@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/about.svg</file>
+        <file>main.cpp</file>
+        <file>mainwindow.cpp</file>
+        <file>mainwindow.h</file>
+        <file>icons/tinyinstaller.svg</file>
+        <file>icons/remove.svg</file>
+    </qresource>
+</RCC>
