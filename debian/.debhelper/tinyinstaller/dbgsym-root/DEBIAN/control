@@ -4,9 +4,9 @@ Version: 1.0.0
 Auto-Built-Package: debug-symbols
 Architecture: amd64
 Maintainer: Bayram KARAHAN <bayramk@gmail.com>
-Installed-Size: 753
+Installed-Size: 605
 Depends: tinyinstaller (= 1.0.0)
 Section: debug
 Priority: optional
 Description: debug symbols for tinyinstaller
-Build-Ids: a70a1e3ffa88cac693999e291947d39ff01d22e3
+Build-Ids: 85acff06da8adc40aaaa3f1fc18b5b1df38e02e7

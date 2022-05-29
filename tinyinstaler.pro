@@ -30,8 +30,7 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    filecrud.h \
-    myprocess.h
+    filecrud.h
 
 FORMS +=
 

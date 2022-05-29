@@ -48,7 +48,7 @@ private:
     QLabel *statusLabel;
     QTextEdit *doc;
     QWidget *mwidget;
-    bool procesType=false;
+    QString  procesType="";
 };
 
 #endif // MAINWINDOW_H
