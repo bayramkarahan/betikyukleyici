@@ -106,7 +106,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
     twl->setRowCount(0);
     // system("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
     procesType="getindex";
-    proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
+    proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/script/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
 
     QStringList list=fileToList("tinyinstallerlist");
     for(int i=0;i<list.count();i++)
@@ -137,10 +137,10 @@ if(list.count()<1)
 
  connect(installerButton, &QToolButton::clicked, [=]() {
    //  qDebug()<<"";
-     if(selectPaketName!=""&&selectPaketAddress!="")
+     if(selectPaketName!=""&&selectPaketAddressInstall!="")
      {
 
-         QString kmt="wget -O /tmp/script.sh "+selectPaketAddress;
+         QString kmt="wget -O /tmp/script.sh "+selectPaketAddressInstall;
         // procesType="getscript";
         // proces->start(kmt);
         //qDebug()<<kmt;
@@ -175,12 +175,16 @@ if(list.count()<1)
 
  connect(removeButton, &QToolButton::clicked, [=]() {
 
-     if(selectPaketName!=""&&selectPaketAddress!="")
+     if(selectPaketName!=""&&selectPaketAddressInstall!="")
      {
          procesType="remove";
-               QString kmt="pkexec apt remove "+selectPaketName +" -y";
+         QString kmt="wget -O /tmp/script.sh "+selectPaketAddressRemove;
+         system(kmt.toStdString().c_str());
+         system("chmod a+x /tmp/script.sh");
+         /***********************************************************/
+         procesType="install";
+         proces->start("pkexec /tmp/script.sh");
 
-          proces->start(kmt);
      }else
      {
          statusLabel->setText("Paket Seçilmemiş");
@@ -257,7 +261,7 @@ void MainWindow :: disp()
         QString t = proces->readLine();
         if( t.isEmpty() ) {break;}
         doc->moveCursor (QTextCursor::End);
-        if(!t.contains("error"))
+        if(!t.contains("error",Qt::CaseInsensitive)&&!t.contains("hata",Qt::CaseInsensitive))
             doc->textCursor().insertHtml("\n<p style=\"color:black;\">"+t+"</p>");
         else
         {
@@ -281,7 +285,9 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
         {
            /// qDebug()<<"seçilen paket"<<lst[0]<<lst[1];
             selectPaketName=lst[0];
-            selectPaketAddress=lst[1];
+           if(lst.count()>1) selectPaketAddressInstall=lst[1];
+          // qDebug()<<lst.count();
+           if(lst.count()>2) selectPaketAddressRemove=lst[2];
 
                      statusLabel->setText("Paket: "+selectPaketName);
                      int font=boy*2;

@@ -41,7 +41,8 @@ private:
     QString localDir;
     QTableWidget *twl;
     QString selectPaketName;
-    QString selectPaketAddress;
+     QString selectPaketAddressInstall;
+     QString selectPaketAddressRemove;
     QProgressBar *progressbar;
     QProcess *proces;
     int val=0;
