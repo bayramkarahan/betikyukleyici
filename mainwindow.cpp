@@ -10,49 +10,59 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
 
-    QWidget *widget=new QWidget(this);
-
-    QSize screenSize = qApp->screens()[0]->size();
+      QSize screenSize = qApp->screens()[0]->size();
     boy=screenSize.height()/153.6;
     en=boy*1.1;
     int e=en;
     int b=boy;
-    this->setFixedSize(boy*75,en*85);
+    this->setFixedSize(boy*75,en*120);
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
-   // this->setStyleSheet("background-color: #dfdfdf;");
+
+    progressbar = new QProgressBar(mwidget);
+    progressbar->setFixedSize(boy*75,en*5);
+    progressbar->setRange(0,1000);
+    progressbar->setStyleSheet("background-color: #dfdfdf;");
+
+    doc=new QTextEdit(mwidget);
+    doc->setFixedSize(boy*75,en*40);
+    doc->setStyleSheet("background-color: #dfdfdf;");
+    doc->setReadOnly(true);
+    mwidget->setFixedSize(boy*75,en*120);
+  // this->setStyleSheet("background-color: #00df00;");
     auto appIcon = QIcon(":/icons/tinyinstaller.svg");
     this->setWindowIcon(appIcon);
-    widget->setFixedSize(boy*75,en*85);
 
-    int font=boy*3;
-    QLabel *userLabel=new QLabel(widget);
-    userLabel->setText("Yüklebilecek Paketler");
-    userLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
-    userLabel->setFixedSize(boy*40,en*5);
 
-    QLabel *statusLabel=new QLabel(widget);
-   // statusLabel->setText("");
-    statusLabel->setStyleSheet("color:#ac0000;");
-    statusLabel->setFixedSize(boy*40,en*5);
+    int font=boy*2;
+    statusLabel=new QLabel(mwidget);
+    statusLabel->setText("Yüklebilecek Paketler");
+    statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
+    statusLabel->setFixedSize(boy*75,en*5);
+    statusLabel->setAlignment(Qt::AlignCenter);
 
 
 
-
-    auto layout = new QGridLayout(widget);
+    auto layout = new QGridLayout;
     layout->setContentsMargins(0,0, 0,0);
-   // layout->setVerticalSpacing(5);
-    // layout->setHorizontalSpacing(5);
+    layout->setVerticalSpacing(0);
+     layout->setHorizontalSpacing(0);
     //layout->setColumnMinimumWidth(0, 37);
-    layout->addWidget(userLabel, 2,1,1,2,Qt::AlignCenter);
-    layout->addWidget( paketSlot(),3,1,1,2,Qt::AlignCenter);
+  QWidget *paket = paketSlot(mwidget);
+    paket->setFixedSize(en*75,en*70);
+  //paket->setStyleSheet("background-color: #00dfdf;");
 
+    layout->addWidget(statusLabel, 2,1,1,2,Qt::AlignCenter);
+    layout->addWidget( paket,3,1,1,2,Qt::AlignCenter);
+    layout->addWidget( doc,4,1,1,2,Qt::AlignCenter);
+    layout->addWidget(progressbar,5,1,1,2,Qt::AlignCenter);
 
-setLayout(layout);
-
+    mwidget->setLayout(layout);
+    setCentralWidget(mwidget);
 }
 
 MainWindow::~MainWindow()
@@ -60,24 +70,24 @@ MainWindow::~MainWindow()
 
 }
 
-QWidget *MainWindow::paketSlot()
+QWidget *MainWindow::paketSlot(QWidget *parent)
 {
    // qDebug()<<"ayar click";
     QString font="12";
-    QWidget * d = new QWidget(this);
+    QWidget * d = new QWidget(parent);
     d->setStyleSheet("background-color: #dfdfdf;");
    // d->setStyleSheet("font-size:"+QString::number(font.toInt()-2)+"px;");
-    auto appIcon = QIcon(":/icons/tinyinstaller.svg");
-    d->setWindowIcon(appIcon);
-    d->setWindowTitle("Paket Listesi");
-    d->setFixedSize(en*75,en*87);
-
-    QLineEdit * paketname = new QLineEdit();
+    //auto appIcon = QIcon(":/icons/tinyinstaller.svg");
+   // d->setWindowIcon(appIcon);
+    //d->setWindowTitle("Paket Listesi");
+   // d->setFixedSize(en*75,en*87);
+/*
+    QLineEdit * paketname = new QLineEdit(d);
     paketname->setFixedSize(en*20,boy*5);
 
-    QLineEdit * address = new QLineEdit();
+    QLineEdit * address = new QLineEdit(d);
     address->setFixedSize(en*20,boy*5);
-
+*/
    /* QLabel *nameLabel=new QLabel("Paket Adı");
     QLabel *addressLabel=new QLabel("Adres");
 
@@ -110,7 +120,7 @@ QWidget *MainWindow::paketSlot()
 });
 
     /***********************************************************************/
-   twl=new QTableWidget;
+   twl=new QTableWidget(d);
     twl->setFixedSize(QSize(en*71,en*55));
     twl->setColumnCount(1);
     //twl->setRowCount(0);
@@ -139,7 +149,13 @@ QWidget *MainWindow::paketSlot()
        // twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
 
     }
+if(list.count()<1)
+{
+    statusLabel->setText("İnternet Bağlantısı bok veya Paket Listesi Yok");
+    int font=boy*2;
+    statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
 
+}
  QToolButton *installerButton= new QToolButton(d);
  installerButton->setFixedSize(QSize(boy*35,boy*10));
  installerButton->setIconSize(QSize(boy*35,boy*5));
@@ -154,17 +170,27 @@ QWidget *MainWindow::paketSlot()
    //  qDebug()<<"";
      if(selectPaketName!=""&&selectPaketAddress!="")
      {
-         // paketSlot();
-        // QString kmt="/usr/share/tinyinstaller/installeryetki "+selectPaketAddress;
+         procesType=true;
          QString kmt="wget -O /tmp/script.sh "+selectPaketAddress;
-          //qDebug()<<kmt;
+         //qDebug()<<kmt;
          system(kmt.toStdString().c_str());
-        system("sleep 1");
-          system("chmod a+x /tmp/script.sh");
-          system("pkexec /tmp/script.sh");
-          qDebug()<<"yükleme bitti";
-        system("sleep 1");
-        system("rm /tmp/script.sh");
+         system("sleep 1");
+         system("chmod a+x /tmp/script.sh");
+         /***********************************************************/
+
+          proces=new QProcess(this);
+          proces->setReadChannelMode(QProcess::MergedChannels);
+          proces->setReadChannel(QProcess::StandardOutput);
+          connect(proces, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
+          connect(proces, SIGNAL(started()), this, SLOT(procresbegin()));
+          connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
+          proces->start("pkexec /tmp/script.sh");
+     }else
+     {
+         statusLabel->setText("Paket Seçilmemiş");
+         int font=boy*2;
+         statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+
      }
 
  });
@@ -181,15 +207,24 @@ QWidget *MainWindow::paketSlot()
  removeButton->setText("Paketi Kaldır");
 
  connect(removeButton, &QToolButton::clicked, [=]() {
-   //  qDebug()<<"";
+
      if(selectPaketName!=""&&selectPaketAddress!="")
      {
-           QString kmt="pkexec apt remove "+selectPaketName +" -y";
-          //qDebug()<<kmt;
-         system(kmt.toStdString().c_str());
+         procesType=false;
+          proces=new QProcess(this);
+          proces->setReadChannelMode(QProcess::MergedChannels);
+          proces->setReadChannel(QProcess::StandardOutput);
+          connect(proces, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
+          connect(proces, SIGNAL(started()), this, SLOT(procresbegin()));
+          connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
+          QString kmt="pkexec apt remove "+selectPaketName +" -y";
 
-          qDebug()<<"kaldırma bitti";
-
+          proces->start(kmt);
+     }else
+     {
+         statusLabel->setText("Paket Seçilmemiş");
+         int font=boy*2;
+         statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
      }
 
  });
@@ -213,7 +248,47 @@ d->setLayout(dlayout);
 
 return d;
    // int result = d->exec();
+}
+void MainWindow :: procresbegin()
+{
+    val=0;
+    progressbar->setValue(val);
+    doc->setText("");
+    doc->moveCursor (QTextCursor::End);
+    if(procesType) doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Başladı***</p><br/>");
+    else doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldıra Başladı***</p>\n");
+}
+void MainWindow :: procresend()
+{
+    val=0;
+    progressbar->setValue(1000);
+    doc->moveCursor (QTextCursor::End);
+    if(procesType)
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>\n");
+        system("rm /tmp/script.sh");
+    }
+    else  doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>\n");
 
+}
+void MainWindow :: disp()
+{
+    while( 1 ){
+        val++;
+        QString t = proces->readLine();
+        if( t.isEmpty() ) {break;}
+        doc->moveCursor (QTextCursor::End);
+        if(!t.contains("error"))
+            doc->textCursor().insertHtml("\n<p style=\"color:black;\">"+t+"</p>");
+        else
+        {
+            doc->textCursor().insertHtml("\n<p style=\"color:red;\">"+t+"</p>");
+            statusLabel->setText("Kurulumda hatalarla karşılaşıldı..");
+            int font=boy*2;
+            statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+        }
+        progressbar->setValue(val);
+    }
 }
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
@@ -228,6 +303,11 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
            /// qDebug()<<"seçilen paket"<<lst[0]<<lst[1];
             selectPaketName=lst[0];
             selectPaketAddress=lst[1];
+
+                     statusLabel->setText("Paket: "+selectPaketName);
+                     int font=boy*2;
+                     statusLabel->setStyleSheet("color: #0000ac;Text-align:center;font-size:"+QString::number(font)+"px");
+
         }
     }
 }

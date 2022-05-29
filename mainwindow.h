@@ -7,7 +7,9 @@
 #include<QPushButton>
 #include<QTableWidget>
 #include<QMessageBox>
-
+#include<QProcess>
+#include<QProgressBar>
+#include<QPlainTextEdit>
 namespace Ui {
 class MainWindow;
 }
@@ -27,9 +29,12 @@ public slots:
     QStringList listReplace(QStringList list,QString oldData,QString newData,int index);
     QStringList listMerge(QStringList list1, QStringList list2,int dataIndex);
     QStringList listGetList(QStringList list, QString data,int index);
-   QWidget *paketSlot();
+   QWidget *paketSlot(QWidget *parent);
    void paketTableCellDoubleClicked(int iRow, int iColumn);
    void paketTableWidgetWindow_cellClicked(int iRow, int iColumn);
+   void disp();
+   void procresbegin();
+   void procresend();
 private:
     int en;
     int boy;
@@ -37,7 +42,13 @@ private:
     QTableWidget *twl;
     QString selectPaketName;
     QString selectPaketAddress;
-
+    QProgressBar *progressbar;
+    QProcess *proces;
+    int val=0;
+    QLabel *statusLabel;
+    QTextEdit *doc;
+    QWidget *mwidget;
+    bool procesType=false;
 };
 
 #endif // MAINWINDOW_H
