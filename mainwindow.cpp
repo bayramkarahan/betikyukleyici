@@ -126,7 +126,7 @@ if(list.count()<1)
 
 }
  QToolButton *installerButton= new QToolButton(d);
- installerButton->setFixedSize(QSize(en*30,boy*10));
+ installerButton->setFixedSize(QSize(en*35,boy*10));
  installerButton->setIconSize(QSize(en*35,boy*5));
  installerButton->setStyleSheet("Text-align:center");
  installerButton->setIcon(QIcon(":/icons/tinyinstaller.svg"));
