@@ -108,23 +108,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
     procesType="getindex";
     proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/script/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
 
-    QStringList list=fileToList("tinyinstallerlist");
-    for(int i=0;i<list.count();i++)
-    {
-        QString line=list[i];
-        QStringList lst=line.split("|");
-        twl->setRowCount(twl->rowCount()+1);
-        twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-        // twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
 
-    }
-if(list.count()<1)
-{
-    statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
-    int font=boy*2;
-    statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
-
-}
  QToolButton *installerButton= new QToolButton(d);
  installerButton->setFixedSize(QSize(en*35,boy*10));
  installerButton->setIconSize(QSize(en*35,boy*5));
@@ -253,6 +237,37 @@ void MainWindow :: procresend()
        }
     if(procesType=="getindex")
     {
+           QStringList list=fileToList("tinyinstallerlist");
+           for(int i=0;i<list.count();i++)
+           {
+               QString line=list[i];
+               QStringList lst=line.split("|");
+               twl->setRowCount(twl->rowCount()+1);
+
+               twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
+               // twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
+               QString path="/var/lib/tinyinstaller/"+lst[0];
+
+               QFile file(path);
+               //qDebug()<<path<<file.exists();
+               if(file.exists())
+               {
+
+                   twl->setStyleSheet("QTableWidget::item{background-color: rgba(0, 255, 0, 50);}");
+               }
+               else{
+                   twl->setStyleSheet("QTableWidget::item{background-color: rgba(200, 200, 200, 255);}");
+
+               }
+
+           }
+           if(list.count()<1)
+           {
+               statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
+               int font=boy*2;
+               statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+
+           }
         doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p><br/>");
        }
     proces->terminate();
