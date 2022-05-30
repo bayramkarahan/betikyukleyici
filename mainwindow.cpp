@@ -88,13 +88,13 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
     /***********************************************************************/
    twl=new QTableWidget(d);
     twl->setFixedSize(QSize(en*75,boy*55));
-    twl->setColumnCount(1);
+    twl->setColumnCount(2);
     //twl->setRowCount(0);
-    twl->setColumnWidth(0, en*66);
-   /// twl->setColumnWidth(1, en*44);
+    twl->setColumnWidth(0, en*50);
+    twl->setColumnWidth(1, en*15);
 
     twl->setHorizontalHeaderItem(0, new QTableWidgetItem("Paket Adı"));
-   // twl->setHorizontalHeaderItem(1, new QTableWidgetItem("package address"));
+   twl->setHorizontalHeaderItem(1, new QTableWidgetItem("Durum"));
 
     twl->setSelectionBehavior(QAbstractItemView::SelectRows);
     twl->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -237,40 +237,40 @@ void MainWindow :: procresend()
        }
     if(procesType=="getindex")
     {
-           QStringList list=fileToList("tinyinstallerlist");
-           for(int i=0;i<list.count();i++)
-           {
-               QString line=list[i];
-               QStringList lst=line.split("|");
-               twl->setRowCount(twl->rowCount()+1);
 
-               twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-               // twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
-               QString path="/var/lib/tinyinstaller/"+lst[0];
 
-               QFile file(path);
-               //qDebug()<<path<<file.exists();
-               if(file.exists())
-               {
-
-                   twl->setStyleSheet("QTableWidget::item{background-color: rgba(0, 255, 0, 50);}");
-               }
-               else{
-                   twl->setStyleSheet("QTableWidget::item{background-color: rgba(200, 200, 200, 255);}");
-
-               }
-
-           }
-           if(list.count()<1)
-           {
-               statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
-               int font=boy*2;
-               statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
-
-           }
         doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p><br/>");
        }
     proces->terminate();
+    /****************************************************/
+    QStringList list=fileToList("tinyinstallerlist");
+    twl->setRowCount(0);
+    for(int i=0;i<list.count();i++)
+    {
+        QString line=list[i];
+        QStringList lst=line.split("|");
+        twl->setRowCount(twl->rowCount()+1);
+
+        twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
+        QString path="/var/lib/tinyinstaller/"+lst[0];
+
+        QFile file(path);
+        //qDebug()<<path<<file.exists();
+        if(file.exists())
+            twl->setItem(i, 1, new QTableWidgetItem("Yüklü"));//package address
+        else
+            twl->setItem(i, 1, new QTableWidgetItem("-----"));//package address
+
+
+
+    }
+    if(list.count()<1)
+    {
+        statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
+        int font=boy*2;
+        statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+
+    }
 }
 void MainWindow :: disp()
 {

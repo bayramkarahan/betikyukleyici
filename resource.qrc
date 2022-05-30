@@ -1,26 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/about.svg</file>
+        <file>icons/remove.svg</file>
+        <file>icons/tinyinstaller.svg</file>
+        <file>filecrud.h</file>
         <file>main.cpp</file>
         <file>mainwindow.cpp</file>
         <file>mainwindow.h</file>
-        <file>icons/tinyinstaller.svg</file>
-        <file>icons/remove.svg</file>
-        <file>qss/QSS_IMG/go-down-symbolic.symbolic.png</file>
-        <file>qss/QSS_IMG/go-next-symbolic.symbolic.png</file>
-        <file>qss/QSS_IMG/go-previous-symbolic.symbolic.png</file>
-        <file>qss/QSS_IMG/go-up-symbolic.symbolic.png</file>
-        <file>qss/QSS_IMG/object-select-symbolic.symbolic.png</file>
-        <file>qss/AMOLED.qss</file>
-        <file>qss/Aqua.qss</file>
-        <file>qss/ConsoleStyle.qss</file>
-        <file>qss/ElegantDark.qss</file>
-        <file>qss/LICENSE</file>
-        <file>qss/MacOS.qss</file>
-        <file>qss/ManjaroMix.qss</file>
-        <file>qss/MaterialDark.qss</file>
-        <file>qss/NeonButtons.qss</file>
-        <file>qss/README.md</file>
-        <file>qss/Ubuntu.qss</file>
     </qresource>
 </RCC>
