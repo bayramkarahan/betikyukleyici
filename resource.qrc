@@ -7,6 +7,6 @@
         <file>main.cpp</file>
         <file>mainwindow.cpp</file>
         <file>mainwindow.h</file>
-        <file>qss/macos.qss</file>
+        <file>icons/macos.qss</file>
     </qresource>
 </RCC>

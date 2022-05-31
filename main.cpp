@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFile styleFile(":/qss/macos.qss");
+    QFile styleFile(":/icons/macos.qss");
     styleFile.open(QFile::ReadOnly);
     QString style=QLatin1String(styleFile.readAll());
     a.setStyleSheet(style);

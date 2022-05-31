@@ -402,7 +402,7 @@ qrc_resource.cpp: resource.qrc \
 		filecrud.h \
 		mainwindow.cpp \
 		main.cpp \
-		qss/macos.qss \
+		icons/macos.qss \
 		icons/about.svg \
 		icons/remove.svg \
 		icons/tinyinstaller.svg \
