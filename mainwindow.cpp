@@ -98,8 +98,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
 
     twl->setSelectionBehavior(QAbstractItemView::SelectRows);
     twl->setSelectionMode(QAbstractItemView::SingleSelection);
-    //connect(tw, &QTableWidget::cellClicked, this, cellClicked());
-    connect(twl, SIGNAL(cellDoubleClicked(int,int)),SLOT(paketTableCellDoubleClicked(int,int)));
+     //connect(twl, SIGNAL(cellDoubleClicked(int,int)),SLOT(paketTableCellDoubleClicked(int,int)));
     connect(twl, SIGNAL(cellClicked(int, int)),
             this, SLOT(paketTableWidgetWindow_cellClicked(int, int)));
 
