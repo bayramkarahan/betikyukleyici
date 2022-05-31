@@ -9,4 +9,4 @@ Depends: tinyinstaller (= 1.0.0)
 Section: debug
 Priority: optional
 Description: debug symbols for tinyinstaller
-Build-Ids: 372c0a13476e97bf69865ca7a4f318a89b3285e7
+Build-Ids: df3f4fc01522f174a1c063e5140a0fa0ab9949a6

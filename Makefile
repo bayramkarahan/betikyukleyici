@@ -402,22 +402,7 @@ qrc_resource.cpp: resource.qrc \
 		filecrud.h \
 		mainwindow.cpp \
 		main.cpp \
-		qss/LICENSE \
-		qss/ManjaroMix.qss \
-		qss/AMOLED.qss \
-		qss/Ubuntu.qss \
-		qss/MacOS.qss \
-		qss/MaterialDark.qss \
-		qss/ConsoleStyle.qss \
-		qss/README.md \
-		qss/ElegantDark.qss \
-		qss/Aqua.qss \
-		qss/NeonButtons.qss \
-		qss/QSS_IMG/go-next-symbolic.symbolic.png \
-		qss/QSS_IMG/go-previous-symbolic.symbolic.png \
-		qss/QSS_IMG/object-select-symbolic.symbolic.png \
-		qss/QSS_IMG/go-down-symbolic.symbolic.png \
-		qss/QSS_IMG/go-up-symbolic.symbolic.png \
+		qss/macos.qss \
 		icons/about.svg \
 		icons/remove.svg \
 		icons/tinyinstaller.svg \
