@@ -1,4 +1,4 @@
 #!/bin/bash
-apt remove winemimetype -y
-rm -rf /var/lib/tinyinstaller/winemimetype
+apt remove e-uctas -y
+rm -rf /var/lib/tinyinstaller/e-uctas
 exit 0
