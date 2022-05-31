@@ -1,4 +1,4 @@
 #!/bin/bash
-apt remove winemimetype -y
-rm -rf /var/lib/tinyinstaller/winemimetype
+apt remove zoom -y
+rm -rf /var/lib/tinyinstaller/zoom
 exit 0

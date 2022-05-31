@@ -1,4 +1,4 @@
 #!/bin/bash
-apt remove winemimetype -y
-rm -rf /var/lib/tinyinstaller/winemimetype
+apt remove pardus-remaster -y
+rm -rf /var/lib/tinyinstaller/pardus-remaster
 exit 0

@@ -1,8 +1,8 @@
 #!/bin/bash
-wget -O /tmp/winemimetype.deb https://github.com/bayramkarahan/wineplugin/raw/master/winemimetype.deb
-dpkg --force-all -i /tmp/winemimetype.deb
+wget -O /tmp/zoom.deb https://zoom.us/client/latest/zoom_amd64.deb
+dpkg --force-all -i /tmp/zoom.deb
 sleep 1
-rm /tmp/winemimetype.deb
+rm /tmp/zoom.deb
 mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/winemimetype
+touch /var/lib/tinyinstaller/zoom
 exit 0
