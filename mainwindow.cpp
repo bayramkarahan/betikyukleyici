@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     en=boy*1.1;
     int e=en;
     int b=boy;
-    this->setFixedSize(en*75,boy*120);
+    this->setFixedSize(en*100,boy*120);
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
@@ -31,15 +31,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
     /**************************************************************/
     progressbar = new QProgressBar(mwidget);
-    progressbar->setFixedSize(en*75,boy*5);
+    progressbar->setFixedSize(en*100,boy*5);
     progressbar->setRange(0,1000);
   //  progressbar->setStyleSheet("background-color: #dfdfdf;");
+    QTabWidget *tabw=new QTabWidget(mwidget);
+    tabw->setFixedSize(en*100,boy*40);
 
-    doc=new QTextEdit(mwidget);
-    doc->setFixedSize(en*75,boy*40);
-  //  doc->setStyleSheet("background-color: #dfdfdf;");
+    doc=new QTextEdit(tabw);
+    doc->setFixedSize(en*100,boy*35);
     doc->setReadOnly(true);
-    mwidget->setFixedSize(en*75,boy*120);
+
+    script=new QTextEdit(tabw);
+    script->setFixedSize(en*100,boy*35);
+    script->setReadOnly(true);
+  //  doc->setStyleSheet("background-color: #dfdfdf;");
+    tabw->addTab(doc,"Süreç");
+    tabw->addTab(script,"Çalışan Komutlar");
+
+    mwidget->setFixedSize(en*100,boy*120);
   // this->setStyleSheet("background-color: #00df00;");
     auto appIcon = QIcon(":/icons/tinyinstaller.svg");
     this->setWindowIcon(appIcon);
@@ -49,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusLabel=new QLabel(mwidget);
     statusLabel->setText("Yüklebilecek Paketler");
     //statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
-    statusLabel->setFixedSize(en*75,boy*5);
+    statusLabel->setFixedSize(en*100,boy*5);
     statusLabel->setAlignment(Qt::AlignCenter);
 
 
@@ -60,12 +69,12 @@ MainWindow::MainWindow(QWidget *parent) :
      layout->setHorizontalSpacing(0);
     //layout->setColumnMinimumWidth(0, 37);
   QWidget *paket = paketSlot(mwidget);
-    paket->setFixedSize(en*75,boy*70);
+    paket->setFixedSize(en*100,boy*70);
   //paket->setStyleSheet("background-color: #00dfdf;");
 
     layout->addWidget(statusLabel, 2,1,1,2,Qt::AlignCenter);
     layout->addWidget( paket,3,1,1,2,Qt::AlignCenter);
-    layout->addWidget( doc,4,1,1,2,Qt::AlignCenter);
+    layout->addWidget( tabw,4,1,1,2,Qt::AlignCenter);
     layout->addWidget(progressbar,5,1,1,2,Qt::AlignCenter);
 
     mwidget->setLayout(layout);
@@ -87,10 +96,10 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
 
     /***********************************************************************/
    twl=new QTableWidget(d);
-    twl->setFixedSize(QSize(en*75,boy*55));
+    twl->setFixedSize(QSize(en*100,boy*55));
     twl->setColumnCount(2);
     //twl->setRowCount(0);
-    twl->setColumnWidth(0, en*50);
+    twl->setColumnWidth(0, en*75);
     twl->setColumnWidth(1, en*15);
 
     twl->setHorizontalHeaderItem(0, new QTableWidgetItem("Paket Adı"));
@@ -129,10 +138,23 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
         //qDebug()<<kmt;
          system(kmt.toStdString().c_str());
           system("chmod a+x /tmp/script.sh");
-         // procesType="getscript";
-         // proces->start("chmod a+x /tmp/script.sh");
+          /*************************************************************/
+          localDir="/tmp/";
+          QStringList list=fileToList("script.sh");
+          script->clear();
+          int font=boy*2;
+          for(int i=0;i<list.count();i++)
+          {
+              QString line=list[i];
+              if(line!="")
+              {
+                 // script->insertPlainText(line+"\n");
+                  script->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
 
-         /***********************************************************/
+              }
+          }
+          localDir="/usr/share/tinyinstaller/";
+          /***********************************************************/
                 procesType="install";
                proces->start("pkexec /tmp/script.sh");
      }else
@@ -200,19 +222,19 @@ void MainWindow :: procresbegin()
 
     if(procesType=="install")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Başladı***</p><br/>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Başladı***</p>");
               }
     if(procesType=="remove")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldıra Başladı***</p><br/>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
         }
     if(procesType=="getscript")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Script İndirme Başladı***</p><br/>");
+        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p>");
        }
     if(procesType=="getindex")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p><br/>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
        }
 
 }
@@ -223,22 +245,22 @@ void MainWindow :: procresend()
     doc->moveCursor (QTextCursor::End);
     if(procesType=="install")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p><br/>");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
         system("rm /tmp/script.sh");
     }
     if(procesType=="remove")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p><br/>");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
        }
     if(procesType=="getscript")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Script İndirme Tamamlandı***</p><br/>");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
        }
     if(procesType=="getindex")
     {
 
 
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p><br/>");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
        }
     proces->terminate();
     /****************************************************/
@@ -273,16 +295,27 @@ void MainWindow :: procresend()
 }
 void MainWindow :: disp()
 {
+    int font=boy*2;
     while( 1 ){
         val++;
         QString t = proces->readLine();
-        if( t.isEmpty() ) {break;}
-        doc->moveCursor (QTextCursor::End);
+
+        t.remove("\n");
+      // qDebug()<<t.toUtf8();
+
+        if( t.isEmpty()||t=="" ) {break;}
+       // t=t+"\n\n";
+      //  doc->moveCursor (QTextCursor::End);
         if(!t.contains("error",Qt::CaseInsensitive)&&!t.contains("hata",Qt::CaseInsensitive))
-            doc->textCursor().insertHtml("<lu style=\"color:black;\">"+t+"</lu><br/><br/>");
+        {
+
+           doc->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+t+"</lu>");
+          //  doc->insertPlainText(t);
+
+        }
         else
         {
-            doc->textCursor().insertHtml("<lu style=\"color:red;\">"+t+"</lu><br/>");
+            doc->textCursor().insertHtml("<br/><lu style=\"color:red;\">"+t+"</lu>");
             statusLabel->setText("Kurulumda hatalarla karşılaşıldı..");
             int font=boy*2;
           //  statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");

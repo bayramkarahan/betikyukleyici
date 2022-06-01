@@ -10,6 +10,7 @@
 #include<QProcess>
 #include<QProgressBar>
 #include<QPlainTextEdit>
+#include<QTabWidget>
 namespace Ui {
 class MainWindow;
 }
@@ -48,6 +49,7 @@ private:
     int val=0;
     QLabel *statusLabel;
     QTextEdit *doc;
+    QTextEdit *script;
     QWidget *mwidget;
     QString  procesType="";
 };

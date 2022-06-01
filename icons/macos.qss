@@ -364,14 +364,14 @@ QTabWidget::tab-bar {
 }
 
 QTabBar::tab {
-    border-bottom: 1px solid #c0c0c0;
+   border-bottom: 1px solid #c0c0c0;
     padding: 3px;
     color: #272727;
     background-color: #fefefc;
     margin-left:0px;
 }
 QTabBar::tab:!last {
-    border-right: 1px solid;
+    border-right: 0px solid;
     border-right-color: #c0c0c0;
     border-bottom-color: #c0c0c0;
 }
