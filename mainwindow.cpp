@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
-    version="tinyinstaller_1.1.0_amd64.deb";
+    version="tinyinstaller_1.0.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -79,8 +79,12 @@ MainWindow::MainWindow(QWidget *parent) :
      if (updateFile=="") return;
      QString kmt="wget -O /tmp/prg.deb https://github.com/bayramkarahan/tinyinstaller/raw/master/"+updateFile;
      system(kmt.toStdString().c_str());
+      system("sleep 1");
+     system("chmod 777 /tmp/prg.deb");
+      system("sleep 1");
      system("pkexec /tmp/prg.deb");
-     system("rm  /tmp/prg.deb");
+      //system("sleep 2");
+     //system("rm  /tmp/prg.deb");
  });
 
     auto layout = new QGridLayout;
