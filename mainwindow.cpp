@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
-    version="tinyinstaller_1.0.0_amd64.deb";
+    version="tinyinstaller_1.1.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
