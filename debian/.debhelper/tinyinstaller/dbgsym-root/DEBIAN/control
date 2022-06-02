@@ -1,11 +1,11 @@
 Package: tinyinstaller-dbgsym
 Source: tinyinstaller
-Version: 1.0.0
+Version: 1.1.0
 Auto-Built-Package: debug-symbols
 Architecture: amd64
 Maintainer: Bayram KARAHAN <bayramk@gmail.com>
 Installed-Size: 626
-Depends: tinyinstaller (= 1.0.0)
+Depends: tinyinstaller (= 1.1.0)
 Section: debug
 Priority: optional
 Description: debug symbols for tinyinstaller
