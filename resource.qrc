@@ -8,5 +8,6 @@
         <file>mainwindow.cpp</file>
         <file>mainwindow.h</file>
         <file>icons/macos.qss</file>
+        <file>icons/update.svg</file>
     </qresource>
 </RCC>

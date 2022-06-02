@@ -11,6 +11,7 @@
 #include<QProgressBar>
 #include<QPlainTextEdit>
 #include<QTabWidget>
+#include<QToolButton>
 namespace Ui {
 class MainWindow;
 }
@@ -52,6 +53,10 @@ private:
     QTextEdit *script;
     QWidget *mwidget;
     QString  procesType="";
+    QString version="";
+    QString updateFile="";
+
+    QToolButton *updateButton;
 };
 
 #endif // MAINWINDOW_H

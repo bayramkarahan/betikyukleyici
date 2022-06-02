@@ -12,6 +12,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
+    version="tinyinstaller_1.1.0_amd64.deb";
+    /**************************************************************/
+    proces=new QProcess(this);
+    proces->setReadChannelMode(QProcess::MergedChannels);
+    proces->setReadChannel(QProcess::StandardOutput);
+    connect(proces, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
+    connect(proces, SIGNAL(started()), this, SLOT(procresbegin()));
+    connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
+    /**************************************************************/
+
+    system("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
+    //procesType="getversion";
+    //proces->start("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
 
       QSize screenSize = qApp->screens()[0]->size();
     boy=screenSize.height()/153.6;
@@ -22,14 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
-    /**************************************************************/
-    proces=new QProcess(this);
-    proces->setReadChannelMode(QProcess::MergedChannels);
-    proces->setReadChannel(QProcess::StandardOutput);
-    connect(proces, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
-    connect(proces, SIGNAL(started()), this, SLOT(procresbegin()));
-    connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
-    /**************************************************************/
     progressbar = new QProgressBar(mwidget);
     progressbar->setFixedSize(en*100,boy*5);
     progressbar->setRange(0,1000);
@@ -60,8 +65,23 @@ MainWindow::MainWindow(QWidget *parent) :
     //statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
     statusLabel->setFixedSize(en*100,boy*5);
     statusLabel->setAlignment(Qt::AlignCenter);
+ updateButton= new QToolButton(mwidget);
+ updateButton->setFixedSize(QSize(en*25,boy*10));
+ updateButton->setIconSize(QSize(en*25,boy*5));
+ updateButton->setStyleSheet("Text-align:center");
+ updateButton->setIcon(QIcon(":/icons/update.svg"));
+ updateButton->setAutoRaise(true);
+ updateButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+ // powerOnButton->setFont(f2);
+ updateButton->setText("Programı Güncelle");
 
-
+ connect(updateButton, &QToolButton::clicked, [=]() {
+     if (updateFile=="") return;
+     QString kmt="wget -O /tmp/prg.deb https://github.com/bayramkarahan/tinyinstaller/raw/master/"+updateFile;
+     system(kmt.toStdString().c_str());
+     system("pkexec /tmp/prg.deb");
+     system("rm  /tmp/prg.deb");
+ });
 
     auto layout = new QGridLayout;
     layout->setContentsMargins(0,0, 0,0);
@@ -73,6 +93,8 @@ MainWindow::MainWindow(QWidget *parent) :
   //paket->setStyleSheet("background-color: #00dfdf;");
 
     layout->addWidget(statusLabel, 2,1,1,2,Qt::AlignCenter);
+    layout->addWidget(updateButton, 2,2,1,1,Qt::AlignRight);
+
     layout->addWidget( paket,3,1,1,2,Qt::AlignCenter);
     layout->addWidget( tabw,4,1,1,2,Qt::AlignCenter);
     layout->addWidget(progressbar,5,1,1,2,Qt::AlignCenter);
@@ -292,6 +314,34 @@ void MainWindow :: procresend()
         statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
 
     }
+    /*******************************************************/
+/// qDebug()<<"********************versiyonlar aynı********";
+        localDir="/tmp/";
+        QStringList listv=fileToList("version");
+        for(int i=0;i<listv.count();i++)
+        {
+            QString line=listv[i];
+            if(line!="")
+            {
+                ///qDebug()<<"**"<<line;
+                if(line.contains(version,Qt::CaseInsensitive))
+                {
+                    updateButton->hide();
+
+                }else
+                {
+                     updateButton->show();
+                    line.truncate(line.lastIndexOf("deb")+3);
+                   // qDebug()<<line;
+                    updateFile=line;
+                }
+
+            }
+        }
+        localDir="/usr/share/tinyinstaller/";
+
+    /**************************************************************/
+
 }
 void MainWindow :: disp()
 {
