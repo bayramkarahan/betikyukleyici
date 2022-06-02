@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
-    version="tinyinstaller_1.1.0_amd64.deb";
+    version="tinyinstaller_1.0.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
       system("sleep 1");
      system("chmod 777 /tmp/prg.deb");
       system("sleep 1");
-     system("pkexec /tmp/prg.deb");
+     system("pkexec dpkg -i --force-all /tmp/prg.deb");
       //system("sleep 2");
      //system("rm  /tmp/prg.deb");
  });
