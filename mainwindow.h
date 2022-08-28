@@ -41,6 +41,8 @@ public slots:
    void procresbegin();
    void procresend();
    void about();
+   QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
+
 private:
     int en;
     int boy;

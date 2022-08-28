@@ -34,31 +34,33 @@ MainWindow::MainWindow(QWidget *parent) :
     /**************************************************************/
 
       QSize screenSize = qApp->screens()[0]->size();
-    boy=screenSize.height()/153.6;
+     // qDebug()<<"boyut"<<screenSize.height()*0.65<<screenSize.width()*0.5;
+    boy=screenSize.height()/153;
     en=boy*1.1;
+  //   qDebug()<<"en"<<en;
     int e=en;
     int b=boy;
-    this->setFixedSize(en*100,boy*120);
+    this->setFixedSize(en*120,boy*120);
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
     progressbar = new QProgressBar(mwidget);
-    progressbar->setFixedSize(en*100,boy*5);
-    progressbar->setRange(0,1000);
+    progressbar->setFixedSize(en*120,boy*5);
+    progressbar->setRange(0,100);
   //  progressbar->setStyleSheet("background-color: #dfdfdf;");
     QTabWidget *tabw=new QTabWidget(mwidget);
-    tabw->setFixedSize(en*100,boy*40);
+    tabw->setFixedSize(en*120,boy*40);
 
     doc=new QTextEdit(tabw);
-    doc->setFixedSize(en*100,boy*35);
+    doc->setFixedSize(en*120,boy*35);
     doc->setReadOnly(true);
 
     installscriptTextEdit=new QTextEdit(tabw);
-    installscriptTextEdit->setFixedSize(en*100,boy*35);
+    installscriptTextEdit->setFixedSize(en*120,boy*35);
     installscriptTextEdit->setReadOnly(true);
 
     removescriptTextEdit=new QTextEdit(tabw);
-    removescriptTextEdit->setFixedSize(en*100,boy*35);
+    removescriptTextEdit->setFixedSize(en*120,boy*35);
     removescriptTextEdit->setReadOnly(true);
 
   //  doc->setStyleSheet("background-color: #dfdfdf;");
@@ -67,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     tabw->addTab(doc,"Süreç");
    // tabw->setTabPosition(QTabWidget::West);
-    mwidget->setFixedSize(en*100,boy*120);
+    mwidget->setFixedSize(en*120,boy*120);
   // this->setStyleSheet("background-color: #00df00;");
     auto appIcon = QIcon(":/icons/betikyukleyici.svg");
     this->setWindowIcon(appIcon);
@@ -77,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusLabel=new QLabel(mwidget);
     statusLabel->setText("Yüklebilecek Paketler");
     //statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
-    statusLabel->setFixedSize(en*100,boy*5);
+    statusLabel->setFixedSize(en*120,boy*5);
     statusLabel->setAlignment(Qt::AlignCenter);
 
 
@@ -112,7 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
      layout->setHorizontalSpacing(0);
     //layout->setColumnMinimumWidth(0, 37);
   QWidget *paket = paketSlot(mwidget);
-    paket->setFixedSize(en*100,boy*65);
+    paket->setFixedSize(en*120,boy*65);
   //paket->setStyleSheet("background-color: #00dfdf;");
 
     layout->addWidget(statusLabel, 2,1,1,2,Qt::AlignCenter);
@@ -139,7 +141,7 @@ MainWindow::MainWindow(QWidget *parent) :
   proces->waitForFinished(-1);
 
      /***************************************************************/
- // paketTableWidgetWindow_cellClicked(0, 0);
+  paketTableWidgetWindow_cellClicked(0, 0);
 }
 
 void   MainWindow::about(){
@@ -172,11 +174,11 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
 
     /***********************************************************************/
    twl=new QTableWidget(d);
-    twl->setFixedSize(QSize(en*100,boy*55));
+    twl->setFixedSize(QSize(en*120,boy*55));
     twl->setColumnCount(3);
     //twl->setRowCount(0);
-    twl->setColumnWidth(0, en*30);
-     twl->setColumnWidth(1, en*50);
+    twl->setColumnWidth(0, en*40);
+     twl->setColumnWidth(1, en*60);
     twl->setColumnWidth(2, en*10);
 
     twl->setHorizontalHeaderItem(0, new QTableWidgetItem("Paket Adı"));
@@ -319,21 +321,24 @@ void MainWindow :: procresbegin()
 }
 void MainWindow :: procresend()
 {
-    val=0;
+    val=100;
     int procesTypeStatus=0;
 
-    progressbar->setValue(1000);
+    progressbar->setValue(val);
     doc->moveCursor (QTextCursor::End);
     if(procesType=="install")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
         system("rm /tmp/installscript.sh");
+           myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
         procesTypeStatus=1;
     }
     if(procesType=="remove")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
     system("rm /tmp/removescript.sh");
+    myMessageBox("", "\n\Kaldırma Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
+
         procesTypeStatus=2;
     }
     if(procesType=="getscriptinstall")
@@ -468,12 +473,14 @@ void MainWindow :: disp()
             int font=boy*2;
           //  statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
         }
+        if(val>99) val=0;
+
         progressbar->setValue(val);
     }
 }
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
-    if(QFile::exists("/usr/share/betikyukleyicilist"))
+    if(QFile::exists("/usr/share/betikyukleyici/betikyukleyicilist"))
     {
     QString paketname= twl->item(iRow, 0)->text();
     QStringList list=fileToList("betikyukleyicilist");
@@ -705,3 +712,31 @@ void MainWindow::listToFile(QStringList list, QString filename)
     }
 /***********************************************/
  }
+
+QString MainWindow::myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon)
+{
+    Qt::WindowFlags flags = 0;
+    flags |= Qt::Dialog;
+   flags |= Qt::X11BypassWindowManagerHint;
+
+    QMessageBox messageBox(this);
+   //messageBox.setWindowFlags(flags);
+    messageBox.setText(baslik+"\t\t\t");
+    messageBox.setInformativeText(mesaj);
+    messageBox.setWindowTitle("Betik Yükleyici");
+
+    QAbstractButton *evetButton;
+    QAbstractButton *hayirButton;
+    QAbstractButton *tamamButton;
+
+    if(evet=="evet") evetButton =messageBox.addButton(tr("Evet"), QMessageBox::ActionRole);
+    if(hayir=="hayir") hayirButton =messageBox.addButton(tr("Hayır"), QMessageBox::ActionRole);
+    if(tamam=="tamam") tamamButton =messageBox.addButton(tr("Tamam"), QMessageBox::ActionRole);
+
+    messageBox.setIcon(icon);
+    messageBox.exec();
+    if(messageBox.clickedButton()==evetButton) return "evet";
+    if(messageBox.clickedButton()==hayirButton) return "hayir";
+    if(messageBox.clickedButton()==tamamButton) return "tamam";
+    return "";
+}
