@@ -157,13 +157,16 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
     /***********************************************************************/
    twl=new QTableWidget(d);
     twl->setFixedSize(QSize(en*100,boy*55));
-    twl->setColumnCount(2);
+    twl->setColumnCount(3);
     //twl->setRowCount(0);
-    twl->setColumnWidth(0, en*75);
-    twl->setColumnWidth(1, en*15);
+    twl->setColumnWidth(0, en*30);
+     twl->setColumnWidth(1, en*50);
+    twl->setColumnWidth(2, en*10);
 
     twl->setHorizontalHeaderItem(0, new QTableWidgetItem("Paket Adı"));
-   twl->setHorizontalHeaderItem(1, new QTableWidgetItem("Durum"));
+    twl->setHorizontalHeaderItem(1, new QTableWidgetItem("Açıklama"));
+
+   twl->setHorizontalHeaderItem(2, new QTableWidgetItem("Drm"));
 
     twl->setSelectionBehavior(QAbstractItemView::SelectRows);
     twl->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -305,65 +308,53 @@ void MainWindow :: procresend()
     }
     if(procesType=="getscriptinstall")
     {
-          doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-    procesTypeStatus=3;
-    ////  system(kmt.toStdString().c_str());
-       ///system("chmod a+x /tmp/script.sh");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        procesTypeStatus=3;
         localDir="/tmp/";
-       QStringList list1=fileToList("installscript.sh");
-       installscriptTextEdit->clear();
-       int font=boy*2;
-       for(int i=0;i<list1.count();i++)
-       {
-           QString line=list1[i];
-           if(line!="")
-           {
-              // script->insertPlainText(line+"\n");
-               installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+        QStringList list1=fileToList("installscript.sh");
+        installscriptTextEdit->clear();
+        int font=boy*2;
+        for(int i=0;i<list1.count();i++)
+        {
+            QString line=list1[i];
+            if(line!="")
+            {
+                // script->insertPlainText(line+"\n");
+                installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
 
-           }
-       }
+            }
+        }
 
     }
     if(procesType=="getscriptremove")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-    procesTypeStatus=3;
-    ////  system(kmt.toStdString().c_str());
-       ///system("chmod a+x /tmp/script.sh");
+        procesTypeStatus=3;
         localDir="/tmp/";
-       QStringList list1=fileToList("removescript.sh");
-       removescriptTextEdit->clear();
-       int font=boy*2;
-       for(int i=0;i<list1.count();i++)
-       {
-           QString line=list1[i];
-           if(line!="")
-           {
-              // script->insertPlainText(line+"\n");
-               removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+        QStringList list1=fileToList("removescript.sh");
+        removescriptTextEdit->clear();
+        int font=boy*2;
+        for(int i=0;i<list1.count();i++)
+        {
+            QString line=list1[i];
+            if(line!="")
+            {
+                // script->insertPlainText(line+"\n");
+                removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
 
-           }
-       }
+            }
+        }
 
     }
     if(procesType=="getindex")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
-    procesTypeStatus=4;
-
-
+        procesTypeStatus=4;
     }
-   /// proces->terminate();
-
-
-
-    /*******************************************************/
-if(procesType=="getversion")
-{
-
-     localDir="/tmp/";
-       QStringList listv=fileToList("version");
+    if(procesType=="getversion")
+    {
+        localDir="/tmp/";
+        QStringList listv=fileToList("version");
         for(int i=0;i<listv.count();i++)
         {
             QString line=listv[i];
@@ -376,18 +367,17 @@ if(procesType=="getversion")
 
                 }else
                 {
-                     updateButton->show();
+                    updateButton->show();
                     line.truncate(line.lastIndexOf("deb")+3);
-                   // qDebug()<<line;
+                    // qDebug()<<line;
                     updateFile=line;
                 }
 
             }
         }
-}
+    }
         localDir="/usr/share/tinyinstaller/";
-/************************************************************/
-        /****************************************************/
+   /***********************************************************************/
             QStringList list=fileToList("tinyinstallerlist");
         twl->setRowCount(0);
         for(int i=0;i<list.count();i++)
@@ -397,17 +387,15 @@ if(procesType=="getversion")
             twl->setRowCount(twl->rowCount()+1);
 
             twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-            QString path="/var/lib/tinyinstaller/"+lst[0];
+            twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
 
+            QString path="/var/lib/tinyinstaller/"+lst[0];
             QFile file(path);
             //qDebug()<<path<<file.exists();
             if(file.exists())
-                twl->setItem(i, 1, new QTableWidgetItem("Yüklü"));//package address
+                twl->setItem(i, 2, new QTableWidgetItem("Yüklü"));//package address
             else
-                twl->setItem(i, 1, new QTableWidgetItem("-----"));//package address
-
-
-
+                twl->setItem(i, 2, new QTableWidgetItem("-----"));//package address
         }
         twl->selectRow(selectRowIndex);
 
