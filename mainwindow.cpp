@@ -12,19 +12,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/tinyinstaller/";
-    version="tinyinstaller_1.1.0_amd64.deb";
+    version="tinyinstaller_1.2.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
     proces->setReadChannel(QProcess::StandardOutput);
+
     connect(proces, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
     connect(proces, SIGNAL(started()), this, SLOT(procresbegin()));
     connect(proces, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
-    /**************************************************************/
 
-    system("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
-    //procesType="getversion";
-    //proces->start("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
+    proces1=new QProcess(this);
+    proces1->setReadChannelMode(QProcess::MergedChannels);
+    proces1->setReadChannel(QProcess::StandardOutput);
+
+    connect(proces1, SIGNAL(readyReadStandardOutput()),this, SLOT(disp()));
+    connect(proces1, SIGNAL(started()), this, SLOT(procresbegin()));
+    connect(proces1, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procresend()));
+
+    /**************************************************************/
 
       QSize screenSize = qApp->screens()[0]->size();
     boy=screenSize.height()/153.6;
@@ -46,13 +52,20 @@ MainWindow::MainWindow(QWidget *parent) :
     doc->setFixedSize(en*100,boy*35);
     doc->setReadOnly(true);
 
-    script=new QTextEdit(tabw);
-    script->setFixedSize(en*100,boy*35);
-    script->setReadOnly(true);
-  //  doc->setStyleSheet("background-color: #dfdfdf;");
-    tabw->addTab(doc,"Süreç");
-    tabw->addTab(script,"Çalışan Komutlar");
+    installscriptTextEdit=new QTextEdit(tabw);
+    installscriptTextEdit->setFixedSize(en*100,boy*35);
+    installscriptTextEdit->setReadOnly(true);
 
+    removescriptTextEdit=new QTextEdit(tabw);
+    removescriptTextEdit->setFixedSize(en*100,boy*35);
+    removescriptTextEdit->setReadOnly(true);
+
+  //  doc->setStyleSheet("background-color: #dfdfdf;");
+    tabw->addTab(installscriptTextEdit,"Yükleme Scripti");
+    tabw->addTab(removescriptTextEdit,"Kaldırma Scripti");
+
+    tabw->addTab(doc,"Süreç");
+   // tabw->setTabPosition(QTabWidget::West);
     mwidget->setFixedSize(en*100,boy*120);
   // this->setStyleSheet("background-color: #00df00;");
     auto appIcon = QIcon(":/icons/tinyinstaller.svg");
@@ -65,9 +78,14 @@ MainWindow::MainWindow(QWidget *parent) :
     //statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
     statusLabel->setFixedSize(en*100,boy*5);
     statusLabel->setAlignment(Qt::AlignCenter);
+
+
+
+
+
  updateButton= new QToolButton(mwidget);
- updateButton->setFixedSize(QSize(en*25,boy*10));
- updateButton->setIconSize(QSize(en*25,boy*5));
+ updateButton->setFixedSize(QSize(en*30,boy*9));
+ updateButton->setIconSize(QSize(en*30,boy*3));
  updateButton->setStyleSheet("Text-align:center");
  updateButton->setIcon(QIcon(":/icons/update.svg"));
  updateButton->setAutoRaise(true);
@@ -93,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) :
      layout->setHorizontalSpacing(0);
     //layout->setColumnMinimumWidth(0, 37);
   QWidget *paket = paketSlot(mwidget);
-    paket->setFixedSize(en*100,boy*70);
+    paket->setFixedSize(en*100,boy*65);
   //paket->setStyleSheet("background-color: #00dfdf;");
 
     layout->addWidget(statusLabel, 2,1,1,2,Qt::AlignCenter);
@@ -105,6 +123,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mwidget->setLayout(layout);
     setCentralWidget(mwidget);
+
+
+    /***************************************************************/
+    //system("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
+   procesType="getversion";
+   QString kmt="wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version";
+  proces->start(kmt);
+  proces->waitForFinished(-1);
+
+  // system("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
+  procesType="getindex";
+  proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/script/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
+  proces->waitForFinished(-1);
+
+     /***************************************************************/
+  paketTableWidgetWindow_cellClicked(0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -138,12 +172,9 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
             this, SLOT(paketTableWidgetWindow_cellClicked(int, int)));
 
     twl->setRowCount(0);
-    // system("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
-    procesType="getindex";
-    proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/script/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
 
 
- QToolButton *installerButton= new QToolButton(d);
+ installerButton= new QToolButton(d);
  installerButton->setFixedSize(QSize(en*35,boy*10));
  installerButton->setIconSize(QSize(en*35,boy*5));
  installerButton->setStyleSheet("Text-align:center");
@@ -151,50 +182,32 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
  installerButton->setAutoRaise(true);
  installerButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
  // powerOnButton->setFont(f2);
- installerButton->setText("Paketi Yükle");
+ installerButton->setText("Script Yükle");
 
  connect(installerButton, &QToolButton::clicked, [=]() {
-   //  qDebug()<<"";
+
      if(selectPaketName!=""&&selectPaketAddressInstall!="")
      {
+         if(!QFile::exists("/tmp/installscript.sh"))
+         {
+             paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+         }
+         procesType="install";
 
-         QString kmt="wget -O /tmp/script.sh "+selectPaketAddressInstall;
-        // procesType="getscript";
-        // proces->start(kmt);
-        //qDebug()<<kmt;
-         system(kmt.toStdString().c_str());
-          system("chmod a+x /tmp/script.sh");
-          /*************************************************************/
-          localDir="/tmp/";
-          QStringList list=fileToList("script.sh");
-          script->clear();
-          int font=boy*2;
-          for(int i=0;i<list.count();i++)
-          {
-              QString line=list[i];
-              if(line!="")
-              {
-                 // script->insertPlainText(line+"\n");
-                  script->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+         proces->start("pkexec bash -c \"chmod a+x /tmp/installscript.sh&&/tmp/installscript.sh\"");
 
-              }
-          }
-          localDir="/usr/share/tinyinstaller/";
-          /***********************************************************/
-                procesType="install";
-               proces->start("pkexec /tmp/script.sh");
      }else
      {
          statusLabel->setText("Paket Seçilmemiş");
          int font=boy*2;
-      //   statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+         //   statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
 
      }
 
  });
 
 
- QToolButton *removeButton= new QToolButton(d);
+ removeButton= new QToolButton(d);
  removeButton->setFixedSize(QSize(en*35,boy*10));
  removeButton->setIconSize(QSize(en*35,boy*5));
  removeButton->setStyleSheet("Text-align:center");
@@ -202,25 +215,24 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
  removeButton->setAutoRaise(true);
  removeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
  // powerOnButton->setFont(f2);
- removeButton->setText("Paketi Kaldır");
+ removeButton->setText("Script Kaldır");
 
  connect(removeButton, &QToolButton::clicked, [=]() {
 
      if(selectPaketName!=""&&selectPaketAddressInstall!="")
      {
+         if(!QFile::exists("/tmp/removescript.sh"))
+         {
+             paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+         }
          procesType="remove";
-         QString kmt="wget -O /tmp/script.sh "+selectPaketAddressRemove;
-         system(kmt.toStdString().c_str());
-         system("chmod a+x /tmp/script.sh");
-         /***********************************************************/
-         procesType="remove";
-         proces->start("pkexec /tmp/script.sh");
+         proces->start("pkexec bash -c \"chmod a+x /tmp/removescript.sh&&/tmp/removescript.sh\"");
 
      }else
      {
          statusLabel->setText("Paket Seçilmemiş");
          int font=boy*2;
-        // statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+         // statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
      }
 
  });
@@ -241,7 +253,9 @@ return d;
 }
 void MainWindow :: procresbegin()
 {
-    val=0;
+    installerButton->setEnabled(false);
+    removeButton->setEnabled(false);
+      val=0;
     progressbar->setValue(val);
     doc->setText("");
     doc->moveCursor (QTextCursor::End);
@@ -254,9 +268,15 @@ void MainWindow :: procresbegin()
     {
         doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
         }
-    if(procesType=="getscript")
+    if(procesType=="getscriptinstall")
     {
         doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+
+       }
+    if(procesType=="getscriptremove")
+    {
+        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+
        }
     if(procesType=="getindex")
     {
@@ -267,61 +287,83 @@ void MainWindow :: procresbegin()
 void MainWindow :: procresend()
 {
     val=0;
+    int procesTypeStatus=0;
+
     progressbar->setValue(1000);
     doc->moveCursor (QTextCursor::End);
     if(procesType=="install")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
-        system("rm /tmp/script.sh");
+        system("rm /tmp/installscript.sh");
+        procesTypeStatus=1;
     }
     if(procesType=="remove")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
+    system("rm /tmp/removescript.sh");
+        procesTypeStatus=2;
+    }
+    if(procesType=="getscriptinstall")
+    {
+          doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+    procesTypeStatus=3;
+    ////  system(kmt.toStdString().c_str());
+       ///system("chmod a+x /tmp/script.sh");
+        localDir="/tmp/";
+       QStringList list1=fileToList("installscript.sh");
+       installscriptTextEdit->clear();
+       int font=boy*2;
+       for(int i=0;i<list1.count();i++)
+       {
+           QString line=list1[i];
+           if(line!="")
+           {
+              // script->insertPlainText(line+"\n");
+               installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+           }
        }
-    if(procesType=="getscript")
+
+    }
+    if(procesType=="getscriptremove")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+    procesTypeStatus=3;
+    ////  system(kmt.toStdString().c_str());
+       ///system("chmod a+x /tmp/script.sh");
+        localDir="/tmp/";
+       QStringList list1=fileToList("removescript.sh");
+       removescriptTextEdit->clear();
+       int font=boy*2;
+       for(int i=0;i<list1.count();i++)
+       {
+           QString line=list1[i];
+           if(line!="")
+           {
+              // script->insertPlainText(line+"\n");
+               removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+           }
        }
+
+    }
     if(procesType=="getindex")
     {
-
-
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
-       }
-    proces->terminate();
-    /****************************************************/
-    QStringList list=fileToList("tinyinstallerlist");
-    twl->setRowCount(0);
-    for(int i=0;i<list.count();i++)
-    {
-        QString line=list[i];
-        QStringList lst=line.split("|");
-        twl->setRowCount(twl->rowCount()+1);
-
-        twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-        QString path="/var/lib/tinyinstaller/"+lst[0];
-
-        QFile file(path);
-        //qDebug()<<path<<file.exists();
-        if(file.exists())
-            twl->setItem(i, 1, new QTableWidgetItem("Yüklü"));//package address
-        else
-            twl->setItem(i, 1, new QTableWidgetItem("-----"));//package address
-
+    procesTypeStatus=4;
 
 
     }
-    if(list.count()<1)
-    {
-        statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
-        int font=boy*2;
-        statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+   /// proces->terminate();
 
-    }
+
+
     /*******************************************************/
-/// qDebug()<<"********************versiyonlar aynı********";
-        localDir="/tmp/";
-        QStringList listv=fileToList("version");
+if(procesType=="getversion")
+{
+
+     localDir="/tmp/";
+       QStringList listv=fileToList("version");
         for(int i=0;i<listv.count();i++)
         {
             QString line=listv[i];
@@ -342,9 +384,43 @@ void MainWindow :: procresend()
 
             }
         }
+}
         localDir="/usr/share/tinyinstaller/";
+/************************************************************/
+        /****************************************************/
+            QStringList list=fileToList("tinyinstallerlist");
+        twl->setRowCount(0);
+        for(int i=0;i<list.count();i++)
+        {
+            QString line=list[i];
+            QStringList lst=line.split("|");
+            twl->setRowCount(twl->rowCount()+1);
+
+            twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
+            QString path="/var/lib/tinyinstaller/"+lst[0];
+
+            QFile file(path);
+            //qDebug()<<path<<file.exists();
+            if(file.exists())
+                twl->setItem(i, 1, new QTableWidgetItem("Yüklü"));//package address
+            else
+                twl->setItem(i, 1, new QTableWidgetItem("-----"));//package address
+
+
+
+        }
+        twl->selectRow(selectRowIndex);
+
+        if(list.count()<1)
+        {
+            statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
+            int font=boy*2;
+            statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+        }
 
     /**************************************************************/
+        installerButton->setEnabled(true);
+        removeButton->setEnabled(true);
 
 }
 void MainWindow :: disp()
@@ -394,11 +470,27 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
            if(lst.count()>2) selectPaketAddressRemove=lst[2];
 
                      statusLabel->setText("Paket: "+selectPaketName);
-                     int font=boy*2;
+                   //  int font=boy*2;
                   //   statusLabel->setStyleSheet("color: #0000ac;Text-align:center;font-size:"+QString::number(font)+"px");
 
+                     selectRowIndex=iRow;
         }
     }
+
+///qDebug()<<"paket adı: "<<selectPaketAddressInstall;
+ ///   proces->terminate();
+     /*********************************************************************/
+     procesType="getscriptinstall";
+     QString kmt="wget -O /tmp/installscript.sh "+selectPaketAddressInstall;
+     proces->start(kmt);
+    proces->waitForFinished(-1);
+
+     procesType="getscriptremove";
+     kmt="wget -O /tmp/removescript.sh "+selectPaketAddressRemove;
+     proces->start(kmt);
+     proces->waitForFinished(-1);
+    /*********************************************************************/
+
 }
 
 void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)

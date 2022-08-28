@@ -47,16 +47,22 @@ private:
      QString selectPaketAddressRemove;
     QProgressBar *progressbar;
     QProcess *proces;
+     QProcess *proces1;
     int val=0;
     QLabel *statusLabel;
     QTextEdit *doc;
-    QTextEdit *script;
+    QTextEdit *installscriptTextEdit;
+    QTextEdit *removescriptTextEdit;
+
     QWidget *mwidget;
     QString  procesType="";
     QString version="";
     QString updateFile="";
 
     QToolButton *updateButton;
+    QToolButton *installerButton;
+    QToolButton *removeButton;
+    int selectRowIndex=0;
 };
 
 #endif // MAINWINDOW_H

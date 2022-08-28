@@ -14,6 +14,7 @@
  {
      border-left: 1px solid #fffff8;
  }*/
+
 /* QHeaderView::section
  {
      background-color: #FCFCFC;
@@ -360,7 +361,7 @@ QTabWidget::pane {
 }
 
 QTabWidget::tab-bar {
-    alignment: center;
+   /* alignment: center;*/
 }
 
 QTabBar::tab {

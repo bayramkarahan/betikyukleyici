@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Name=tinyinstaller Application
-Name[tr]=Paket Yükelem Uygulaması
+Name[tr]=Paket Yükleme Uygulaması
 Type=Application
 Comment=Simple Qt based package Installer Application
 Comment[tr]=Basit Qt tabanlı Paket Yükleme Uygulaması
