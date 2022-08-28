@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = tinyinstaller
+TARGET = betikyukleyici
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -30,26 +30,24 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    filecrud.h
+    filecrud.h \
+    hakkinda.h
 
 FORMS +=
 
 target.path = /usr/bin
 
-desktop_file.files = tinyinstaller.desktop
+desktop_file.files = betikyukleyici.desktop
 desktop_file.path = /usr/share/applications/
 
-icon.files = icons/tinyinstaller.svg
-icon.path = /usr/share/tinyinstaller
+icon.files = icons/betikyukleyici.svg
+icon.path = /usr/share/betikyukleyici
 
-installeryetki.files = installeryetki
-installeryetki.path = /usr/share/tinyinstaller
 
-INSTALLS += target desktop_file icon installeryetki
+INSTALLS += target desktop_file icon
 DISTFILES += \
-       tinyinstaller.desktop\
-       installeryetki \
-    icons/remove.svg
+       betikyukleyici.desktop\
+          icons/remove.svg
 
 RESOURCES += \
     resource.qrc

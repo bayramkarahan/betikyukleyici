@@ -5,6 +5,6 @@ apt-get update
 apt-get install printer-driver-* -y
 apt install cups -y
 /etc/init.d/cups restart
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/printer
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/printer
 exit 0

@@ -12,6 +12,9 @@
 #include<QPlainTextEdit>
 #include<QTabWidget>
 #include<QToolButton>
+
+#include<QWidget>
+
 namespace Ui {
 class MainWindow;
 }
@@ -37,6 +40,7 @@ public slots:
    void disp();
    void procresbegin();
    void procresend();
+   void about();
 private:
     int en;
     int boy;
@@ -62,7 +66,10 @@ private:
     QToolButton *updateButton;
     QToolButton *installerButton;
     QToolButton *removeButton;
+    QToolButton *aboutButton;
+
     int selectRowIndex=0;
+    QWidget *hakkinda();
 };
 
 #endif // MAINWINDOW_H

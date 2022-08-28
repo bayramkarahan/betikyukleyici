@@ -1,4 +1,4 @@
-Source: tinyinstaller
+Source: betikyukleyici
 Section: utils
 Priority: optional
 Maintainer: Bayram KARAHAN <bayramk@gmail.com>
@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9),
 Standards-Version: 3.9.8
 Homepage: http://pardus.org.tr
 
-Package: tinyinstaller
+Package: betikyukleyici
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends},
        	libqt5core5a,
@@ -22,4 +22,4 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
     	libqt5svg5-dev,
     	libqt5widgets5,
     	libstdc++6
-Description: tinyinstaller Uygulaması
+Description: betikyukleyici Uygulaması

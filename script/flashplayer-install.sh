@@ -5,6 +5,6 @@ sleep 1
 rm /tmp/flashplayer.deb
 
 
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/flashplayer
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/flashplayer
 exit 0

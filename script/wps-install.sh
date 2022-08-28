@@ -3,6 +3,6 @@ wget -O /tmp/wps.deb https://depo.pardus.org.tr/etap/pool/non-free/w/wps-office/
 dpkg --force-all -i /tmp/wps.deb
 sleep 1
 rm /tmp/wps.deb
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/wps
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/wps
 exit 0

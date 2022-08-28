@@ -1,5 +1,5 @@
 #!/bin/bash
 apt install libre* -y
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/libre
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/libre
 exit 0

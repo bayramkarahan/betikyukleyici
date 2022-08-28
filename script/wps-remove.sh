@@ -1,4 +1,4 @@
 #!/bin/bash
 apt remove wps* -y
-rm -rf /var/lib/tinyinstaller/wps
+rm -rf /var/lib/betikyukleyici/wps
 exit 0

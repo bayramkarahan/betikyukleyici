@@ -3,6 +3,6 @@ wget -O /tmp/e-uctas.deb https://github.com/bayramkarahan/e-uctas/raw/master/e-u
 dpkg --force-all -i /tmp/e-uctas.deb
 sleep 1
 rm /tmp/e-uctas.deb
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/e-uctas
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/e-uctas
 exit 0

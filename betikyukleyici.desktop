@@ -1,13 +1,13 @@
 [Desktop Entry]
 Version=1.0
-Name=tinyinstaller Application
+Name=Script Installer Application
 Name[tr]=Paket Yükleme Uygulaması
 Type=Application
-Comment=Simple Qt based package Installer Application
+Comment=Simple Qt based Script Installer Application
 Comment[tr]=Basit Qt tabanlı Paket Yükleme Uygulaması
 Terminal=false
-Exec=/usr/bin/tinyinstaller
-Icon=/usr/share/tinyinstaller/tinyinstaller.svg
+Exec=/usr/bin/betikyukleyici
+Icon=/usr/share/betikyukleyici/betikyukleyici.svg
 Categories=Qt;Util;
 Keywords=package;paket;
-GenericName=tinyinstaller
+GenericName=betikyukleyici

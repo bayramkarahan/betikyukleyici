@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get -y install gperiodic
 sleep 1
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/gperiodic
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/gperiodic
 exit 0

@@ -1,10 +1,9 @@
-# tint-yinstaller
-Linuxta açık olan yetkili yetkisiz kullanıcının gui olarak paket yüklemesi için yazılmıştır.. 
+# betikyukleyici
+Linuxta kullanıcının gui olarak betik(script) yüklemesi için yazılmıştır.. 
 <br/>
-![tinyinstaller](https://github.com/bayramkarahan/tinyinstaller/blob/master/tinyinstaller0.png)<br/>
+![betikyukleyici](https://github.com/bayramkarahan/betikyukleyici/blob/master/betikyukleyici0.png)<br/>
 # install
-gcc -o installeryetki --static yetki.c<br/>
-qmake tinyinstaller<br/>
+qmake betikyukleyici<br/>
 make<br/>
 sudo make install<br/>
 # Kullanım Amacı

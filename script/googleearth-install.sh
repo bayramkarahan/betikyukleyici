@@ -3,6 +3,6 @@ wget -O /tmp/googleearth.deb https://dl.google.com/dl/earth/client/current/googl
 dpkg --force-all -i /tmp/googleearth.deb
 sleep 1
 rm /tmp/googleearth.deb
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/google-earth-pro-stable
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/google-earth-pro-stable
 exit 0

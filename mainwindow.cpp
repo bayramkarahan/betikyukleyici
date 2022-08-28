@@ -7,12 +7,13 @@
 #include<QToolButton>
 #include<stdio.h>
 #include<QDebug>
+#include<hakkinda.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     mwidget=new QWidget(this);
-    localDir="/usr/share/tinyinstaller/";
-    version="tinyinstaller_1.2.0_amd64.deb";
+    localDir="/usr/share/betikyukleyici/";
+    version="betikyukleyici_1.2.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -61,16 +62,16 @@ MainWindow::MainWindow(QWidget *parent) :
     removescriptTextEdit->setReadOnly(true);
 
   //  doc->setStyleSheet("background-color: #dfdfdf;");
-    tabw->addTab(installscriptTextEdit,"Yükleme Scripti");
-    tabw->addTab(removescriptTextEdit,"Kaldırma Scripti");
+    tabw->addTab(installscriptTextEdit,"Yükleme Betiği");
+    tabw->addTab(removescriptTextEdit,"Kaldırma Betiği");
 
     tabw->addTab(doc,"Süreç");
    // tabw->setTabPosition(QTabWidget::West);
     mwidget->setFixedSize(en*100,boy*120);
   // this->setStyleSheet("background-color: #00df00;");
-    auto appIcon = QIcon(":/icons/tinyinstaller.svg");
+    auto appIcon = QIcon(":/icons/betikyukleyici.svg");
     this->setWindowIcon(appIcon);
-
+  this->setWindowTitle("Betik Yükleyici");
 
     int font=boy*2;
     statusLabel=new QLabel(mwidget);
@@ -95,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
  connect(updateButton, &QToolButton::clicked, [=]() {
      if (updateFile=="") return;
-     QString kmt="wget -O /tmp/prg.deb https://github.com/bayramkarahan/tinyinstaller/raw/master/"+updateFile;
+     QString kmt="wget -O /tmp/prg.deb https://github.com/bayramkarahan/betikyukleyici/raw/master/"+updateFile;
      system(kmt.toStdString().c_str());
       system("sleep 1");
      system("chmod 777 /tmp/prg.deb");
@@ -126,21 +127,36 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     /***************************************************************/
-    //system("wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version");
+    //system("wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version");
    procesType="getversion";
-   QString kmt="wget https://github.com/bayramkarahan/tinyinstaller/raw/master/debian/files -O /tmp/version";
+   QString kmt="wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version";
   proces->start(kmt);
   proces->waitForFinished(-1);
 
-  // system("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
+  // system("wget  https://raw.githubusercontent.com/bayramkarahan/betikyukleyici/master/index.conf -O /usr/share/betikyukleyici/betikyukleyicilist");
   procesType="getindex";
-  proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/tinyinstaller/master/script/index.conf -O /usr/share/tinyinstaller/tinyinstallerlist");
+  proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/betikyukleyici/master/script/index.conf -O /usr/share/betikyukleyici/betikyukleyicilist");
   proces->waitForFinished(-1);
 
      /***************************************************************/
-  paketTableWidgetWindow_cellClicked(0, 0);
+ // paketTableWidgetWindow_cellClicked(0, 0);
 }
 
+void   MainWindow::about(){
+    QSize screenSize = qApp->screens()[0]->size();
+   // qDebug()<<screenSize.width()/65<<screenSize.height()/35;
+
+    QWidget *hk=hakkinda();
+
+    hk->show();
+    hk->move(screenSize.width()/2-hk->width()/2,screenSize.height()/2-hk->height()/2);
+     hk->setWindowTitle("Betik Yükleyici");
+     auto appIcon = QIcon(":/icons/about.svg");
+     hk->setWindowIcon(appIcon);
+
+
+
+}
 MainWindow::~MainWindow()
 {
 
@@ -181,11 +197,11 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
  installerButton->setFixedSize(QSize(en*35,boy*10));
  installerButton->setIconSize(QSize(en*35,boy*5));
  installerButton->setStyleSheet("Text-align:center");
- installerButton->setIcon(QIcon(":/icons/tinyinstaller.svg"));
+ installerButton->setIcon(QIcon(":/icons/betikyukleyici.svg"));
  installerButton->setAutoRaise(true);
  installerButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
  // powerOnButton->setFont(f2);
- installerButton->setText("Script Yükle");
+ installerButton->setText("Betik Yükle");
 
  connect(installerButton, &QToolButton::clicked, [=]() {
 
@@ -218,7 +234,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
  removeButton->setAutoRaise(true);
  removeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
  // powerOnButton->setFont(f2);
- removeButton->setText("Script Kaldır");
+ removeButton->setText("Betik Kaldır");
 
  connect(removeButton, &QToolButton::clicked, [=]() {
 
@@ -239,6 +255,19 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
      }
 
  });
+ aboutButton= new QToolButton(d);
+ aboutButton->setFixedSize(QSize(en*20,boy*10));
+ aboutButton->setIconSize(QSize(en*10,boy*5));
+ aboutButton->setStyleSheet("Text-align:center");
+ aboutButton->setIcon(QIcon(":/icons/about.svg"));
+ aboutButton->setAutoRaise(true);
+ aboutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+ // powerOnButton->setFont(f2);
+ aboutButton->setText("Hakkında");
+
+ connect(aboutButton, &QToolButton::clicked, [=]() {
+about();
+});
     auto dlayout = new QGridLayout(d);
  dlayout->setContentsMargins(0,0, 0,0);
  dlayout->setVerticalSpacing(0);
@@ -248,6 +277,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
 
      dlayout->addWidget(installerButton, 7,1,1,1,Qt::AlignCenter);
      dlayout->addWidget(removeButton, 7,2,1,1,Qt::AlignCenter);
+     dlayout->addWidget(aboutButton, 7,3,1,1,Qt::AlignCenter);
 
 d->setLayout(dlayout);
 
@@ -376,9 +406,9 @@ void MainWindow :: procresend()
             }
         }
     }
-        localDir="/usr/share/tinyinstaller/";
+        localDir="/usr/share/betikyukleyici/";
    /***********************************************************************/
-            QStringList list=fileToList("tinyinstallerlist");
+            QStringList list=fileToList("betikyukleyicilist");
         twl->setRowCount(0);
         for(int i=0;i<list.count();i++)
         {
@@ -389,7 +419,7 @@ void MainWindow :: procresend()
             twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
             twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
 
-            QString path="/var/lib/tinyinstaller/"+lst[0];
+            QString path="/var/lib/betikyukleyici/"+lst[0];
             QFile file(path);
             //qDebug()<<path<<file.exists();
             if(file.exists())
@@ -443,8 +473,10 @@ void MainWindow :: disp()
 }
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
+    if(QFile::exists("/usr/share/betikyukleyicilist"))
+    {
     QString paketname= twl->item(iRow, 0)->text();
-    QStringList list=fileToList("tinyinstallerlist");
+    QStringList list=fileToList("betikyukleyicilist");
     for(int i=0;i<list.count();i++)
     {
         QString line=list[i];
@@ -478,13 +510,13 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
      proces->start(kmt);
      proces->waitForFinished(-1);
     /*********************************************************************/
-
+}
 }
 
 void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
 {
      QString paketname= twl->item(iRow, 0)->text();
-     QStringList list=fileToList("tinyinstallerlist");
+     QStringList list=fileToList("betikyukleyicilist");
 /******************************************************************/
     //QMessageBox::StandardButton reply;
     // reply = QMessageBox::question(this, "Uyarı", "Bilgisayar Silinecek! Emin misiniz?",
@@ -499,7 +531,7 @@ void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
              if (messageBox.clickedButton() == evetButton) {
                  // qDebug()<<"evet basıldı";
                  list=listRemove(list,paketname);
-                 listToFile(list,"tinyinstallerlist");
+                 listToFile(list,"betikyukleyicilist");
                  if(list.count()==0) twl->setRowCount(0);
                  for(int i=0;i<list.count();i++)
                  {

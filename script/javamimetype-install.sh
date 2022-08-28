@@ -3,6 +3,6 @@ wget -O /tmp/javamimetype.deb https://github.com/bayramkarahan/javaplugin/raw/ma
 dpkg --force-all -i /tmp/javamimetype.deb
 sleep 1
 rm /tmp/javamimetype.deb
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/javamimetype
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/javamimetype
 exit 0

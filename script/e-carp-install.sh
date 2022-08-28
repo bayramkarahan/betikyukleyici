@@ -3,6 +3,6 @@ wget -O /tmp/e-carp.deb https://github.com/bayramkarahan/e-carp/raw/master/e-car
 dpkg --force-all -i /tmp/e-carp.deb
 sleep 1
 rm /tmp/e-carp.deb
-mkdir /var/lib/tinyinstaller
-touch /var/lib/tinyinstaller/e-carp
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/e-carp
 exit 0

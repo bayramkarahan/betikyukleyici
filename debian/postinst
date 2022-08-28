@@ -1,4 +1,2 @@
 #!/bin/sh
-#chown root:root /usr/share/tinyinstaller/installeryetki
-#chmod a+s /usr/share/tinyinstaller/installeryetki
-chmod 777 /usr/share/tinyinstaller
+chmod 777 /usr/share/betikyukleyici

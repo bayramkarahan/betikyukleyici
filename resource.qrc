@@ -2,12 +2,12 @@
     <qresource prefix="/">
         <file>icons/about.svg</file>
         <file>icons/remove.svg</file>
-        <file>icons/tinyinstaller.svg</file>
         <file>filecrud.h</file>
         <file>main.cpp</file>
         <file>mainwindow.cpp</file>
         <file>mainwindow.h</file>
         <file>icons/macos.qss</file>
         <file>icons/update.svg</file>
+        <file>icons/betikyukleyici.svg</file>
     </qresource>
 </RCC>
