@@ -4,5 +4,5 @@ dpkg --force-all -i /tmp/remaster.deb
 sleep 1
 rm /tmp/remaster.deb
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/remaster
+touch /var/lib/betikyukleyici/remasterImaj
 exit 0

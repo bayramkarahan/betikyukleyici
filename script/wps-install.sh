@@ -4,5 +4,5 @@ dpkg --force-all -i /tmp/wps.deb
 sleep 1
 rm /tmp/wps.deb
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/wps
+touch /var/lib/betikyukleyici/wpsOfis
 exit 0

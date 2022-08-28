@@ -8,6 +8,6 @@ Comment[tr]=Basit Qt tabanlı Paket Yükleme Uygulaması
 Terminal=false
 Exec=/usr/bin/betikyukleyici
 Icon=/usr/share/betikyukleyici/betikyukleyici.svg
-Categories=Qt;Util;
+Categories=Qt;Utility;
 Keywords=package;paket;
 GenericName=betikyukleyici

@@ -4,5 +4,5 @@ dpkg --force-all -i /tmp/googleearth.deb
 sleep 1
 rm /tmp/googleearth.deb
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/google-earth-pro-stable
+touch /var/lib/betikyukleyici/Googleearth
 exit 0
