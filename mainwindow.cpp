@@ -177,8 +177,8 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
     twl->setFixedSize(QSize(en*120,boy*55));
     twl->setColumnCount(3);
     //twl->setRowCount(0);
-    twl->setColumnWidth(0, en*40);
-     twl->setColumnWidth(1, en*60);
+    twl->setColumnWidth(0, en*35);
+     twl->setColumnWidth(1, en*55);
     twl->setColumnWidth(2, en*10);
 
     twl->setHorizontalHeaderItem(0, new QTableWidgetItem("Paket Adı"));
