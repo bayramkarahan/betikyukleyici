@@ -169,7 +169,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
    // qDebug()<<"ayar click";
     QString font="12";
     QWidget * d = new QWidget(parent);
-    d->setStyleSheet("background-color: #dfdfdf;");
+  //  d->setStyleSheet("background-color: #dfdfdf;");
 
 
     /***********************************************************************/
