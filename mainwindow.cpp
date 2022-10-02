@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
-    version="betikyukleyici_1.2.0_amd64.deb";
+    version="betikyukleyici_1.3.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
