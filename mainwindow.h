@@ -12,7 +12,7 @@
 #include<QPlainTextEdit>
 #include<QTabWidget>
 #include<QToolButton>
-
+#include<QHBoxLayout>
 #include<QWidget>
 
 namespace Ui {
@@ -42,7 +42,7 @@ public slots:
    void procresend();
    void about();
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
-
+    void findTextEditChanged();
 private:
     int en;
     int boy;
@@ -56,6 +56,9 @@ private:
      QProcess *proces1;
     int val=0;
     QLabel *statusLabel;
+    QLabel *findTextEditLabel;
+
+    QTextEdit *findTextEdit;
     QTextEdit *doc;
     QTextEdit *installscriptTextEdit;
     QTextEdit *removescriptTextEdit;
