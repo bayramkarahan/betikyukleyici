@@ -1,10 +1,4 @@
 #!/bin/bash
-wget -O /tmp/winemimetype.deb https://github.com/bayramkarahan/wineplugin/raw/master/winemimetype.deb
-dpkg --force-all -i /tmp/winemimetype.deb
-sleep 1
-rm /tmp/winemimetype.deb
-mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/winemimetype
 
 #### install wine
 
@@ -28,6 +22,14 @@ apt update
 dpkg-reconfigure wine-stable-amd64 wine-stable wine-stable-i386 -y
 
 apt-get install libgtk3-nocsd0:i386 -y
+###instal wine mimetype package
+wget -O /tmp/winemimetype.deb https://github.com/bayramkarahan/wineplugin/raw/master/winemimetype.deb
+dpkg --force-all -i /tmp/winemimetype.deb
+sleep 1
+rm /tmp/winemimetype.deb
+mkdir /var/lib/betikyukleyici
+touch /var/lib/betikyukleyici/winemimetype
+
 apt autoremove -y
 apt autoclean -y
 
