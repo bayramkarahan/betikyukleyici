@@ -3,6 +3,7 @@ apt-get update
 apt --fix-broken install -y
 apt-get install -f -y 
 apt autoremove -y
+apt install system-config-printer -y
 #cups install
 apt install cups -y
 /etc/init.d/cups restart
