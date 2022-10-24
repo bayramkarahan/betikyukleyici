@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
 Name=Script Installer Application
-Name[tr]=Paket Yükleme Uygulaması
+Name[tr]=Betik Yükleme Uygulaması
 Type=Application
 Comment=Simple Qt based Script Installer Application
-Comment[tr]=Basit Qt tabanlı Paket Yükleme Uygulaması
+Comment[tr]=Basit Qt tabanlı Betik Yükleme Uygulaması
 Terminal=false
 Exec=/usr/bin/betikyukleyici
 Icon=/usr/share/betikyukleyici/betikyukleyici.svg
