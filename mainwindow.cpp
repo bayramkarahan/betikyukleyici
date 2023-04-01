@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
-    version="betikyukleyici_1.3.0_amd64.deb";
+    version="betikyukleyici_1.4.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -438,6 +438,9 @@ void MainWindow :: procresend()
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
         procesTypeStatus=4;
+        localDir="/usr/share/betikyukleyici/";
+        QStringList list=fileToList("betikyukleyicilist");
+        listToFile(list,"betikyukleyicilist");
     }
     if(procesType=="getversion")
     {
@@ -769,6 +772,7 @@ void MainWindow::listToFile(QStringList list, QString filename)
                                     QFileDevice::WriteOther | QFileDevice::ReadOther|QFileDevice::ExeOther)){
                 qDebug()<< "Error in permissions";
              }
+             // qDebug()<<localDir+filename<< "dosya izinleri ayarlandı..";
             file.close();
     }
 /***********************************************/
