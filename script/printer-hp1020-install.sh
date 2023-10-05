@@ -5,6 +5,10 @@ rm -rf /usr/share/hplip
 apt-get install build-essential tix groff dc cups cups-filters system-config-printer hplip system-config-printer-common -y
 sleep 1
 /etc/init.d/cups restart
+#tarayıcıda localhost:631
+#tüm marka sürücüler yükleniyor
+apt-get install printer-driver-* -y
+sleep 1
 cd /tmp
 
 git clone https://github.com/bayramkarahan/printer.git
