@@ -1,29 +1,28 @@
 #!/bin/bash
 apt-get update
-apt-get remove hplip cups-filters cups hplip-data system-config-printer-udev -y
-rm -rf /usr/share/hplip
-apt-get install build-essential tix groff dc cups cups-filters system-config-printer hplip system-config-printer-common -y
-sleep 1
+apt --fix-broken install -y
+apt-get install -f -y 
+apt autoremove -y
+apt install system-config-printer -y
+#cups install
+apt install cups -y
 /etc/init.d/cups restart
 #tarayıcıda localhost:631
 #tüm marka sürücüler yükleniyor
 apt-get install printer-driver-* -y
 sleep 1
+apt install hplip -y
+sleep 1
+getweb 1020 # Get HP LaserJet 1020 firmware file
+sleep 1
 cd /tmp
-
 git clone https://github.com/bayramkarahan/printer.git
 cd printer/
 make
-
 make install
-make install-hotplug
-getweb 1020 # Get HP LaserJet P1005 firmware file
-
-system-config-printer
-tail /var/log/syslog
-
 sleep 1
 rm print*
+
 mkdir /var/lib/betikyukleyici
 touch /var/lib/betikyukleyici/hp1020
 exit 0
