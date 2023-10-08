@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
-    version="betikyukleyici_1.4.0_amd64.deb";
+    version="betikyukleyici_1.5.0_amd64.deb";
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -117,7 +117,7 @@ MainWindow::MainWindow(QWidget *parent) :
       system("sleep 1");
      system("chmod 777 /tmp/prg.deb");
       system("sleep 1");
-     system("pkexec dpkg -i --force-all /tmp/prg.deb");
+     system("dpkg -i --force-all /tmp/prg.deb");
       //system("sleep 2");
      //system("rm  /tmp/prg.deb");
  });
@@ -132,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent) :
   //paket->setStyleSheet("background-color: #00dfdf;");
     layout->addWidget(statusLabel, 1,1,1,2,Qt::AlignCenter);
 
-     layout->addWidget(updateButton, 1,2,1,1,Qt::AlignRight);
+     layout->addWidget(updateButton, 1,2,2,1,Qt::AlignRight);
 
      layout->addLayout(aramalayout, 2,2,1,1,Qt::AlignLeft);
 
@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent) :
   proces->waitForFinished(-1);
 
      /***************************************************************/
-  paketTableWidgetWindow_cellClicked(0, 0);
+ /// paketTableWidgetWindow_cellClicked(0, 0);
 }
 void   MainWindow::findTextEditChanged()
 {
@@ -257,16 +257,21 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
      {
          if(!QFile::exists("/tmp/installscript.sh"))
          {
-             paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
-         }
+             qDebug()<<"paket seçildi..";
+             ///paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+         }else
+         {
+              qDebug()<<"paket seçilmiş install başladı..";
          procesType="install";
+       // system("chmod a+x /tmp/installscript.sh");
+       // proces->start("/tmp/installscript.sh");
 
-         proces->start("pkexec bash -c \"chmod a+x /tmp/installscript.sh&&/tmp/installscript.sh\"");
-
+         }
      }else
      {
          statusLabel->setText("Paket Seçilmemiş");
          int font=boy*2;
+         qDebug()<<"paket seçilmemiş..";
          //   statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
 
      }
@@ -293,7 +298,7 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
              paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
          }
          procesType="remove";
-         proces->start("pkexec bash -c \"chmod a+x /tmp/removescript.sh&&/tmp/removescript.sh\"");
+         proces->start("chmod a+x /tmp/removescript.sh&&/tmp/removescript.sh");
 
      }else
      {
@@ -350,8 +355,9 @@ void MainWindow :: procresbegin()
 
     if(procesType=="install")
     {
+        // qDebug()<<"kurulum başladı.";
         doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Başladı***</p>");
-              }
+    }
     if(procesType=="remove")
     {
         doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
@@ -381,10 +387,12 @@ void MainWindow :: procresend()
     doc->moveCursor (QTextCursor::End);
     if(procesType=="install")
     {
+        qDebug()<<"kurulum bitti.";
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
         system("rm /tmp/installscript.sh");
            myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
         procesTypeStatus=1;
+
     }
     if(procesType=="remove")
     {
@@ -536,6 +544,7 @@ void MainWindow :: disp()
 }
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
+    qDebug()<<"satır seçildi";
     int ldrm=0;
     if(QFile::exists("/usr/share/betikyukleyici/betikyukleyicilist"))
     {
@@ -560,7 +569,8 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 
                      statusLabel->setText("Paket: "+selectPaketName);
                    //  int font=boy*2;
-                  //   statusLabel->setStyleSheet("color: #0000ac;Text-align:center;font-size:"+QString::number(font)+"px");
+                    // statusLabel->setStyleSheet("color: #0000ac;Text-align:center;font-size:"+QString::number(font)+"px");
+                     statusLabel->setStyleSheet("color: #ac0000;Text-align:center;");
 
                      selectRowIndex=iRow;
         }

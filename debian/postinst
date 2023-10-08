@@ -1,2 +1,2 @@
 #!/bin/sh
-chmod 777 /usr/share/betikyukleyici
+#chmod 777 /usr/share/betikyukleyici
