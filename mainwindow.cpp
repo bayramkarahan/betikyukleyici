@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
     version="betikyukleyici_1.5.0_amd64.deb";
+    system("rm -rf /tmp/version");
+    system("rm -rf /tmp/installscript.sh");
+    system("rm -rf /tmp/removescript.sh");
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -157,7 +160,7 @@ MainWindow::MainWindow(QWidget *parent) :
   proces->waitForFinished(-1);
 
      /***************************************************************/
- /// paketTableWidgetWindow_cellClicked(0, 0);
+  paketTableWidgetWindow_cellClicked(0, 0);
 }
 void   MainWindow::findTextEditChanged()
 {
@@ -258,13 +261,13 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
          if(!QFile::exists("/tmp/installscript.sh"))
          {
              qDebug()<<"paket seçildi..";
-             ///paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+             paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
          }else
          {
               qDebug()<<"paket seçilmiş install başladı..";
          procesType="install";
-       // system("chmod a+x /tmp/installscript.sh");
-       // proces->start("/tmp/installscript.sh");
+        system("chmod a+x /tmp/installscript.sh");
+        proces->start("/tmp/installscript.sh");
 
          }
      }else
@@ -296,10 +299,12 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
          if(!QFile::exists("/tmp/removescript.sh"))
          {
              paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
-         }
+         }else
+         {
          procesType="remove";
-         proces->start("chmod a+x /tmp/removescript.sh&&/tmp/removescript.sh");
-
+         system("chmod a+x /tmp/removescript.sh");
+         proces->start("/tmp/removescript.sh");
+         }
      }else
      {
          statusLabel->setText("Paket Seçilmemiş");
@@ -364,17 +369,17 @@ void MainWindow :: procresbegin()
         }
     if(procesType=="getscriptinstall")
     {
-        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p><br/>");
 
        }
     if(procesType=="getscriptremove")
     {
-        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+        doc->textCursor().insertHtml("><p style=\"color:green;\">***Script İndirme Başladı***</p><br/>");
 
        }
     if(procesType=="getindex")
     {
-        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p><br/>");
        }
 
 }
@@ -388,23 +393,23 @@ void MainWindow :: procresend()
     if(procesType=="install")
     {
         qDebug()<<"kurulum bitti.";
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
-        system("rm /tmp/installscript.sh");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p><br/>");
+       /// system("rm /tmp/installscript.sh");
            myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
         procesTypeStatus=1;
 
     }
     if(procesType=="remove")
     {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
-    system("rm /tmp/removescript.sh");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p><br/>");
+   // system("rm /tmp/removescript.sh");
     myMessageBox("", "\n\Kaldırma Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
 
         procesTypeStatus=2;
-    }
+      }
     if(procesType=="getscriptinstall")
     {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Script İndirme Tamamlandı***</p><br/>");
         procesTypeStatus=3;
         localDir="/tmp/";
         QStringList list1=fileToList("installscript.sh");
@@ -416,7 +421,7 @@ void MainWindow :: procresend()
             if(line!="")
             {
                 // script->insertPlainText(line+"\n");
-                installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+                installscriptTextEdit->textCursor().insertHtml("<lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu><br/>");
 
             }
         }
@@ -424,7 +429,7 @@ void MainWindow :: procresend()
     }
     if(procesType=="getscriptremove")
     {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Script İndirme Tamamlandı***</p><br/>");
         procesTypeStatus=3;
         localDir="/tmp/";
         QStringList list1=fileToList("removescript.sh");
@@ -436,7 +441,7 @@ void MainWindow :: procresend()
             if(line!="")
             {
                 // script->insertPlainText(line+"\n");
-                removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+                removescriptTextEdit->textCursor().insertHtml("<lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu><br/>");
 
             }
         }
@@ -444,7 +449,7 @@ void MainWindow :: procresend()
     }
     if(procesType=="getindex")
     {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
+        doc->textCursor().insertHtml("<p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p><br/>");
         procesTypeStatus=4;
         localDir="/usr/share/betikyukleyici/";
         QStringList list=fileToList("betikyukleyicilist");
@@ -508,7 +513,7 @@ void MainWindow :: procresend()
     /**************************************************************/
         installerButton->setEnabled(true);
         removeButton->setEnabled(true);
-
+ doc->moveCursor(QTextCursor::End);
 }
 void MainWindow :: disp()
 {
@@ -526,8 +531,10 @@ void MainWindow :: disp()
         if(!t.contains("error",Qt::CaseInsensitive)&&!t.contains("hata",Qt::CaseInsensitive))
         {
 
-           doc->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+t+"</lu>");
+           doc->textCursor().insertHtml("<lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+t+"</lu><br/>");
           //  doc->insertPlainText(t);
+
+        //doc->moveCursor(QTextCursor::End);
 
         }
         else
@@ -540,11 +547,12 @@ void MainWindow :: disp()
         if(val>99) val=0;
 
         progressbar->setValue(val);
+         doc->moveCursor(QTextCursor::End);
     }
 }
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
-    qDebug()<<"satır seçildi";
+   // qDebug()<<"satır seçildi"<<iRow;
     int ldrm=0;
     if(QFile::exists("/usr/share/betikyukleyici/betikyukleyicilist"))
     {
