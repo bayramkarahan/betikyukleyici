@@ -1,12 +1,10 @@
 #!/bin/bash
-
-#!/bin/bash
-#### install wine
+apt install --fix-missing -y
 apt --fix-broken install -y
 apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
-apt --purge remove wine* -y
 apt autoremove -y
 apt update
+############################################################
 #*******************************************************************************************
 wget -O /tmp/winehq.key https://dl.winehq.org/wine-builds/winehq.key
 apt update

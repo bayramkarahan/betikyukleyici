@@ -1,8 +1,11 @@
 #!/bin/bash
-apt-get update
+apt install --fix-missing -y
 apt --fix-broken install -y
-apt-get install -f -y 
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
+apt update
+############################################################
+
 apt install system-config-printer -y
 #cups install
 apt install cups -y

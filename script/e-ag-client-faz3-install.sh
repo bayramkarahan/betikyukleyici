@@ -1,4 +1,10 @@
 #!/bin/bash
+apt install --fix-missing -y
+apt --fix-broken install -y
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt autoremove -y
+apt update
+############################################################
 wget -O /tmp/e-ag-client.deb https://github.com/bayramkarahan/e-ag-client/raw/master/e-ag-client_2.1.0_amd64.deb
 dpkg --force-all -i /tmp/e-ag-client.deb
 sleep 1

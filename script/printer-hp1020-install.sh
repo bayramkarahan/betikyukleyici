@@ -1,5 +1,10 @@
 #!/bin/bash
-apt-get update
+apt install --fix-missing -y
+apt --fix-broken install -y
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt autoremove -y
+apt update
+############################################################
 apt --fix-broken install -y
 apt-get install -f -y 
 apt autoremove -y

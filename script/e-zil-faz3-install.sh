@@ -1,4 +1,11 @@
 #!/bin/bash
+apt install --fix-missing -y
+apt --fix-broken install -y
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt autoremove -y
+apt autoremove -y
+apt update
+############################################################
 wget -O /tmp/e-zil.deb https://github.com/bayramkarahan/e-zil/raw/master/e-zil-faz3.deb
 dpkg --force-all -i /tmp/e-zil.deb
 sleep 1

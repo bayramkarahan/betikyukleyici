@@ -1,5 +1,10 @@
 #!/bin/bash
-apt-get update
+apt install --fix-missing -y
+apt --fix-broken install -y
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt autoremove -y
+apt update
+############################################################
 apt-get remove hplip cups-filters cups hplip-data system-config-printer-udev -y
 rm -rf /usr/share/hplip
 apt-get install build-essential tix groff dc cups cups-filters system-config-printer hplip system-config-printer-common -y

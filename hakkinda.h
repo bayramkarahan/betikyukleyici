@@ -37,7 +37,7 @@ QWidget *MainWindow::hakkinda()
     hak->setText("\nBu Uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
                  "\n"
 
-                   "\n   Copyright (C) 2022 by Bayram KARAHAN                                     "
+                   "\n   Copyright (C) 2023 by Bayram KARAHAN                                     "
                   "\n   github.com/bayramkarahan/betikyukleyici                                         "
                   "\n"
                   "\n\n                                                                          "
