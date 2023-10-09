@@ -1,4 +1,8 @@
 #!/bin/bash
+apt install --fix-missing -y
+apt --fix-broken install -y
+apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt update
 wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 dpkg --force-all -i /tmp/chrome.deb
 sleep 1
