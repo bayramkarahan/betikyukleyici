@@ -1,4 +1,7 @@
 #!/bin/bash
+#merhaba bu flash ekleme betiği
+#flash dosyaları oynatır.
+
 apt install --fix-missing -y
 apt --fix-broken install -y
 apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
