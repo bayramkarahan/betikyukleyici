@@ -13,7 +13,7 @@ wget -O /tmp/yuzuncuyil.deb http://depo.pardus.org.tr/pardus/pool/main/p/pardus-
 dpkg --force-all -i /tmp/yuzuncuyil.deb
 sleep 1
 rm /tmp/yuzuncuyil.deb
-
+apt remove setwallpaper
 
 mkdir /var/lib/betikyukleyici
 touch /var/lib/betikyukleyici/yuzuncuyil
