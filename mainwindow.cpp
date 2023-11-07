@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
-    version="betikyukleyici_1.5.0_amd64.deb";
+    version="betikyukleyici_1.6.0_amd64.deb";
     system("rm -rf /tmp/version");
     system("rm -rf /tmp/installscript.sh");
     system("rm -rf /tmp/removescript.sh");
@@ -353,6 +353,8 @@ void MainWindow :: procresbegin()
 {
     installerButton->setEnabled(false);
     removeButton->setEnabled(false);
+    twl->setEnabled(false);
+
       val=0;
     progressbar->setValue(val);
     doc->setText("");
@@ -513,6 +515,7 @@ void MainWindow :: procresend()
     /**************************************************************/
         installerButton->setEnabled(true);
         removeButton->setEnabled(true);
+        twl->setEnabled(true);
  doc->moveCursor(QTextCursor::End);
 }
 void MainWindow :: disp()
