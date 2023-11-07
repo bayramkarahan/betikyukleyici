@@ -324,7 +324,10 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
  aboutButton->setText("Hakkında");
 
  connect(aboutButton, &QToolButton::clicked, [=]() {
-about();
+//about();
+  appList();
+
+
 });
  QHBoxLayout *btnlayout = new QHBoxLayout;
  btnlayout->addWidget(installerButton);
@@ -605,6 +608,78 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 }
 }
 
+void MainWindow::appList()
+{
+qDebug()<<"apps list";
+
+QWidget *wapps=new QWidget();
+wapps->setFixedSize(en*120,boy*125);
+/******************************************************************/
+int appsListeGenislik=en*90;
+int appsListeYukseklik=boy*90;
+QScrollArea *scrollArea=new QScrollArea(wapps);
+scrollArea->setFixedSize(appsListeGenislik,appsListeYukseklik);
+scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+scrollArea->setBackgroundRole(QPalette::Dark);
+/*****************************************************/
+QWidget *appsListe=new QWidget();
+appsListe->setObjectName("appsListewidget");
+appsListe->setStyleSheet("background-color: #aaaadd");
+appsListe->setBackgroundRole(QPalette::Dark);
+appsListe->setFixedSize(appsListeGenislik,appsListeYukseklik*0.99);
+
+/********************************************************/
+scrollArea->setWidget(appsListe);
+//scrollArea->show();
+/*******************************************************************/
+appslayout = new QGridLayout();
+appslayout->setContentsMargins(0, 0, 0,0);
+appslayout->setSpacing(3);
+appsListe->setLayout(appslayout);
+/******************************************************************/
+int appsSayisi=10;
+int sutunSayisi=4;
+int satir=appsSayisi/sutunSayisi;
+int mod=appsSayisi%sutunSayisi;
+if (mod!=0) satir++;
+int sutun=sutunSayisi;
+int sn=0;
+int butonGenislik=appsListeGenislik/(sutunSayisi*1.1);
+int butonYukseklik=appsListeYukseklik/(5);
+
+for(int i=1;i<=satir;i++)
+{
+     for(int j=1;j<=sutunSayisi;j++)
+     {
+        QWidget * appsButton=new QWidget(appsListe);
+
+        appsButton->setFixedSize(QSize(butonGenislik,butonYukseklik));
+        appsButton->setStyleSheet("background-color: #dddddd; border:1px solid black;");
+
+        QToolButton * appsYukleButton= new QToolButton(appsButton);
+        appsYukleButton->setFixedSize(QSize(butonGenislik*0.3,butonYukseklik*0.3));
+        appsYukleButton->setIconSize(QSize(butonGenislik*0.2,butonYukseklik*0.2));
+        appsYukleButton->setStyleSheet("Text-align:center");
+        appsYukleButton->setIcon(QIcon(":/icons/remove.svg"));
+        //appsYukleButton->setAutoRaise(true);
+        appsYukleButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        appsYukleButton->setText("Betik"+QString::number(i)+". kodu");
+
+
+
+        appsListButton.append(appsButton);
+        appslayout->addWidget(appsButton, i,j,1,1);
+        sn++;
+        if (appsSayisi==sn) break;
+     }
+}
+if (appsListeYukseklik>satir*butonYukseklik)
+     appsListe->setFixedSize(appsListeGenislik,appsListeYukseklik*0.99);
+     else
+appsListe->setFixedSize(appsListeGenislik,satir*butonYukseklik);
+wapps->show();
+}
 void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
 {
      QString paketname= twl->item(iRow, 0)->text();

@@ -14,7 +14,8 @@
 #include<QToolButton>
 #include<QHBoxLayout>
 #include<QWidget>
-
+#include<QGridLayout>
+#include<QScrollArea>
 namespace Ui {
 class MainWindow;
 }
@@ -43,7 +44,11 @@ public slots:
    void about();
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
     void findTextEditChanged();
+   void appList();
 private:
+      // QList<QToolButton*> appsListButton;
+    QList<QWidget*> appsListButton;
+        QGridLayout *appslayout;
     int en;
     int boy;
     QString localDir;
