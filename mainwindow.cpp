@@ -652,23 +652,23 @@ for(int i=1;i<=satir;i++)
 {
      for(int j=1;j<=sutunSayisi;j++)
      {
-        QWidget * appsButton=new QWidget(appsListe);
+        AppWidget * appsButton=new AppWidget(butonGenislik,butonYukseklik,appsListe);
+        connect(appsButton, SIGNAL(installSignal(QString)),this, SLOT(installSlot(QString)));
 
-        appsButton->setFixedSize(QSize(butonGenislik,butonYukseklik));
-        appsButton->setStyleSheet("background-color: #dddddd; border:1px solid black;");
+        connect(appsButton, SIGNAL(removeSignal(QString)),this, SLOT(removeSlot(QString)));
 
-        QToolButton * appsYukleButton= new QToolButton(appsButton);
-        appsYukleButton->setFixedSize(QSize(butonGenislik*0.3,butonYukseklik*0.3));
-        appsYukleButton->setIconSize(QSize(butonGenislik*0.2,butonYukseklik*0.2));
-        appsYukleButton->setStyleSheet("Text-align:center");
-        appsYukleButton->setIcon(QIcon(":/icons/remove.svg"));
-        //appsYukleButton->setAutoRaise(true);
-        appsYukleButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        appsYukleButton->setText("Betik"+QString::number(i)+". kodu");
+         //appsButton->setFixedSize(butonGenislik,butonYukseklik);
+        appsButton->setStyleSheet("background-color: #dadada;/* border:1px solid black;*/");
+        int recordNumber;
+        if (mod!=0&&satir==i)
+            recordNumber=(i-1)*sutunSayisi+j;
+        else
+         recordNumber=(i-1)*sutunSayisi+j;
+
+        appsButton->paketAdiLabel->setText(QString::number(recordNumber)+". Paket");
 
 
-
-        appsListButton.append(appsButton);
+      //  appsListButton.append(appsButton);
         appslayout->addWidget(appsButton, i,j,1,1);
         sn++;
         if (appsSayisi==sn) break;
@@ -680,6 +680,15 @@ if (appsListeYukseklik>satir*butonYukseklik)
 appsListe->setFixedSize(appsListeGenislik,satir*butonYukseklik);
 wapps->show();
 }
+
+ void MainWindow::installSlot(QString paket)
+ {
+     qDebug()<<"Yüklenecek Paket: "<<paket;
+ }
+ void MainWindow::removeSlot(QString paket)
+ {
+     qDebug()<<"Kaldırılacak Paket: "<<paket;
+ }
 void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
 {
      QString paketname= twl->item(iRow, 0)->text();

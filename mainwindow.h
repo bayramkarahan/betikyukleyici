@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include<appwidget.h>
 #include <QMainWindow>
 #include<filecrud.h>
 #include<QDialog>
@@ -28,6 +28,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
+    void installSlot(QString paket);
+     void removeSlot(QString paket);
     void listToFile(QStringList list, QString filename);
     QStringList fileToList(QString filename);
     QString listGetLine(QStringList list,QString data);

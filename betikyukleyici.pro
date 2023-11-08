@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    appwidget.cpp \
         mainwindow.cpp \
     main.cpp
 
 HEADERS += \
+    appwidget.h \
         mainwindow.h \
     filecrud.h \
     hakkinda.h
