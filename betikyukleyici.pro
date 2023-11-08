@@ -31,6 +31,7 @@ SOURCES += \
 
 HEADERS += \
     appwidget.h \
+    funtion.h \
         mainwindow.h \
     filecrud.h \
     hakkinda.h

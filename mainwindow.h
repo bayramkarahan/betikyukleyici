@@ -46,10 +46,13 @@ public slots:
    void about();
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
     void findTextEditChanged();
-   void appList();
+   void appWidgetfindTextEditChanged();
+   QWidget *appList(QWidget *parent);
+    void getIndex();
+    void selectPackageSlot(QString paket);
 private:
       // QList<QToolButton*> appsListButton;
-    QList<QWidget*> appsListButton;
+    QList<AppWidget*> appsListButton;
         QGridLayout *appslayout;
     int en;
     int boy;
@@ -82,6 +85,7 @@ private:
 
     int selectRowIndex=0;
     QWidget *hakkinda();
+    int font;
 };
 
 #endif // MAINWINDOW_H
