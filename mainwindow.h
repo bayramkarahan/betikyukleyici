@@ -47,9 +47,11 @@ public slots:
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
     void findTextEditChanged();
    void appWidgetfindTextEditChanged();
-   QWidget *appList(QWidget *aparent);
+   void appList(QWidget *aparent);
     void getIndex();
     void selectPackageSlot(QString paket);
+    void uygulamaListele();
+    void uygulamaListeHazirla(QStringList list);
 private:
       // QList<QToolButton*> appsListButton;
     QList<AppWidget*> appsListButton;
@@ -74,6 +76,12 @@ private:
     QTextEdit *removescriptTextEdit;
 
     QWidget *mwidget;
+    QWidget *aramaWidget;
+    QWidget *appsListWidget;
+    QWidget *kategoriWidget;
+    QWidget *scriptWidget;
+QWidget *appsListe;
+
     QString  procesType="";
     QString version="";
     QString updateFile="";

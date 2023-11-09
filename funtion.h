@@ -41,17 +41,8 @@ void MainWindow::getIndex()
         statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
     }*/
 }
-
-void   MainWindow::appWidgetfindTextEditChanged()
+void MainWindow::uygulamaListeHazirla(QStringList list)
 {
-    //  qDebug()<<"tuşa basıldı..";
-     localDir="/usr/share/betikyukleyici/";
-    QStringList list=fileToList("betikyukleyicilist");
-    if(findTextEdit->toPlainText().length()>0)
-    {
-        list=listGetList(list, findTextEdit->toPlainText(),0);
-        // ldrm=1;
-    }
     appsListButton.clear();
     for(int i=0;i<list.count();i++)
     {
@@ -76,9 +67,65 @@ void   MainWindow::appWidgetfindTextEditChanged()
         // else
         //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
     }
-    qDebug()<<"liste sayısı: "<<list.count()<<appsListButton.count();
 }
 
+void MainWindow::uygulamaListele()
+{
+
+    qDeleteAll(appsListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    int appsSayisi=appsListButton.count();
+    int sutunSayisi=8;
+    int satir=appsSayisi/sutunSayisi;
+    int mod=appsSayisi%sutunSayisi;
+    if (mod!=0) satir++;
+    int sutun=sutunSayisi;
+    int sn=0;
+    int butonGenislik=appsListWidget->width()/(sutunSayisi*1.1);
+    int butonYukseklik=appsListWidget->height()/4;
+
+    for(int i=1;i<=satir;i++)
+    {
+         for(int j=1;j<=sutunSayisi;j++)
+         {
+            int recordNumber;
+            if (mod!=0&&satir==i)
+                         recordNumber=(i-1)*sutunSayisi+j;
+            else
+                         recordNumber=(i-1)*sutunSayisi+j;
+       //  appsListButton.append(appsButton);
+            appsListButton[recordNumber-1]->AppWidgetResize(butonGenislik*0.9,butonYukseklik*0.9);
+            appsListButton[recordNumber-1]->setAutoFillBackground(false);
+            appslayout->addWidget(appsListButton[recordNumber-1], i,j,1,1);
+
+            sn++;
+            if (appsSayisi==sn) break;
+         }
+    }
+    if (appsListWidget->height()>satir*butonYukseklik)
+    appsListe->setFixedSize(appsListWidget->width()*0.99,appsListWidget->height()*1.1);
+         else
+    appsListe->setFixedSize(appsListWidget->width()*0.99,satir*butonYukseklik);
+
+    //wapps->show();
+    appsListButton[0]->selectSlot();
+      // return   appsListe;
+
+}
+
+void   MainWindow::appWidgetfindTextEditChanged()
+{
+    //  qDebug()<<"tuşa basıldı..";
+     localDir="/usr/share/betikyukleyici/";
+    QStringList list=fileToList("betikyukleyicilist");
+    if(findTextEdit->toPlainText().length()>0)
+    {
+        list=listGetList(list, findTextEdit->toPlainText(),0);
+        // ldrm=1;
+    }
+    qDebug()<<"liste sayısı: "<<list.count()<<appsListButton.count();
+    uygulamaListeHazirla(list);
+    uygulamaListele();
+}
 void MainWindow::selectPackageSlot(QString paket)
 {
     for(int i=0;i<appsListButton.count();i++)
