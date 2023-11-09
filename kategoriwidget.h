@@ -1,5 +1,5 @@
-#ifndef APPWIDGET_H
-#define APPWIDGET_H
+#ifndef KATEGORIWIDGET_H
+#define KATEGORIWIDGET_H
 
 #include <QWidget>
 #include<QStyleOption>
@@ -8,19 +8,19 @@
 #include<QToolButton>
 #include<QMouseEvent>
 #include<QDebug>
-class AppWidget : public QWidget
+
+class KategoriWidget: public QWidget
 {
-    Q_OBJECT
 public:
+
+        explicit KategoriWidget(int w, int h,QWidget *parent = nullptr);
     QLabel *paketAdiLabel;
     QLabel *paketResmi;
     QToolButton * appsInstallButton;
     QToolButton * appsRemoveButton;
     QLabel * appsInstallButtonLabel;
     QLabel * appsRemoveButtonLabel;
-       bool select;
-    explicit AppWidget(int w, int h,QWidget *parent = nullptr);
-
+    bool select;
 public slots:
     void AppWidgetResize(int w, int h);
     void selectSlot();
@@ -31,12 +31,10 @@ protected slots:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 signals:
-void installSignal(QString paket);
-void removeSignal(QString paket);
-void appWidgetClickSignal(QString paket);
-
-private:
+   // void installSignal(QString paket);
+    //void removeSignal(QString paket);
+    void kategoriWidgetClickSignal(QString paket);
 
 };
 
-#endif // APPWIDGET_H
+#endif // KATEGORIWIDGET_H

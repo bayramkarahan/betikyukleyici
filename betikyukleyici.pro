@@ -26,12 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
     appwidget.cpp \
+    kategoriwidget.cpp \
         mainwindow.cpp \
     main.cpp
 
 HEADERS += \
     appwidget.h \
     funtion.h \
+    kategoriwidget.h \
         mainwindow.h \
     filecrud.h \
     hakkinda.h

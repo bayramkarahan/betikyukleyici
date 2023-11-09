@@ -72,7 +72,8 @@ void MainWindow::uygulamaListeHazirla(QStringList list)
 void MainWindow::uygulamaListele()
 {
 
-    qDeleteAll(appsListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    qDeleteAll(appsWidgetListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    if (appsListButton.count()==0) return;
     int appsSayisi=appsListButton.count();
     int sutunSayisi=8;
     int satir=appsSayisi/sutunSayisi;
@@ -80,8 +81,8 @@ void MainWindow::uygulamaListele()
     if (mod!=0) satir++;
     int sutun=sutunSayisi;
     int sn=0;
-    int butonGenislik=appsListWidget->width()/(sutunSayisi*1.1);
-    int butonYukseklik=appsListWidget->height()/4;
+    int butonGenislik=appsWidget->width()/(sutunSayisi*1.1);
+    int butonYukseklik=appsWidget->height()/3;
 
     for(int i=1;i<=satir;i++)
     {
@@ -101,10 +102,10 @@ void MainWindow::uygulamaListele()
             if (appsSayisi==sn) break;
          }
     }
-    if (appsListWidget->height()>satir*butonYukseklik)
-    appsListe->setFixedSize(appsListWidget->width()*0.99,appsListWidget->height()*1.1);
+    if (appsWidget->height()>satir*butonYukseklik)
+    appsWidgetListe->setFixedSize(appsWidget->width()*0.99,appsWidget->height()*1.1);
          else
-    appsListe->setFixedSize(appsListWidget->width()*0.99,satir*butonYukseklik);
+    appsWidgetListe->setFixedSize(appsWidget->width()*0.99,satir*butonYukseklik);
 
     //wapps->show();
     appsListButton[0]->selectSlot();
@@ -112,7 +113,7 @@ void MainWindow::uygulamaListele()
 
 }
 
-void   MainWindow::appWidgetfindTextEditChanged()
+void MainWindow::appWidgetfindTextEditChanged()
 {
     //  qDebug()<<"tuşa basıldı..";
      localDir="/usr/share/betikyukleyici/";
@@ -163,5 +164,86 @@ void MainWindow::selectPackageSlot(QString paket)
 
 
     }
+}
+
+void MainWindow::kategoriListele()
+{
+    if (kategoriListButton.count()==0)
+    {
+        localDir="/usr/share/betikyukleyici/";
+        QStringList list=fileToList("betikyukleyicilist");
+       kategoriListButton.clear();
+        for(int i=0;i<list.count();i++)
+        {
+            QString line=list[i];
+            QStringList lst=line.split("|");
+
+            KategoriWidget * kategoriButton=new KategoriWidget(50,50);
+      //      connect(appsButton, SIGNAL(appWidgetClickSignal(QString)),this, SLOT(selectPackageSlot(QString)));
+
+            //appsButton->setFixedSize(butonGenislik,butonYukseklik);
+            kategoriButton->paketAdiLabel->setText(lst[0]);
+            kategoriListButton.append(kategoriButton);
+
+            kategoriButton->setStyleSheet("background-color: #ededed;/* border:1px solid black;*/");
+            QString path="/var/lib/betikyukleyici/"+lst[0];
+            QFile file(path);
+            //qDebug()<<path<<file.exists();
+            //     if(file.exists())
+            //       appsButton->setStyleSheet("background-color: #cacaca;/* border:1px solid black;*/");
+            // else
+            //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
+        }
+    }
+    qDebug()<<"apps list"<<kategoriListButton.count();
+    kategoriWidgetListe=new QWidget(kategoriWidget);
+    kategoriWidgetListe->setObjectName("appsListewidget");
+    kategoriWidgetListe->setStyleSheet("background-color: #aaaadd");
+    kategoriWidgetListe->setAutoFillBackground(false);
+    /**************************************************/
+    kategorilayout = new QGridLayout();
+    kategorilayout->setContentsMargins(0, 0, 0,0);
+    kategorilayout->setSpacing(3);
+    kategoriWidgetListe->setLayout(kategorilayout);
+
+/*******************************************************************/
+    qDeleteAll(kategoriWidgetListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    if (appsListButton.count()==0) return;
+    int kategoriSayisi=kategoriListButton.count();
+    int sutunSayisi=8;
+    int satir=kategoriSayisi/sutunSayisi;
+    int mod=kategoriSayisi%sutunSayisi;
+    if (mod!=0) satir++;
+    int sutun=sutunSayisi;
+    int sn=0;
+    int butonGenislik=kategoriWidget->width()/(sutunSayisi*1.1);
+    int butonYukseklik=kategoriWidget->height()/3;
+
+    for(int i=1;i<=satir;i++)
+    {
+        for(int j=1;j<=sutunSayisi;j++)
+        {
+            int recordNumber;
+            if (mod!=0&&satir==i)
+                         recordNumber=(i-1)*sutunSayisi+j;
+            else
+                         recordNumber=(i-1)*sutunSayisi+j;
+            //  appsListButton.append(appsButton);
+            kategoriListButton[recordNumber-1]->AppWidgetResize(butonGenislik*0.9,butonYukseklik*0.9);
+            kategoriListButton[recordNumber-1]->setAutoFillBackground(false);
+            kategorilayout->addWidget(kategoriListButton[recordNumber-1], i,j,1,1);
+
+            sn++;
+            if (kategoriSayisi==sn) break;
+        }
+    }
+    if (kategoriWidget->height()>satir*butonYukseklik)
+        kategoriWidgetListe->setFixedSize(kategoriWidget->width()*0.99,kategoriWidget->height()*1.1);
+    else
+        kategoriWidgetListe->setFixedSize(kategoriWidget->width()*0.99,satir*butonYukseklik);
+
+    //wapps->show();
+  //  kategoriListButton[0]->selectSlot();
+        // return   appsListe;
 }
 #endif // FUNTION_H

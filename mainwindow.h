@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include<appwidget.h>
+#include<kategoriwidget.h>
 #include <QMainWindow>
 #include<filecrud.h>
 #include<QDialog>
@@ -47,15 +48,17 @@ public slots:
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
     void findTextEditChanged();
    void appWidgetfindTextEditChanged();
-   void appList(QWidget *aparent);
-    void getIndex();
+     void getIndex();
     void selectPackageSlot(QString paket);
     void uygulamaListele();
     void uygulamaListeHazirla(QStringList list);
+    void kategoriListele();
 private:
-      // QList<QToolButton*> appsListButton;
     QList<AppWidget*> appsListButton;
-        QGridLayout *appslayout;
+    QList<KategoriWidget*> kategoriListButton;
+
+    QGridLayout *appslayout;
+      QGridLayout *kategorilayout;
     int en;
     int boy;
     QString localDir;
@@ -75,12 +78,12 @@ private:
     QTextEdit *installscriptTextEdit;
     QTextEdit *removescriptTextEdit;
 
-    QWidget *mwidget;
     QWidget *aramaWidget;
-    QWidget *appsListWidget;
+    QWidget *appsWidget;
     QWidget *kategoriWidget;
     QWidget *scriptWidget;
-QWidget *appsListe;
+    QWidget *appsWidgetListe;
+    QWidget *kategoriWidgetListe;
 
     QString  procesType="";
     QString version="";
