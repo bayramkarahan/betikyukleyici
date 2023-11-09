@@ -12,7 +12,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    mwidget=new QWidget(this);
+   // mwidget=new QWidget(this);
     localDir="/usr/share/betikyukleyici/";
     version="betikyukleyici_1.6.0_amd64.deb";
     system("rm -rf /tmp/version");
@@ -48,11 +48,11 @@ MainWindow::MainWindow(QWidget *parent) :
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
-    progressbar = new QProgressBar(mwidget);
+    progressbar = new QProgressBar(this);
     progressbar->setFixedSize(en*120,boy*5);
     progressbar->setRange(0,100);
   //  progressbar->setStyleSheet("background-color: #dfdfdf;");
-    QTabWidget *tabw=new QTabWidget(mwidget);
+    QTabWidget *tabw=new QTabWidget(this);
     tabw->setFixedSize(en*120,boy*40);
 
 
@@ -74,27 +74,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
     tabw->addTab(doc,"Süreç");
    // tabw->setTabPosition(QTabWidget::West);
-    mwidget->setFixedSize(en*120,boy*125);
+  //  mwidget->setFixedSize(en*120,boy*125);
   // this->setStyleSheet("background-color: #00df00;");
     auto appIcon = QIcon(":/icons/betikyukleyici.svg");
     this->setWindowIcon(appIcon);
   this->setWindowTitle("Betik Yükleyici");
 
     font=boy*2;
-    statusLabel=new QLabel(mwidget);
+    statusLabel=new QLabel(this);
     statusLabel->setText("Yüklebilecek Paketler");
     //statusLabel->setStyleSheet("color: #0000ac;font-size:"+QString::number(font)+"px");
     statusLabel->setFixedSize(en*120,boy*5);
     statusLabel->setAlignment(Qt::AlignCenter);
 
 
-    findTextEditLabel=new QLabel(mwidget);
+    findTextEditLabel=new QLabel(this);
     findTextEditLabel->setText("Paket Ara");
     ///findTextEditLabel->setStyleSheet("background-color: #0000ac;");
     findTextEditLabel->setFixedSize(en*15,boy*5.5);
   //  findTextEditLabel->setAlignment(Qt::AlignLeft);
 
-    findTextEdit=new QTextEdit(mwidget);
+    findTextEdit=new QTextEdit(this);
     findTextEdit->setFixedSize(en*30,boy*6);
  //connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(findTextEditChanged()));
  connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(appWidgetfindTextEditChanged()));
@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
- updateButton= new QToolButton(mwidget);
+ updateButton= new QToolButton(this);
  updateButton->setFixedSize(QSize(en*30,boy*9));
  updateButton->setIconSize(QSize(en*30,boy*3));
  updateButton->setStyleSheet("Text-align:center");
@@ -127,28 +127,39 @@ MainWindow::MainWindow(QWidget *parent) :
      //system("rm  /tmp/prg.deb");
  });
 
-    auto layout = new QGridLayout;
+    auto layout = new QGridLayout(this);
     layout->setContentsMargins(0,0, 0,0);
    // layout->setVerticalSpacing(0);
    //  layout->setHorizontalSpacing(10);
     //layout->setColumnMinimumWidth(0, 37);
    // QWidget *paket = paketSlot(mwidget);
-      QWidget *appsWidget = appList(mwidget);
+     // QWidget *appsWidget = appList(mwidget);
+      /********************************************************/
+    /*  int appsListeGenislik=en*120;
+      int appsListeYukseklik=boy*65;
+      QScrollArea *scrollArea=new QScrollArea(this);
+      scrollArea->setFixedSize(appsListeGenislik,appsListeYukseklik);
+      scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+      //scrollArea->setBackgroundRole(QPalette::Dark);
+
+      scrollArea->setWidget(mwidget);
+*/
    // appsWidget->setFixedSize(en*120,boy*65);
     //paket->setStyleSheet("background-color: #00dfdf;");
     layout->addWidget(statusLabel, 1,1,1,2,Qt::AlignCenter);
 
-     layout->addWidget(updateButton, 1,2,2,1,Qt::AlignRight);
+    // layout->addWidget(updateButton, 1,2,2,1,Qt::AlignRight);
 
-     layout->addLayout(aramalayout, 2,2,1,1,Qt::AlignLeft);
+   //  layout->addLayout(aramalayout, 2,2,1,1,Qt::AlignLeft);
 
-    layout->addWidget( appsWidget,3,1,1,2,Qt::AlignCenter);
-    layout->addWidget( tabw,4,1,1,2,Qt::AlignCenter);
-    layout->addWidget(progressbar,5,1,1,2,Qt::AlignCenter);
+  //  layout->addWidget( mwidget,3,1,1,2,Qt::AlignCenter);
+   // layout->addWidget( tabw,4,1,1,2,Qt::AlignCenter);
+  //  layout->addWidget(progressbar,5,1,1,2,Qt::AlignCenter);
 
-    mwidget->setLayout(layout);
-    setCentralWidget(mwidget);
-
+   // mwidget->setLayout(layout);
+    //setCentralWidget(mwidget);
+setLayout(layout);
 
   /****************versiyon kontrolü yapılıyor***********************************************/
   //system("wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version");
@@ -612,7 +623,7 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 }
 }
 
-QWidget *MainWindow::appList(QWidget *parent)
+QWidget *MainWindow::appList(QWidget *aparent)
 {
 if (appsListButton.count()==0)appWidgetfindTextEditChanged();
 qDebug()<<"apps list"<<appsListButton.count();
@@ -620,24 +631,15 @@ qDebug()<<"apps list"<<appsListButton.count();
 //QWidget *wapps=new QWidget();
 //wapps->setFixedSize(en*120,boy*125);
 /******************************************************************/
-int appsListeGenislik=en*120;
-int appsListeYukseklik=boy*65;
+
 /*****************************************************/
-QWidget *appsListe=new QWidget();
+QWidget *appsListe=new QWidget(aparent);
 appsListe->setObjectName("appsListewidget");
 appsListe->setStyleSheet("background-color: #aaaadd");
 appsListe->setAutoFillBackground(false);
 //appsListe->setBackgroundRole(QPalette::Dark);
 //appsListe->setFixedSize(appsListeGenislik*0.7,appsListeYukseklik);
 
-/********************************************************/
-QScrollArea *scrollArea=new QScrollArea(appsListe);
-scrollArea->setFixedSize(appsListeGenislik,appsListeYukseklik);
-scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-//scrollArea->setBackgroundRole(QPalette::Dark);
-
-//scrollArea->setWidget(appsListe);
 //scrollArea->show();
 //qDeleteAll(appsListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
 
@@ -647,6 +649,8 @@ appslayout->setContentsMargins(0, 0, 0,0);
 appslayout->setSpacing(3);
 appsListe->setLayout(appslayout);
 /******************************************************************/
+int appsListeGenislik=en*120;
+int appsListeYukseklik=boy*65;
 
 int appsSayisi=appsListButton.count();
 int sutunSayisi=4;

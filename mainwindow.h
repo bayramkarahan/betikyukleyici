@@ -47,7 +47,7 @@ public slots:
    QString myMessageBox(QString baslik, QString mesaj, QString evet, QString hayir, QString tamam, QMessageBox::Icon icon);
     void findTextEditChanged();
    void appWidgetfindTextEditChanged();
-   QWidget *appList(QWidget *parent);
+   QWidget *appList(QWidget *aparent);
     void getIndex();
     void selectPackageSlot(QString paket);
 private:
