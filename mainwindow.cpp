@@ -130,7 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
     findTextEdit->setStyleSheet("color: #000000;font-size:"+QString::number(fontt)+"px");
 
  //connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(findTextEditChanged()));
- connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(appWidgetfindTextEditChanged()));
+    connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(appWidgetfindTextEditChanged()));
 
  updateButton= new QToolButton(aramaWidget);
  updateButton->setFixedSize(aramaWidget->width()*0.15,aramaWidget->height()*0.8);
@@ -170,11 +170,11 @@ aramalayout->addWidget(statusLabel,3,1,1,2);
       // appList(appsListWidget);
 /**********************ilk Liste oluşturma***************************************/
 /**********************ilk Liste oluşturma***************************************/
-
+// getIndex();
         if (appsListButton.count()==0)
         {
             localDir="/usr/share/betikyukleyici/";
-            QStringList list=fileToList("betikyukleyicilist");
+            QStringList list=fileToList("nbetikyukleyicilist");
             uygulamaListeHazirla(list);
         }
         qDebug()<<"apps list"<<appsListButton.count();

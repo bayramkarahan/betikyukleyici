@@ -9,5 +9,15 @@
         <file>icons/macos.qss</file>
         <file>icons/update.svg</file>
         <file>icons/betikyukleyici.svg</file>
+        <file>icons/all.svg</file>
+        <file>icons/education.svg</file>
+        <file>icons/game.svg</file>
+        <file>icons/internet.svg</file>
+        <file>icons/multimedia.svg</file>
+        <file>icons/office.svg</file>
+        <file>icons/other.svg</file>
+        <file>icons/printer.svg</file>
+        <file>icons/system.svg</file>
+        <file>icons/wine.svg</file>
     </qresource>
 </RCC>

@@ -11,18 +11,16 @@
 
 class KategoriWidget: public QWidget
 {
+    Q_OBJECT
 public:
 
         explicit KategoriWidget(int w, int h,QWidget *parent = nullptr);
     QLabel *paketAdiLabel;
     QLabel *paketResmi;
-    QToolButton * appsInstallButton;
-    QToolButton * appsRemoveButton;
-    QLabel * appsInstallButtonLabel;
-    QLabel * appsRemoveButtonLabel;
-    bool select;
+    QString resimyol;
+       bool select;
 public slots:
-    void AppWidgetResize(int w, int h);
+    void KategoriWidgetResize(int w, int h);
     void selectSlot();
 
 
@@ -31,8 +29,6 @@ protected slots:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 signals:
-   // void installSignal(QString paket);
-    //void removeSignal(QString paket);
     void kategoriWidgetClickSignal(QString paket);
 
 };
