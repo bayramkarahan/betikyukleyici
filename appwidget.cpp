@@ -21,9 +21,9 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     paketResmi=new QLabel(this);
     paketResmi->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
     paketResmi->setScaledContents( true );
-    paketResmi->setFixedSize(QSize(w*0.55,h*0.55));
+    //paketResmi->setFixedSize(QSize(w*0.55,h*0.55));
 
-    appsInstallButtonLabel=new QLabel(this);
+   /* appsInstallButtonLabel=new QLabel(this);
     appsInstallButtonLabel->setFixedSize(QSize(w*0.5,h*0.5));
     appsInstallButtonLabel->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
    appsInstallButtonLabel->setScaledContents( true );
@@ -32,17 +32,17 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     appsRemoveButtonLabel->setFixedSize(QSize(w*0.5,h*0.5));
     appsRemoveButtonLabel->setPixmap( QPixmap( ":/icons/remove.svg" ) );
     appsRemoveButtonLabel->setScaledContents( true );
+*/
 
-   // paketResmi->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
-
-    appsInstallButton= new QToolButton(this);
+    appsInstallButton= new QPushButton(this);
     appsInstallButton->setFixedSize(QSize(w*0.4,h*0.4));
     appsInstallButton->setIconSize(QSize(w*0.3,h*0.3));
     appsInstallButton->setStyleSheet("Text-align:center");
     appsInstallButton->setIcon(QIcon(":/icons/betikyukleyici.svg"));
-    appsInstallButton->setAutoRaise(true);
+     appsInstallButton->setObjectName("appsInstallButton");
+   // appsInstallButton->setAutoRaise(true);
    // appsInstallButton->setStyleSheet("background-color: #dadada; border:1px solid black;");
-    appsInstallButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    //appsInstallButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     //appsInstallButton->setText("Betik"+QString::number(i)+". kodu");
    appsInstallButton->setVisible(false);
     connect(appsInstallButton, &QToolButton::clicked, [=]() {
@@ -56,6 +56,7 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     appsRemoveButton->setIcon(QIcon(":/icons/remove.svg"));
     appsRemoveButton->setAutoRaise(true);
     appsRemoveButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+     appsRemoveButton->setObjectName("appsRemoveButton");
     appsRemoveButton->setVisible(false);
     //appsRemoveButton->setText("Betik"+QString::number(i)+". kodu");
    // appsRemoveButton->setStyleSheet("background-color: #dadada; border:1px solid black;");
@@ -76,8 +77,8 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
    mainlayout->addWidget(paketResmi,2,1,2,2,Qt::AlignCenter);
    mainlayout->addWidget(appsInstallButton,4,1,1,1,Qt::AlignLeft);
    mainlayout->addWidget(appsRemoveButton,4,2,1,1,Qt::AlignRight);
-   mainlayout->addWidget(appsInstallButtonLabel,4,1,1,1,Qt::AlignLeft);
-   mainlayout->addWidget(appsRemoveButtonLabel,4,2,1,1,Qt::AlignRight);
+  // mainlayout->addWidget(appsInstallButtonLabel,4,1,1,1,Qt::AlignLeft);
+  // mainlayout->addWidget(appsRemoveButtonLabel,4,2,1,1,Qt::AlignRight);
 
 
 
@@ -89,6 +90,8 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
 void AppWidget::AppWidgetResize(int w, int h)
 {
    this->setFixedSize(w,h);
+   paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciappsicons/"+paketResmiYol) );
+  paketResmi->setFixedSize(h*0.4,h*0.4);
 
    appsInstallButton->setFixedSize(QSize(w*0.4,h*0.4));
    appsInstallButton->setIconSize(QSize(w*0.3,h*0.3));

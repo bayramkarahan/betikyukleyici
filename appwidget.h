@@ -6,6 +6,7 @@
 #include<QPainter>
 #include<QLabel>
 #include<QToolButton>
+#include<QPushButton>
 #include<QMouseEvent>
 #include<QDebug>
 class AppWidget : public QWidget
@@ -14,7 +15,8 @@ class AppWidget : public QWidget
 public:
     QLabel *paketAdiLabel;
     QLabel *paketResmi;
-    QToolButton * appsInstallButton;
+    QString paketResmiYol;
+    QPushButton * appsInstallButton;
     QToolButton * appsRemoveButton;
     QLabel * appsInstallButtonLabel;
     QLabel * appsRemoveButtonLabel;

@@ -16,10 +16,20 @@ void MainWindow::getIndex()
 }
 void MainWindow::uygulamaListeHazirla(QStringList list)
 {
+   /* if (appsListButton.count()==0)
+    {
+        localDir="/tmp/";
+        QStringList list=fileToList("index.conf");
+
+    }*/
+
     appsListButton.clear();
     for(int i=0;i<list.count();i++)
     {
+
         QString line=list[i];
+        if(line.length()>0)
+        {
         QStringList lst=line.split("|");
 
         AppWidget * appsButton=new AppWidget(50,50);
@@ -29,9 +39,10 @@ void MainWindow::uygulamaListeHazirla(QStringList list)
 
         //appsButton->setFixedSize(butonGenislik,butonYukseklik);
         appsButton->paketAdiLabel->setText(lst[0]);
+        appsButton->paketResmiYol=lst[2];
         appsListButton.append(appsButton);
         appsButton->setObjectName("appsButton");
-
+       //qDebug()<<line;
        // appsButton->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid black;}");
 
         QString path="/var/lib/betikyukleyici/"+lst[0];
@@ -41,6 +52,7 @@ void MainWindow::uygulamaListeHazirla(QStringList list)
         //       appsButton->setStyleSheet("background-color: #cacaca;/* border:1px solid black;*/");
         // else
         //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
+        }
     }
 }
 
@@ -92,7 +104,7 @@ void MainWindow::appWidgetfindTextEditChanged()
 {
     //  qDebug()<<"tuşa basıldı..";
      localDir="/tmp/";
-    QStringList list=fileToList("index.conf");
+    QStringList list=fileToList("betikyukleyiciappsindex.conf");
     if(findTextEdit->toPlainText().length()>0)
     {
         list=listGetList(list, findTextEdit->toPlainText(),0);
@@ -107,7 +119,7 @@ void MainWindow::kategoriWidgetfindTextEditChanged(QString data)
 {
      qDebug()<<"kategori seçildi.."<<data;
      localDir="/tmp/";
-    QStringList list=fileToList("index.conf");
+    QStringList list=fileToList("betikyukleyiciappsindex.conf");
      if(data.length()>0&&data!="Tümü")
     {
         list=listGetList(list, data,0);
@@ -127,19 +139,22 @@ void MainWindow::selectPackageSlot(QString paket)
             appsListButton[i]->select=true;
             appsListButton[i]->appsInstallButton->setVisible(true);
             appsListButton[i]->appsRemoveButton->setVisible(true);
+           // appsListButton[i]->appsInstallButton->setFlat(false);
+
          }
         else
         {
-            appsListButton[i]->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:0px solid Red;}");
+            appsListButton[i]->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
             appsListButton[i]->select=false;
             appsListButton[i]->appsInstallButton->setVisible(false);
             appsListButton[i]->appsRemoveButton->setVisible(false);
          }
         appsListButton[i]->paketAdiLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
         appsListButton[i]->paketResmi->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
-        appsListButton[i]->appsInstallButtonLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
-        appsListButton[i]->appsRemoveButtonLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
-     }
+        //appsListButton[i]->appsInstallButton->autoRaise();
+       // appsListButton[i]->appsInstallButton->setStyleSheet("QToolButton#appsInstallButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
+       // appsListButton[i]->appsRemoveButton->setStyleSheet("QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}");
+       }
 }
 
 
@@ -172,23 +187,28 @@ void MainWindow::kategoriListele()
     if (kategoriListButton.count()==0)
     {
         localDir="/tmp/";
-        QStringList list=fileToList("index.conf");
+        QStringList list=fileToList("betikyukleyiciappsindex.conf");
        kategoriListButton.clear();
         QStringList groupList;
        for(int i=0;i<list.count();i++)
         {
             bool found=false;
-            QString linet1=list[i];  QStringList linet1lst=linet1.split("|");
+            QString linet1=list[i];
+            if(linet1.length()>0)
+            {
+            QStringList linet1lst=linet1.split("|");
 
             if(i==0){
             groupList.append("Tümü|all.svg");
-            groupList.append(linet1lst[2]+"|"+linet1lst[3]);
+            groupList.append(linet1lst[3]+"|"+linet1lst[4]);
+            qDebug()<<"group eklendi"<<linet1lst[3]+"|"+linet1lst[4];
+
             }
 
              for(int j=0;j<groupList.count();j++)
             {
                           QString glinet1=groupList[j];  QStringList glinet1lst=glinet1.split("|");
-                          if(glinet1lst[0]==linet1lst[2])
+                          if(glinet1lst[0]==linet1lst[3])
                          {
                              found=true;
                              // qDebug()<<"group liste sayısı"<<linet1lst[4]<<groupList[j];
@@ -198,11 +218,12 @@ void MainWindow::kategoriListele()
               if(found==false)
              {
 
-                        //  qDebug()<<"eklendi liste sayısı"<<linet1;
-                        groupList.append(linet1lst[2]+"|"+linet1lst[3]);
+                        //qDebug()<<"group eklendi-"<<linet1lst[3]+"|"+linet1lst[4];
+                        groupList.append(linet1lst[3]+"|"+linet1lst[4]);
               }
+            }
         }
-       //qDebug()<<"group liste sayısı"<<groupList.count();
+      // qDebug()<<"group liste sayısı"<<groupList.count();
         for(int i=0;i<groupList.count();i++)
         {
             QString line=groupList[i];
@@ -226,7 +247,7 @@ void MainWindow::kategoriListele()
             //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
         }
     }
-    qDebug()<<"apps list"<<kategoriListButton.count();
+    qDebug()<<"kategori list"<<kategoriListButton.count();
     kategoriWidgetListe=new QWidget(kategoriWidget);
     kategoriWidgetListe->setObjectName("appsListewidget");
    // kategoriWidgetListe->setStyleSheet("background-color: #aaaadd");
@@ -240,7 +261,7 @@ void MainWindow::kategoriListele()
 
 /*******************************************************************/
     qDeleteAll(kategoriWidgetListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
-    if (appsListButton.count()==0) return;
+    if (kategoriListButton.count()==0) return;
     int kategoriSayisi=kategoriListButton.count();
     int sutunSayisi=8;
     int satir=kategoriSayisi/sutunSayisi;
@@ -261,6 +282,7 @@ void MainWindow::kategoriListele()
             else
                          recordNumber=(i-1)*sutunSayisi+j;
             //  appsListButton.append(appsButton);
+
             kategoriListButton[recordNumber-1]->KategoriWidgetResize(butonGenislik*0.9,butonYukseklik*0.9);
             kategoriListButton[recordNumber-1]->setAutoFillBackground(false);
             kategorilayout->addWidget(kategoriListButton[recordNumber-1], i,j,1,1);

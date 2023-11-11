@@ -17,7 +17,7 @@ KategoriWidget::KategoriWidget(int w, int h, QWidget *parent)
     QFont f;
     f.setPointSize(w*0.17);
     paketAdiLabel->setFont(f);
-    //  paketAdiLabel->setStyleSheet("color: #ac0000;");
+    //paketAdiLabel->setStyleSheet("color: #ac0000;");
     paketResmi=new QLabel(this);
     paketResmi->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
     paketResmi->setScaledContents( true );

@@ -183,11 +183,11 @@ aramalayout->setContentsMargins(0,0,0,0);
       // appList(appsListWidget);
 /**********************ilk Liste oluşturma***************************************/
 /**********************ilk Liste oluşturma***************************************/
- getIndex();
+// getIndex();
         if (appsListButton.count()==0)
         {
             localDir="/tmp/";
-            QStringList list=fileToList("index.conf");
+            QStringList list=fileToList("betikyukleyiciappsindex.conf");
             uygulamaListeHazirla(list);
         }
         qDebug()<<"apps list"<<appsListButton.count();
