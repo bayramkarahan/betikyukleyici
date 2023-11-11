@@ -183,7 +183,7 @@ aramalayout->setContentsMargins(0,0,0,0);
       // appList(appsListWidget);
 /**********************ilk Liste oluşturma***************************************/
 /**********************ilk Liste oluşturma***************************************/
- //getIndex();
+ getIndex();
         if (appsListButton.count()==0)
         {
             localDir="/tmp/";

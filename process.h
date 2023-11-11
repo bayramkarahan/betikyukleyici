@@ -31,12 +31,18 @@ void MainWindow :: procresbegin()
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
 
        }
-    qDebug()<<"procresbegin.";
+    //qDebug()<<"procresbegin.";
 
     if(procesType=="getindex")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
     }
+
+    if(procesType=="getindexicons")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İconları İndirme Başladı***</p>");
+    }
+
 
 }
 void MainWindow :: procresend()
@@ -108,10 +114,22 @@ void MainWindow :: procresend()
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
         procesTypeStatus=4;
-        localDir="/usr/share/betikyukleyici/";
+      /*  localDir="/usr/share/betikyukleyici/";
         QStringList list=fileToList("betikyukleyicilist");
-        listToFile(list,"betikyukleyicilist");
+        listToFile(list,"betikyukleyicilist");*/
     }
+
+    if(procesType=="getindexicons")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İconları İndirme Tamamlandı***</p>");
+        procesTypeStatus=5;
+       /* localDir="/usr/share/betikyukleyici/";
+        QStringList list=fileToList("betikyukleyicilist");
+        listToFile(list,"betikyukleyicilist");*/
+        system("unzip -q -x -o /tmp/betikyukleyiciappsicons.zip -d /tmp/");
+       // qDebug()<<"icon indirme tamamlandı";
+    }
+
     if(procesType=="getversion")
     {
         localDir="/tmp/";

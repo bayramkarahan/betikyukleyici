@@ -5,8 +5,13 @@
 void MainWindow::getIndex()
 {
     procesType="getindex";
-    proces->start("wget  https://github.com/bayramkarahan/betikyukleyici/raw/master/script/nindex.conf -O /tmp/index.conf");
+    proces->start("wget  https://github.com/bayramkarahan/betikyukleyici/raw/master/script/betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
     proces->waitForFinished(-1);
+
+    procesType="getindexicons";
+    proces->start("wget  https://github.com/bayramkarahan/betikyukleyici/raw/master/script/betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciappsicons.zip");
+    proces->waitForFinished(-1);
+
 
 }
 void MainWindow::uygulamaListeHazirla(QStringList list)
