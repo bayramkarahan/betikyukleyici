@@ -32,11 +32,12 @@ SOURCES += \
 
 HEADERS += \
     appwidget.h \
-    funtion.h \
+    function.h \
     kategoriwidget.h \
         mainwindow.h \
     filecrud.h \
-    hakkinda.h
+    hakkinda.h \
+    process.h
 
 FORMS +=
 

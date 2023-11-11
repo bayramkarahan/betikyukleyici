@@ -19,5 +19,6 @@
         <file>icons/printer.svg</file>
         <file>icons/system.svg</file>
         <file>icons/wine.svg</file>
+        <file>icons/myapps.svg</file>
     </qresource>
 </RCC>

@@ -8,7 +8,9 @@
 #include<stdio.h>
 #include<QDebug>
 #include<hakkinda.h>
-#include<funtion.h>
+#include<function.h>
+#include<process.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -22,36 +24,47 @@ MainWindow::MainWindow(QWidget *parent) :
     int pencereW=en*180;
     int pencereH=boy*125;
     int pencereNW=pencereW*0.99;
-     int pencereNH=pencereH*0.99;
+     int pencereNH=pencereH;
     this->setFixedSize(pencereW,pencereH);
     int x = (screenSize.width() - this->width())/2;
     int y = (screenSize.height() - this->height()) / 2;
     this->move(x, y);
 /*****************************************************************************************/
     QWidget *anaWidget= new QWidget(this);
-    anaWidget->setFixedSize(pencereW,pencereNH);
+    anaWidget->setFixedSize(pencereW,pencereH);
+    anaWidget->setObjectName("anaWidget");
+    anaWidget->setStyleSheet("QWidget#anaWidget{background-color: #ffffff;}");
 
     aramaWidget=new QWidget(anaWidget);
-    //aramaWidget->setStyleSheet("border: 1px solid #000000;");
-    aramaWidget->setFixedSize(pencereNW,pencereNH*0.10);
+    aramaWidget->setObjectName("aramaWidget");
+    aramaWidget->setStyleSheet("QWidget#aramaWidget{/*background-color: #44ff22;*/border-bottom:2px solid #dcdcdc;}");
+    aramaWidget->setFixedSize(pencereNW,pencereNH*0.05);
 
     kategoriWidget=new QWidget(anaWidget);
-    kategoriWidget->setStyleSheet("background-color: #dcdcdc; border:2px solid #dcdcdc;");
-    kategoriWidget->setFixedSize(pencereNW,pencereNH*0.15);
+    kategoriWidget->setObjectName("kategoriWidget");
+    kategoriWidget->setStyleSheet("QWidget#kategoriWidget{/*background-color: #00ffaa;*/border-bottom:2px solid #dcdcdc;}");
+    kategoriWidget->setFixedSize(pencereNW,pencereNH*0.10);
 
     appsWidget=new QWidget(anaWidget);
-    appsWidget->setStyleSheet("background-color: #eeeeaa;");
-    appsWidget->setFixedSize(pencereNW,pencereNH*0.45);
+    appsWidget->setObjectName("appsWidget");
+    //appsWidget->setStyleSheet("QWidget#appsWidget{/*background-color: #ffffaa;border-bottom:2px solid #dc0000;*/}");
+    appsWidget->setFixedSize(pencereNW,pencereNH*0.55);
 
     scriptWidget=new QWidget(anaWidget);
-    scriptWidget->setStyleSheet("background-color: #00ffaa;");
-    scriptWidget->setFixedSize(pencereNW,pencereNH*0.27);
+    scriptWidget->setStyleSheet("background-color: #ffffff;");
+    scriptWidget->setFixedSize(pencereNW,pencereNH*0.25);
 
-    auto layout = new QGridLayout();
-    layout->setContentsMargins(0,5, 0,0);
-    layout->setSpacing(0);
+    progressbar = new QProgressBar(anaWidget);
+    progressbar->setFixedSize(pencereNW,pencereNH*0.04);
+    progressbar->setRange(0,100);
+    progressbar->setStyleSheet("background-color: #ffffff;");
+
+    auto layout = new QGridLayout(anaWidget);
+    layout->setContentsMargins(0,0, 0,0);
+   layout->setSpacing(0);
+
   //this->centralWidget->setLayout (layout);
-    anaWidget->setLayout(layout);
+   // anaWidget->setLayout(layout);
     localDir="/usr/share/betikyukleyici/";
     version="betikyukleyici_1.6.0_amd64.deb";
     system("rm -rf /tmp/version");
@@ -77,11 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /**************************************************************/
 
 
-    progressbar = new QProgressBar(anaWidget);
-    progressbar->setFixedSize(pencereNW,pencereNH*0.03);
-    progressbar->setRange(0,100);
-    progressbar->setStyleSheet("background-color: #aadfdf;");
-
     QTabWidget *tabw=new QTabWidget(scriptWidget);
     tabw->setFixedSize(pencereNW,pencereNH);
 
@@ -106,40 +114,45 @@ MainWindow::MainWindow(QWidget *parent) :
    // tabw->setTabPosition(QTabWidget::West);
   //  mwidget->setFixedSize(en*120,boy*125);
   // this->setStyleSheet("background-color: #00df00;");
+
     auto appIcon = QIcon(":/icons/betikyukleyici.svg");
     this->setWindowIcon(appIcon);
   this->setWindowTitle("Betik Yükleyici");
 
     font=boy*2;
+    int fontt=font*1;
     statusLabel=new QLabel(aramaWidget);
     statusLabel->setText("Yüklenebilecek Paketler");
     statusLabel->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
-    statusLabel->setFixedSize(pencereNW,aramaWidget->height()*0.2);
-    statusLabel->setAlignment(Qt::AlignCenter);
+
+     statusLabel->setFixedSize(aramaWidget->width()*0.42,aramaWidget->height()*0.9);
+    //statusLabel->setAlignment(Qt::AlignLeft);
 
 
     findTextEditLabel=new QLabel(aramaWidget);
     findTextEditLabel->setText("Paket Ara");
-    ///findTextEditLabel->setStyleSheet("background-color: #0000ac;");
-    findTextEditLabel->setFixedSize(aramaWidget->width()*0.15,aramaWidget->height()*0.2);
+    //findTextEditLabel->setStyleSheet("background-color: #0000ac;");
+    findTextEditLabel->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
+    findTextEditLabel->setFixedSize(aramaWidget->width()*0.06,aramaWidget->height()*0.9);
   //  findTextEditLabel->setAlignment(Qt::AlignLeft);
 
     findTextEdit=new QTextEdit(aramaWidget);
-    findTextEdit->setFixedSize(aramaWidget->width()*0.30,aramaWidget->height()*0.50);
-    int fontt=font*1.2;
-    findTextEdit->setStyleSheet("color: #000000;font-size:"+QString::number(fontt)+"px");
+    findTextEdit->setFixedSize(aramaWidget->width()*0.30,aramaWidget->height()*0.80);
+
+    findTextEdit->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
 
  //connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(findTextEditChanged()));
     connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(appWidgetfindTextEditChanged()));
 
  updateButton= new QToolButton(aramaWidget);
- updateButton->setFixedSize(aramaWidget->width()*0.15,aramaWidget->height()*0.8);
- updateButton->setIconSize(QSize(aramaWidget->width()*0.15,aramaWidget->height()*0.4));
+ updateButton->setFixedSize(aramaWidget->width()*0.20,aramaWidget->height()*0.9);
+ updateButton->setIconSize(QSize(aramaWidget->width()*0.20,aramaWidget->height()*0.9));
  updateButton->setStyleSheet("Text-align:center");
  updateButton->setIcon(QIcon(":/icons/update.svg"));
  updateButton->setAutoRaise(true);
- updateButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
- // powerOnButton->setFont(f2);
+ updateButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+ updateButton->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
+
  updateButton->setText("Programı Güncelle");
 
  connect(updateButton, &QToolButton::clicked, [=]() {
@@ -155,12 +168,12 @@ MainWindow::MainWindow(QWidget *parent) :
  });
 
  QGridLayout *aramalayout = new QGridLayout(aramaWidget);
-aramalayout->setSpacing(0);
+//aramalayout->setSpacing(0);
 aramalayout->setContentsMargins(0,0,0,0);
- aramalayout->addWidget(findTextEditLabel,1,1,1,1);
- aramalayout->addWidget(findTextEdit,2,1,1,1);
- aramalayout->addWidget(updateButton,1,2,3,1,Qt::AlignRight|Qt::AlignTop);
-aramalayout->addWidget(statusLabel,3,1,1,2);
+ aramalayout->addWidget(findTextEditLabel,1,1,1,1,Qt::AlignCenter);
+ aramalayout->addWidget(findTextEdit,1,2,1,1,Qt::AlignCenter);
+ aramalayout->addWidget(statusLabel,1,3,1,1,Qt::AlignCenter);
+ aramalayout->addWidget(updateButton,1,4,1,1,Qt::AlignCenter);
 
     // layout->setVerticalSpacing(0);
    //  layout->setHorizontalSpacing(10);
@@ -170,22 +183,22 @@ aramalayout->addWidget(statusLabel,3,1,1,2);
       // appList(appsListWidget);
 /**********************ilk Liste oluşturma***************************************/
 /**********************ilk Liste oluşturma***************************************/
-// getIndex();
+ //getIndex();
         if (appsListButton.count()==0)
         {
-            localDir="/usr/share/betikyukleyici/";
-            QStringList list=fileToList("nbetikyukleyicilist");
+            localDir="/tmp/";
+            QStringList list=fileToList("index.conf");
             uygulamaListeHazirla(list);
         }
         qDebug()<<"apps list"<<appsListButton.count();
         appsWidgetListe=new QWidget(appsWidget);
         appsWidgetListe->setObjectName("appsListewidget");
-        appsWidgetListe->setStyleSheet("background-color: #aaaadd");
-        appsWidgetListe->setAutoFillBackground(false);
+        appsWidgetListe->setStyleSheet("background-color: #ffffff");
+        //appsWidgetListe->setAutoFillBackground(false);
         /**************************************************/
         appslayout = new QGridLayout();
         appslayout->setContentsMargins(0, 0, 0,0);
-        appslayout->setSpacing(3);
+        appslayout->setSpacing(0);
         appsWidgetListe->setLayout(appslayout);
 
         uygulamaListele();
@@ -195,19 +208,18 @@ aramalayout->addWidget(statusLabel,3,1,1,2);
 /*****************************************************************/
 /*****************************************************************/
 
-      int appsListeGenislik=en*120;
-      int appsListeYukseklik=boy*65;
       QScrollArea *appsWidgetscrollArea=new QScrollArea(appsWidget);
       appsWidgetscrollArea->setFixedSize(appsWidget->width(),appsWidget->height());
       appsWidgetscrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       appsWidgetscrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+      appsWidgetscrollArea->setStyleSheet("border:0;border-bottom:2px solid #dcdcdc;");
       appsWidgetscrollArea->setWidget(appsWidgetListe);
 
     layout->addWidget(aramaWidget,1,1,1,1,Qt::AlignCenter);
     layout->addWidget(kategoriWidget,2,1,1,1,Qt::AlignCenter);
     layout->addWidget(appsWidget,3,1,1,1,Qt::AlignCenter);
     layout->addWidget(scriptWidget,4,1,1,1,Qt::AlignCenter);
-    layout->addWidget(progressbar,5,1,1,1,Qt::AlignCenter);
+   layout->addWidget(progressbar,5,1,1,1,Qt::AlignCenter);
 
 
   /****************versiyon kontrolü yapılıyor***********************************************/
@@ -225,37 +237,7 @@ aramalayout->addWidget(statusLabel,3,1,1,2);
   /***************************************************************/
  // paketTableWidgetWindow_cellClicked(0, 0);
 }
-void   MainWindow::findTextEditChanged()
-{
-//  qDebug()<<"tuşa basıldı..";
-    QStringList list=fileToList("betikyukleyicilist");
-     if(findTextEdit->toPlainText().length()>0)
-      {
-          list=listGetList(list, findTextEdit->toPlainText(),0);
-         // ldrm=1;
-      }
-twl->setRowCount(0);
-for(int i=0;i<list.count();i++)
-{
-    QString line=list[i];
-    QStringList lst=line.split("|");
-    twl->setRowCount(twl->rowCount()+1);
 
-    twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-    twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
-
-    QString path="/var/lib/betikyukleyici/"+lst[0];
-    QFile file(path);
-    //qDebug()<<path<<file.exists();
-    if(file.exists())
-        twl->setItem(i, 2, new QTableWidgetItem("Yüklü"));//package address
-    else
-        twl->setItem(i, 2, new QTableWidgetItem("-----"));//package address
-}
-//twl->selectRow(0);
-
-    // paketTableWidgetWindow_cellClicked(0,0);
-}
 void   MainWindow::about(){
     QSize screenSize = qApp->screens()[0]->size();
    // qDebug()<<screenSize.width()/65<<screenSize.height()/35;
@@ -416,210 +398,6 @@ d->setLayout(dlayout);
 return d;
    // int result = d->exec();
 }
-void MainWindow :: procresbegin()
-{
-    installerButton->setEnabled(false);
-    removeButton->setEnabled(false);
-    twl->setEnabled(false);
-
-      val=0;
-    progressbar->setValue(val);
-    doc->setText("");
-    doc->moveCursor (QTextCursor::End);
-
-    if(procesType=="install")
-    {
-        // qDebug()<<"kurulum başladı.";
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Başladı***</p>");
-    }
-    if(procesType=="remove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
-        }
-    if(procesType=="getscriptinstall")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
-
-       }
-    if(procesType=="getscriptremove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
-
-       }
-    if(procesType=="getindex")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
-       }
-
-}
-void MainWindow :: procresend()
-{
-    val=100;
-    int procesTypeStatus=0;
-
-    progressbar->setValue(val);
-    doc->moveCursor (QTextCursor::End);
-    if(procesType=="install")
-    {
-        qDebug()<<"kurulum bitti.";
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
-       /// system("rm /tmp/installscript.sh");
-           myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
-        procesTypeStatus=1;
-
-    }
-    if(procesType=="remove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
-   // system("rm /tmp/removescript.sh");
-    myMessageBox("", "\n\Kaldırma Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
-
-        procesTypeStatus=2;
-      }
-    if(procesType=="getscriptinstall")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-        procesTypeStatus=3;
-        localDir="/tmp/";
-        QStringList list1=fileToList("installscript.sh");
-        installscriptTextEdit->clear();
-        int font=boy*2;
-        for(int i=0;i<list1.count();i++)
-        {
-            QString line=list1[i];
-            if(line!="")
-            {
-                // script->insertPlainText(line+"\n");
-                installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
-
-            }
-        }
-
-    }
-    if(procesType=="getscriptremove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-        procesTypeStatus=3;
-        localDir="/tmp/";
-        QStringList list1=fileToList("removescript.sh");
-        removescriptTextEdit->clear();
-        int font=boy*2;
-        for(int i=0;i<list1.count();i++)
-        {
-            QString line=list1[i];
-            if(line!="")
-            {
-                // script->insertPlainText(line+"\n");
-                removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
-
-            }
-        }
-
-    }
-    if(procesType=="getindex")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
-        procesTypeStatus=4;
-        localDir="/usr/share/betikyukleyici/";
-        QStringList list=fileToList("betikyukleyicilist");
-        listToFile(list,"betikyukleyicilist");
-    }
-    if(procesType=="getversion")
-    {
-        localDir="/tmp/";
-        QStringList listv=fileToList("version");
-        for(int i=0;i<listv.count();i++)
-        {
-            QString line=listv[i];
-            if(line!="")
-            {
-                ///qDebug()<<"**"<<line;
-                if(line.contains(version,Qt::CaseInsensitive))
-                {
-                    updateButton->hide();
-
-                }else
-                {
-                    updateButton->show();
-                    line.truncate(line.lastIndexOf("deb")+3);
-                    // qDebug()<<line;
-                    updateFile=line;
-                }
-
-            }
-        }
-    }
- /*       localDir="/usr/share/betikyukleyici/";
-   /***********************************************************************/
-    /*        QStringList list=fileToList("betikyukleyicilist");
-        twl->setRowCount(0);
-        for(int i=0;i<list.count();i++)
-        {
-            QString line=list[i];
-            QStringList lst=line.split("|");
-            twl->setRowCount(twl->rowCount()+1);
-
-            twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-            twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
-
-            QString path="/var/lib/betikyukleyici/"+lst[0];
-            QFile file(path);
-            //qDebug()<<path<<file.exists();
-            if(file.exists())
-                twl->setItem(i, 2, new QTableWidgetItem("Yüklü"));//package address
-            else
-                twl->setItem(i, 2, new QTableWidgetItem("-----"));//package address
-        }
-        twl->selectRow(selectRowIndex);
-
-        if(list.count()<1)
-        {
-            statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
-            int font=boy*2;
-            statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
-        }
-
-    /**************************************************************/
-        installerButton->setEnabled(true);
-        removeButton->setEnabled(true);
-        twl->setEnabled(true);
- doc->moveCursor(QTextCursor::End);
-}
-void MainWindow :: disp()
-{
-    int font=boy*2;
-    while( 1 ){
-        val++;
-        QString t = proces->readLine();
-
-        t.remove("\n");
-      // qDebug()<<t.toUtf8();
-
-        if( t.isEmpty()||t=="" ) {break;}
-       // t=t+"\n\n";
-      //  doc->moveCursor (QTextCursor::End);
-        if(!t.contains("error",Qt::CaseInsensitive)&&!t.contains("hata",Qt::CaseInsensitive))
-        {
-
-           doc->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+t+"</lu>");
-          //  doc->insertPlainText(t);
-
-        //doc->moveCursor(QTextCursor::End);
-
-        }
-        else
-        {
-            doc->textCursor().insertHtml("<br/><lu style=\"color:red;\">"+t+"</lu>");
-            statusLabel->setText("Kurulumda hatalarla karşılaşıldı..");
-            int font=boy*2;
-          //  statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
-        }
-        if(val>99) val=0;
-
-        progressbar->setValue(val);
-         doc->moveCursor(QTextCursor::End);
-    }
-}
 void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 {
    // qDebug()<<"satır seçildi"<<iRow;
@@ -671,6 +449,41 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
 
 }
 }
+void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
+{
+QString paketname= twl->item(iRow, 0)->text();
+QStringList list=fileToList("betikyukleyicilist");
+/******************************************************************/
+//QMessageBox::StandardButton reply;
+// reply = QMessageBox::question(this, "Uyarı", "Bilgisayar Silinecek! Emin misiniz?",
+//                             QMessageBox::Yes|tr(QMessageBox::No);
+QMessageBox messageBox(this);
+messageBox.setText("Uyarı");
+    messageBox.setInformativeText("Paket Listesi İşlem Seçiniz!");
+QAbstractButton *evetButton =messageBox.addButton(tr("Sil"), QMessageBox::ActionRole);
+QAbstractButton *hayirButton =messageBox.addButton(tr("Düzenle"), QMessageBox::ActionRole);
+                               messageBox.setIcon(QMessageBox::Question);
+messageBox.exec();
+if (messageBox.clickedButton() == evetButton) {
+     // qDebug()<<"evet basıldı";
+     list=listRemove(list,paketname);
+     listToFile(list,"betikyukleyicilist");
+     if(list.count()==0) twl->setRowCount(0);
+     for(int i=0;i<list.count();i++)
+     {
+        QString line=list[i];
+        QStringList lst=line.split("|");
+        twl->setRowCount(i+1);
+        twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
+        twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
+     }
+}
+if (messageBox.clickedButton() == hayirButton) {
+     //qDebug()<<"hayır basıldı";
+}
+
+
+}
 
 
 
@@ -682,41 +495,6 @@ void MainWindow::paketTableWidgetWindow_cellClicked(int iRow, int iColumn)
  {
      qDebug()<<"Kaldırılacak Paket: "<<paket;
  }
-void MainWindow::paketTableCellDoubleClicked(int iRow, int iColumn)
-{
-     QString paketname= twl->item(iRow, 0)->text();
-     QStringList list=fileToList("betikyukleyicilist");
-/******************************************************************/
-    //QMessageBox::StandardButton reply;
-    // reply = QMessageBox::question(this, "Uyarı", "Bilgisayar Silinecek! Emin misiniz?",
-      //                             QMessageBox::Yes|tr(QMessageBox::No);
-     QMessageBox messageBox(this);
-     messageBox.setText("Uyarı");
-     messageBox.setInformativeText("Paket Listesi İşlem Seçiniz!");
-     QAbstractButton *evetButton =messageBox.addButton(tr("Sil"), QMessageBox::ActionRole);
-     QAbstractButton *hayirButton =messageBox.addButton(tr("Düzenle"), QMessageBox::ActionRole);
-     messageBox.setIcon(QMessageBox::Question);
-             messageBox.exec();
-             if (messageBox.clickedButton() == evetButton) {
-                 // qDebug()<<"evet basıldı";
-                 list=listRemove(list,paketname);
-                 listToFile(list,"betikyukleyicilist");
-                 if(list.count()==0) twl->setRowCount(0);
-                 for(int i=0;i<list.count();i++)
-                 {
-                     QString line=list[i];
-                     QStringList lst=line.split("|");
-                     twl->setRowCount(i+1);
-                     twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-                     twl->setItem(i, 1, new QTableWidgetItem(lst[1]));//package address
-                   }
-             }
-             if (messageBox.clickedButton() == hayirButton) {
-                 //qDebug()<<"hayır basıldı";
-             }
-
-
-}
 
 QStringList MainWindow::listMerge(QStringList list1, QStringList list2, int dataIndex)
 {

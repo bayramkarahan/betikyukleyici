@@ -1,0 +1,215 @@
+#ifndef PROCESS_H
+#define PROCESS_H
+void MainWindow :: procresbegin()
+{
+
+   /* installerButton->setEnabled(false);
+    removeButton->setEnabled(false);
+    twl->setEnabled(false);
+*/
+      val=0;
+    progressbar->setValue(val);
+    doc->setText("");
+    doc->moveCursor (QTextCursor::End);
+
+    if(procesType=="install")
+    {
+        // qDebug()<<"kurulum başladı.";
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Başladı***</p>");
+    }
+    if(procesType=="remove")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
+        }
+    if(procesType=="getscriptinstall")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+
+       }
+    if(procesType=="getscriptremove")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
+
+       }
+    qDebug()<<"procresbegin.";
+
+    if(procesType=="getindex")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
+    }
+
+}
+void MainWindow :: procresend()
+{
+     qDebug()<<"procresend";
+    val=100;
+    int procesTypeStatus=0;
+
+    progressbar->setValue(val);
+    doc->moveCursor (QTextCursor::End);
+    if(procesType=="install")
+    {
+        qDebug()<<"kurulum bitti.";
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Yükleme Tamamlandı***</p>");
+       /// system("rm /tmp/installscript.sh");
+           myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
+        procesTypeStatus=1;
+
+    }
+    if(procesType=="remove")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
+   // system("rm /tmp/removescript.sh");
+    myMessageBox("", "\n\Kaldırma Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
+
+        procesTypeStatus=2;
+      }
+    if(procesType=="getscriptinstall")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        procesTypeStatus=3;
+        localDir="/tmp/";
+        QStringList list1=fileToList("installscript.sh");
+        installscriptTextEdit->clear();
+        int font=boy*2;
+        for(int i=0;i<list1.count();i++)
+        {
+            QString line=list1[i];
+            if(line!="")
+            {
+                // script->insertPlainText(line+"\n");
+                installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+            }
+        }
+
+    }
+    if(procesType=="getscriptremove")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        procesTypeStatus=3;
+        localDir="/tmp/";
+        QStringList list1=fileToList("removescript.sh");
+        removescriptTextEdit->clear();
+        int font=boy*2;
+        for(int i=0;i<list1.count();i++)
+        {
+            QString line=list1[i];
+            if(line!="")
+            {
+                // script->insertPlainText(line+"\n");
+                removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+            }
+        }
+
+    }
+    if(procesType=="getindex")
+    {
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
+        procesTypeStatus=4;
+        localDir="/usr/share/betikyukleyici/";
+        QStringList list=fileToList("betikyukleyicilist");
+        listToFile(list,"betikyukleyicilist");
+    }
+    if(procesType=="getversion")
+    {
+        localDir="/tmp/";
+        QStringList listv=fileToList("version");
+        for(int i=0;i<listv.count();i++)
+        {
+            QString line=listv[i];
+            if(line!="")
+            {
+                ///qDebug()<<"**"<<line;
+                if(line.contains(version,Qt::CaseInsensitive))
+                {
+                    updateButton->hide();
+
+                }else
+                {
+                    updateButton->show();
+                    line.truncate(line.lastIndexOf("deb")+3);
+                    // qDebug()<<line;
+                    updateFile=line;
+                }
+
+            }
+        }
+    }
+       localDir="/usr/share/betikyukleyici/";
+   /***********************************************************************
+    *
+    /*        QStringList list=fileToList("betikyukleyicilist");
+        twl->setRowCount(0);
+        for(int i=0;i<list.count();i++)
+        {
+            QString line=list[i];
+            QStringList lst=line.split("|");
+            twl->setRowCount(twl->rowCount()+1);
+
+            twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
+            twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
+
+            QString path="/var/lib/betikyukleyici/"+lst[0];
+            QFile file(path);
+            //qDebug()<<path<<file.exists();
+            if(file.exists())
+                twl->setItem(i, 2, new QTableWidgetItem("Yüklü"));//package address
+            else
+                twl->setItem(i, 2, new QTableWidgetItem("-----"));//package address
+        }
+        twl->selectRow(selectRowIndex);
+
+        if(list.count()<1)
+        {
+            statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
+            int font=boy*2;
+            statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+        }
+*/
+      /*  installerButton->setEnabled(true);
+        removeButton->setEnabled(true);
+        twl->setEnabled(true);*/
+ doc->moveCursor(QTextCursor::End);
+}
+
+
+void MainWindow :: disp()
+{
+    int font=boy*2;
+    while( 1 ){
+        val++;
+        QString t = proces->readLine();
+
+        t.remove("\n");
+      // qDebug()<<t.toUtf8();
+
+        if( t.isEmpty()||t=="" ) {break;}
+       // t=t+"\n\n";
+      //  doc->moveCursor (QTextCursor::End);
+        if(!t.contains("error",Qt::CaseInsensitive)&&!t.contains("hata",Qt::CaseInsensitive))
+        {
+
+           doc->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+t+"</lu>");
+          //  doc->insertPlainText(t);
+
+        //doc->moveCursor(QTextCursor::End);
+
+        }
+        else
+        {
+            doc->textCursor().insertHtml("<br/><lu style=\"color:red;\">"+t+"</lu>");
+            statusLabel->setText("Kurulumda hatalarla karşılaşıldı..");
+            int font=boy*2;
+          //  statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
+        }
+        if(val>99) val=0;
+
+        progressbar->setValue(val);
+         doc->moveCursor(QTextCursor::End);
+    }
+}
+
+
+#endif // PROCESS_H

@@ -11,7 +11,7 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     paketAdiLabel=new QLabel(this);
   //  setAutoFillBackground(false);
     paketAdiLabel->setObjectName("paketAdiLabel");
-    //paketAdiLabel->setStyleSheet("QLabel#paketAdiLabel{ color : blue; }");
+   // paketAdiLabel->setStyleSheet("QLabel#paketAdiLabel{ background-color:#ffffff; }");
     paketAdiLabel->setFixedWidth(w*0.9);
     paketAdiLabel->setAlignment(Qt::AlignCenter);
     QFont f;
