@@ -23,42 +23,35 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     paketResmi->setScaledContents( true );
     //paketResmi->setFixedSize(QSize(w*0.55,h*0.55));
 
-   /* appsInstallButtonLabel=new QLabel(this);
-    appsInstallButtonLabel->setFixedSize(QSize(w*0.5,h*0.5));
-    appsInstallButtonLabel->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
-   appsInstallButtonLabel->setScaledContents( true );
-
-    appsRemoveButtonLabel=new QLabel(this);
-    appsRemoveButtonLabel->setFixedSize(QSize(w*0.5,h*0.5));
-    appsRemoveButtonLabel->setPixmap( QPixmap( ":/icons/remove.svg" ) );
-    appsRemoveButtonLabel->setScaledContents( true );
-*/
-
-    appsInstallButton= new QPushButton(this);
-    appsInstallButton->setFixedSize(QSize(w*0.4,h*0.4));
-    appsInstallButton->setIconSize(QSize(w*0.3,h*0.3));
+      QFont ff;
+    ff.setPointSize(w*0.14);
+    appsInstallButton= new QToolButton(this);
+    appsInstallButton->setFixedSize(QSize(w*0.2,h*0.2));
+    appsInstallButton->setIconSize(QSize(w*0.25,h*0.25));
     appsInstallButton->setStyleSheet("Text-align:center");
     appsInstallButton->setIcon(QIcon(":/icons/betikyukleyici.svg"));
      appsInstallButton->setObjectName("appsInstallButton");
    // appsInstallButton->setAutoRaise(true);
    // appsInstallButton->setStyleSheet("background-color: #dadada; border:1px solid black;");
-    //appsInstallButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    //appsInstallButton->setText("Betik"+QString::number(i)+". kodu");
+    appsInstallButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    appsInstallButton->setText("Yükle");
    appsInstallButton->setVisible(false);
+    appsInstallButton->setFont(ff);
     connect(appsInstallButton, &QToolButton::clicked, [=]() {
         emit installSignal(paketAdiLabel->text());
          });
 
     appsRemoveButton= new QToolButton(this);
-    appsRemoveButton->setFixedSize(QSize(w*0.4,h*0.4));
-    appsRemoveButton->setIconSize(QSize(w*0.3,h*0.3));
+    appsRemoveButton->setFixedSize(QSize(w*0.30,h*0.3));
+    appsRemoveButton->setIconSize(QSize(w*0.25,h*0.25));
     appsRemoveButton->setStyleSheet("Text-align:center");
     appsRemoveButton->setIcon(QIcon(":/icons/remove.svg"));
     appsRemoveButton->setAutoRaise(true);
     appsRemoveButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
      appsRemoveButton->setObjectName("appsRemoveButton");
     appsRemoveButton->setVisible(false);
-    //appsRemoveButton->setText("Betik"+QString::number(i)+". kodu");
+    appsRemoveButton->setText("Kaldır");
+    appsRemoveButton->setFont(ff);
    // appsRemoveButton->setStyleSheet("background-color: #dadada; border:1px solid black;");
     connect(appsRemoveButton, &QToolButton::clicked, [=]() {
         emit removeSignal(paketAdiLabel->text());
@@ -91,13 +84,13 @@ void AppWidget::AppWidgetResize(int w, int h)
 {
    this->setFixedSize(w,h);
    paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciappsicons/"+paketResmiYol) );
-  paketResmi->setFixedSize(h*0.4,h*0.4);
+  paketResmi->setFixedSize(h*0.45,h*0.45);
 
-   appsInstallButton->setFixedSize(QSize(w*0.4,h*0.4));
-   appsInstallButton->setIconSize(QSize(w*0.3,h*0.3));
+   appsInstallButton->setFixedSize(QSize(w*0.45,h*0.35));
+   appsInstallButton->setIconSize(QSize(w*0.25,h*0.25));
 
-   appsRemoveButton->setFixedSize(QSize(w*0.4,h*0.4));
-   appsRemoveButton->setIconSize(QSize(w*0.3,h*0.3));
+   appsRemoveButton->setFixedSize(QSize(w*0.45,h*0.35));
+   appsRemoveButton->setIconSize(QSize(w*0.25,h*0.25));
    paketAdiLabel->setFixedWidth(w*0.9);
 
 }
@@ -105,24 +98,9 @@ void AppWidget::AppWidgetResize(int w, int h)
 void AppWidget::selectSlot()
 {
    QPalette palet;
-
-   qDebug()<<"tıklandıı";
+   //qDebug()<<"tıklandıı";
    select=true;
    emit appWidgetClickSignal(paketAdiLabel->text());//nesneler arası data transferi***
-   /*
-      if(select){
-        /*  palet.setColor(QPalette::Window, QColor(0,200,200,100));
-          setPalette(palet);
-          setAutoFillBackground(true);
-*/
-   //  setStyleSheet("background-color: #ff9999;");
-
-   /*   }
-      else{
-
-         setStyleSheet("background-color: #dadada;");
-
-    }*/
 }
 void AppWidget::paintEvent(QPaintEvent *pe)
 {

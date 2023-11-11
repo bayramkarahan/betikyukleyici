@@ -19,7 +19,7 @@ void MainWindow :: procresbegin()
     }
     if(procesType=="remove")
     {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldıra Başladı***</p>");
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Başladı***</p>");
         }
     if(procesType=="getscriptinstall")
     {
@@ -47,7 +47,7 @@ void MainWindow :: procresbegin()
 }
 void MainWindow :: procresend()
 {
-     qDebug()<<"procresend";
+    // qDebug()<<"procresend";
     val=100;
     int procesTypeStatus=0;
 
@@ -132,6 +132,7 @@ void MainWindow :: procresend()
 
     if(procesType=="getversion")
     {
+        qDebug()<<"version kontrol yapılıyor";
         localDir="/tmp/";
         QStringList listv=fileToList("version");
         for(int i=0;i<listv.count();i++)
@@ -155,40 +156,7 @@ void MainWindow :: procresend()
             }
         }
     }
-       localDir="/usr/share/betikyukleyici/";
-   /***********************************************************************
-    *
-    /*        QStringList list=fileToList("betikyukleyicilist");
-        twl->setRowCount(0);
-        for(int i=0;i<list.count();i++)
-        {
-            QString line=list[i];
-            QStringList lst=line.split("|");
-            twl->setRowCount(twl->rowCount()+1);
 
-            twl->setItem(i, 0, new QTableWidgetItem(lst[0]));//package name
-            twl->setItem(i, 1, new QTableWidgetItem(lst[3]));//package name
-
-            QString path="/var/lib/betikyukleyici/"+lst[0];
-            QFile file(path);
-            //qDebug()<<path<<file.exists();
-            if(file.exists())
-                twl->setItem(i, 2, new QTableWidgetItem("Yüklü"));//package address
-            else
-                twl->setItem(i, 2, new QTableWidgetItem("-----"));//package address
-        }
-        twl->selectRow(selectRowIndex);
-
-        if(list.count()<1)
-        {
-            statusLabel->setText("İnternet Bağlantısı Yok veya Paket Listesi Yok");
-            int font=boy*2;
-            statusLabel->setStyleSheet("color: #ac0000;Text-align:center;font-size:"+QString::number(font)+"px");
-        }
-*/
-      /*  installerButton->setEnabled(true);
-        removeButton->setEnabled(true);
-        twl->setEnabled(true);*/
  doc->moveCursor(QTextCursor::End);
 }
 

@@ -14,6 +14,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    downloadAddress="https://github.com/bayramkarahan/betikyukleyici/raw/master/script/";
        QSize screenSize = qApp->screens()[0]->size();
     // qDebug()<<"boyut"<<screenSize.height()*0.65<<screenSize.width()*0.5;
     boy=screenSize.height()/153;
@@ -47,8 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     appsWidget=new QWidget(anaWidget);
     appsWidget->setObjectName("appsWidget");
-    //appsWidget->setStyleSheet("QWidget#appsWidget{/*background-color: #ffffaa;border-bottom:2px solid #dc0000;*/}");
-    appsWidget->setFixedSize(pencereNW,pencereNH*0.55);
+   // appsWidget->setStyleSheet("QWidget#appsWidget{background-color: #ff0000;border-bottom:2px solid #dc0000;}");
+    appsWidget->setFixedSize(pencereNW,pencereNH*0.56);
 
     scriptWidget=new QWidget(anaWidget);
     scriptWidget->setStyleSheet("background-color: #ffffff;");
@@ -91,20 +92,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QTabWidget *tabw=new QTabWidget(scriptWidget);
-    tabw->setFixedSize(pencereNW,pencereNH);
+    tabw->setFixedSize(pencereNW,pencereNH*0.5);
+   // tabw->setStyleSheet("font-size:"+QString::number(font)+"px");
+    font=boy*2;
+    int fontt=font*1;
 
+    int fonttt=font*0.7;
 
+   // qDebug()<<"font:"<<font<<fontt<<fonttt;
+    QString tabstyle="QTabWidget::pane {border: 1px solid lightgray;top:-1px; background:#efefef;}\
+        QTabBar::tab {background:#eeeeee; border: 1px solid lightgray;font-size:"+QString::number(font)+"px; padding: 5px;} \
+        QTabBar::tab:selected { background:#ffffff; margin-bottom: -1px; }";
+    tabw->setStyleSheet(tabstyle);
     doc=new QTextEdit(tabw);
-    doc->setFixedSize(pencereNW,pencereNH);
+    doc->setFixedSize(pencereNW*0.995,pencereNH*0.2);
     doc->setReadOnly(true);
+    doc->setStyleSheet(" border:0px solid black;");
 
     installscriptTextEdit=new QTextEdit(tabw);
-    installscriptTextEdit->setFixedSize(pencereNW,pencereNH);
+    installscriptTextEdit->setFixedSize(pencereNW,pencereNH*0.2);
     installscriptTextEdit->setReadOnly(true);
+    installscriptTextEdit->setStyleSheet(" border:0px solid black;");
 
     removescriptTextEdit=new QTextEdit(tabw);
-    removescriptTextEdit->setFixedSize(pencereNW,pencereNH);
+    removescriptTextEdit->setFixedSize(pencereNW,pencereNH*0.2);
     removescriptTextEdit->setReadOnly(true);
+    removescriptTextEdit->setStyleSheet(" border:0px solid black;");
 
   //  doc->setStyleSheet("background-color: #dfdfdf;");
     tabw->addTab(installscriptTextEdit,"Yükleme Betiği");
@@ -119,13 +132,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowIcon(appIcon);
   this->setWindowTitle("Betik Yükleyici");
 
-    font=boy*2;
-    int fontt=font*1;
+
     statusLabel=new QLabel(aramaWidget);
     statusLabel->setText("Yüklenebilecek Paketler");
     statusLabel->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
 
-     statusLabel->setFixedSize(aramaWidget->width()*0.42,aramaWidget->height()*0.9);
+     statusLabel->setFixedSize(aramaWidget->width()*0.35,aramaWidget->height()*0.9);
     //statusLabel->setAlignment(Qt::AlignLeft);
 
 
@@ -145,8 +157,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(findTextEdit, SIGNAL(textChanged()), this, SLOT(appWidgetfindTextEditChanged()));
 
  updateButton= new QToolButton(aramaWidget);
- updateButton->setFixedSize(aramaWidget->width()*0.20,aramaWidget->height()*0.9);
- updateButton->setIconSize(QSize(aramaWidget->width()*0.20,aramaWidget->height()*0.9));
+ updateButton->setFixedSize(aramaWidget->width()*0.15,aramaWidget->height()*0.9);
+ updateButton->setIconSize(QSize(aramaWidget->width()*0.15,aramaWidget->height()*0.9));
  updateButton->setStyleSheet("Text-align:center");
  updateButton->setIcon(QIcon(":/icons/update.svg"));
  updateButton->setAutoRaise(true);
@@ -167,6 +179,19 @@ MainWindow::MainWindow(QWidget *parent) :
      //system("rm  /tmp/prg.deb");
  });
 
+ aboutButton= new QToolButton(aramaWidget);
+ aboutButton->setFixedSize(aramaWidget->width()*0.1,aramaWidget->height()*0.9);
+ aboutButton->setIconSize(QSize(aramaWidget->width()*0.15,aramaWidget->height()*0.9));
+ aboutButton->setStyleSheet("Text-align:center;color: #000000;font-size:"+QString::number(font)+"px");
+ aboutButton->setIcon(QIcon(":/icons/about.svg"));
+ aboutButton->setAutoRaise(true);
+ aboutButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+ // powerOnButton->setFont(f2);
+ aboutButton->setText("Hakkında");
+
+     connect(aboutButton, &QToolButton::clicked, [=]() {
+         about();
+     });
  QGridLayout *aramalayout = new QGridLayout(aramaWidget);
 //aramalayout->setSpacing(0);
 aramalayout->setContentsMargins(0,0,0,0);
@@ -174,26 +199,21 @@ aramalayout->setContentsMargins(0,0,0,0);
  aramalayout->addWidget(findTextEdit,1,2,1,1,Qt::AlignCenter);
  aramalayout->addWidget(statusLabel,1,3,1,1,Qt::AlignCenter);
  aramalayout->addWidget(updateButton,1,4,1,1,Qt::AlignCenter);
+ aramalayout->addWidget(aboutButton,1,5,1,1,Qt::AlignCenter);
 
-    // layout->setVerticalSpacing(0);
-   //  layout->setHorizontalSpacing(10);
-    //layout->setColumnMinimumWidth(0, 37);
-   // QWidget *paket = paketSlot(mwidget);
-      //QWidget *appsWidget =
-      // appList(appsListWidget);
+  /**********************ilk Liste oluşturma***************************************/
 /**********************ilk Liste oluşturma***************************************/
-/**********************ilk Liste oluşturma***************************************/
-// getIndex();
+ getIndex();
         if (appsListButton.count()==0)
         {
             localDir="/tmp/";
             QStringList list=fileToList("betikyukleyiciappsindex.conf");
             uygulamaListeHazirla(list);
         }
-        qDebug()<<"apps list"<<appsListButton.count();
-        appsWidgetListe=new QWidget(appsWidget);
+        //qDebug()<<"apps list"<<appsListButton.count();
+       appsWidgetListe=new QWidget(appsWidget);
         appsWidgetListe->setObjectName("appsListewidget");
-        appsWidgetListe->setStyleSheet("background-color: #ffffff");
+      // appsWidgetListe->setStyleSheet("background-color: #000077");
         //appsWidgetListe->setAutoFillBackground(false);
         /**************************************************/
         appslayout = new QGridLayout();
@@ -212,8 +232,8 @@ aramalayout->setContentsMargins(0,0,0,0);
       appsWidgetscrollArea->setFixedSize(appsWidget->width(),appsWidget->height());
       appsWidgetscrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       appsWidgetscrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-      appsWidgetscrollArea->setStyleSheet("border:0;border-bottom:2px solid #dcdcdc;");
-      appsWidgetscrollArea->setWidget(appsWidgetListe);
+      appsWidgetscrollArea->setStyleSheet("background-color: #ffffff;border:0;border-bottom:2px solid #dcdcdc;");
+     appsWidgetscrollArea->setWidget(appsWidgetListe);
 
     layout->addWidget(aramaWidget,1,1,1,1,Qt::AlignCenter);
     layout->addWidget(kategoriWidget,2,1,1,1,Qt::AlignCenter);
@@ -223,19 +243,11 @@ aramalayout->setContentsMargins(0,0,0,0);
 
 
   /****************versiyon kontrolü yapılıyor***********************************************/
-  //system("wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version");
-  /*procesType="getversion";
+  procesType="getversion";
   QString kmt="wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version";
   proces->start(kmt);
   proces->waitForFinished(-1);
-  /****************index listesi çekiliyor***********************************************/
-  // system("wget  https://raw.githubusercontent.com/bayramkarahan/betikyukleyici/master/index.conf -O /usr/share/betikyukleyici/betikyukleyicilist");
- /* procesType="getindex";
-  proces->start("wget  https://raw.githubusercontent.com/bayramkarahan/betikyukleyici/master/script/index.conf -O /usr/share/betikyukleyici/betikyukleyicilist");
-  proces->waitForFinished(-1);
 
-  /***************************************************************/
- // paketTableWidgetWindow_cellClicked(0, 0);
 }
 
 void   MainWindow::about(){
@@ -370,10 +382,6 @@ QWidget *MainWindow::paketSlot(QWidget *parent)
 
  connect(aboutButton, &QToolButton::clicked, [=]() {
 //about();
-    // getIndex();
-
-
-
 });
  QHBoxLayout *btnlayout = new QHBoxLayout;
  btnlayout->addWidget(installerButton);
@@ -487,14 +495,7 @@ if (messageBox.clickedButton() == hayirButton) {
 
 
 
- void MainWindow::installSlot(QString paket)
- {
-     qDebug()<<"Yüklenecek Paket: "<<paket;
- }
- void MainWindow::removeSlot(QString paket)
- {
-     qDebug()<<"Kaldırılacak Paket: "<<paket;
- }
+
 
 QStringList MainWindow::listMerge(QStringList list1, QStringList list2, int dataIndex)
 {

@@ -69,6 +69,7 @@ private:
     QString selectPaketName;
      QString selectPaketAddressInstall;
      QString selectPaketAddressRemove;
+     QString downloadAddress;
     QProgressBar *progressbar;
     QProcess *proces;
      QProcess *proces1;

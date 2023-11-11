@@ -29,18 +29,20 @@ QWidget *MainWindow::hakkinda()
 
     QWidget *hakkindaPage=new QWidget();
     /*******************************************************/
-    hakkindaPage->setFixedWidth(boy*90);
-    hakkindaPage->setFixedHeight(boy*80);
+    hakkindaPage->setFixedWidth(boy*100);
+    hakkindaPage->setFixedHeight(boy*100);
 
    auto *hak=new QLabel(hakkindaPage);
 
-    hak->setText("\nBu Uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
+    hak->setText("\n* Bu uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
+                 "\n\n* Betiklerin çalıştırılmasından doğacak maddi manevi kaybı kullanıcı kabul etmiş sayılır."
+                "\n\n* Yazılımı kullanarak Yükleme ve Kaldırma betiklerini çalıştırmadan önce kontrol ediniz."
+                "\n\n* Bu betik yükleme listesinde bulunmayan yazılımları talep edebilirsiniz."
+                "\n\n* Listede bulunan betiklerde hata varsa iletişime geçebilirsiniz."
                  "\n"
-
                    "\n   Copyright (C) 2023 by Bayram KARAHAN                                     "
                   "\n   github.com/bayramkarahan/betikyukleyici                                         "
                   "\n"
-                  "\n\n                                                                          "
                   "\n   This program is free software; you can redistribute it and/or modify    "
                   "\n   it under the terms of the GNU General Public License as published by    "
                   "\n   the Free Software Foundation; either version 3 of the License, or       "

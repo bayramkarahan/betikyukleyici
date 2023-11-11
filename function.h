@@ -5,11 +5,11 @@
 void MainWindow::getIndex()
 {
     procesType="getindex";
-    proces->start("wget  https://github.com/bayramkarahan/betikyukleyici/raw/master/script/betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
+    proces->start("wget  "+downloadAddress+"betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
     proces->waitForFinished(-1);
 
     procesType="getindexicons";
-    proces->start("wget  https://github.com/bayramkarahan/betikyukleyici/raw/master/script/betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciappsicons.zip");
+    proces->start("wget  "+downloadAddress+"betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciappsicons.zip");
     proces->waitForFinished(-1);
 
 
@@ -61,6 +61,7 @@ void MainWindow::uygulamaListele()
 
     qDeleteAll(appsWidgetListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
     if (appsListButton.count()==0) return;
+
     int appsSayisi=appsListButton.count();
     int sutunSayisi=8;
     int satir=appsSayisi/sutunSayisi;
@@ -81,7 +82,7 @@ void MainWindow::uygulamaListele()
             else
                          recordNumber=(i-1)*sutunSayisi+j;
        //  appsListButton.append(appsButton);
-            appsListButton[recordNumber-1]->AppWidgetResize(butonGenislik*0.9,butonYukseklik*0.9);
+            appsListButton[recordNumber-1]->AppWidgetResize(butonGenislik*1,butonYukseklik*0.9);
             appsListButton[recordNumber-1]->setAutoFillBackground(false);
             appslayout->addWidget(appsListButton[recordNumber-1], i,j,1,1);
 
@@ -141,6 +142,25 @@ void MainWindow::selectPackageSlot(QString paket)
             appsListButton[i]->appsRemoveButton->setVisible(true);
            // appsListButton[i]->appsInstallButton->setFlat(false);
 
+        /***********************************************************************************************/
+        /*************************install remove scriptler iniyor***************************************/
+        /***********************************************************************************************/
+        selectPaketAddressInstall=downloadAddress+paket+"-install.sh";
+        selectPaketAddressRemove=downloadAddress+paket+"-remove.sh";
+        //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressInstall;
+        //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressRemove;
+
+           procesType="getscriptinstall";
+            QString kmt="wget -O /tmp/installscript.sh "+selectPaketAddressInstall;
+            proces->start(kmt);
+            proces->waitForFinished(-1);
+
+            procesType="getscriptremove";
+            kmt="wget -O /tmp/removescript.sh "+selectPaketAddressRemove;
+            proces->start(kmt);
+            proces->waitForFinished(-1);
+        /***********************************************************************************************/
+
          }
         else
         {
@@ -152,9 +172,17 @@ void MainWindow::selectPackageSlot(QString paket)
         appsListButton[i]->paketAdiLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
         appsListButton[i]->paketResmi->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
         //appsListButton[i]->appsInstallButton->autoRaise();
-       // appsListButton[i]->appsInstallButton->setStyleSheet("QToolButton#appsInstallButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
+       // appsListButton[i]->appsInstallButton->setStyleSheet("QToolButton#appsInstallButton{background-color: #ffffff; :disabled}");
        // appsListButton[i]->appsRemoveButton->setStyleSheet("QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}");
-       }
+
+        QString ExButtonStyleSheet = "QToolButton#appsInstallButton,QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}\
+            QToolButton#appsInstallButton:hover,QToolButton#appsRemoveButton:hover{background-color:#efefef;}\
+            QToolButton#appsInstallButton:pressed,QToolButton#appsRemoveButton:pressed{background-color:#dcdcdc;}\
+            QToolButton#appsInstallButton:disabled,QToolButton#appsRemoveButton:disabled{background-color:grey;}";
+
+         appsListButton[i]->appsInstallButton->setStyleSheet(ExButtonStyleSheet);
+         appsListButton[i]->appsRemoveButton->setStyleSheet(ExButtonStyleSheet);
+    }
 }
 
 
@@ -201,7 +229,7 @@ void MainWindow::kategoriListele()
             if(i==0){
             groupList.append("Tümü|all.svg");
             groupList.append(linet1lst[3]+"|"+linet1lst[4]);
-            qDebug()<<"group eklendi"<<linet1lst[3]+"|"+linet1lst[4];
+           // qDebug()<<"group eklendi"<<linet1lst[3]+"|"+linet1lst[4];
 
             }
 
@@ -247,7 +275,7 @@ void MainWindow::kategoriListele()
             //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
         }
     }
-    qDebug()<<"kategori list"<<kategoriListButton.count();
+  //  qDebug()<<"kategori list"<<kategoriListButton.count();
     kategoriWidgetListe=new QWidget(kategoriWidget);
     kategoriWidgetListe->setObjectName("appsListewidget");
    // kategoriWidgetListe->setStyleSheet("background-color: #aaaadd");
@@ -331,5 +359,40 @@ void   MainWindow::findTextEditChanged()
     //twl->selectRow(0);
 
     // paketTableWidgetWindow_cellClicked(0,0);
+}
+
+void MainWindow::installSlot(QString paket)
+{
+    qDebug()<<"Yüklenecek Paket: "<<paket;
+
+         if(!QFile::exists("/tmp/installscript.sh"))
+         {
+             qDebug()<<"paket seçildi..";
+             ///paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+         }else
+         {
+         qDebug()<<"paket seçilmiş install başladı..";
+         procesType="install";
+        system("chmod a+x /tmp/installscript.sh");
+        proces->start("/tmp/installscript.sh");
+
+         }
+
+}
+void MainWindow::removeSlot(QString paket)
+{
+         qDebug()<<"Kaldırılacak Paket: "<<paket;
+
+         if(!QFile::exists("/tmp/removescript.sh"))
+         {
+            qDebug()<<"paket seçildi..";
+            //paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
+         }else
+         {
+            procesType="remove";
+            system("chmod a+x /tmp/removescript.sh");
+            proces->start("/tmp/removescript.sh");
+         }
+
 }
 #endif // FUNCTION_H

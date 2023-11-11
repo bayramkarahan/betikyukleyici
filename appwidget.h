@@ -16,7 +16,7 @@ public:
     QLabel *paketAdiLabel;
     QLabel *paketResmi;
     QString paketResmiYol;
-    QPushButton * appsInstallButton;
+    QToolButton * appsInstallButton;
     QToolButton * appsRemoveButton;
     QLabel * appsInstallButtonLabel;
     QLabel * appsRemoveButtonLabel;
