@@ -6,6 +6,7 @@
 AppWidget::AppWidget(int w, int h, QWidget *parent)
     : QWidget{parent}
 {
+    installStatus=false;
     setObjectName("AppWidget");
     this->setFixedSize(w,h);
     paketAdiLabel=new QLabel(this);
@@ -22,6 +23,14 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
     paketResmi->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
     paketResmi->setScaledContents( true );
     //paketResmi->setFixedSize(QSize(w*0.55,h*0.55));
+
+    installStatusLabel=new QLabel(this);
+    installStatusLabel->setPixmap( QPixmap( ":/icons/install.svg" ) );
+    installStatusLabel->setScaledContents( true );
+    installStatusLabel->setFixedSize(QSize(w*0.25,h*0.25));
+    installStatusLabel->setObjectName("installStatusLabel");
+    installStatusLabel->setStyleSheet("QLabel#installStatusLabel{ background-color:#ffffff;border:1px solid white; }");
+
 
       QFont ff;
     ff.setPointSize(w*0.14);
@@ -68,6 +77,7 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
 
    mainlayout->addWidget(paketAdiLabel,1,1,1,2,Qt::AlignCenter);
    mainlayout->addWidget(paketResmi,2,1,2,2,Qt::AlignCenter);
+   mainlayout->addWidget(installStatusLabel,3,2,1,1,Qt::AlignRight);
    mainlayout->addWidget(appsInstallButton,4,1,1,1,Qt::AlignLeft);
    mainlayout->addWidget(appsRemoveButton,4,2,1,1,Qt::AlignRight);
   // mainlayout->addWidget(appsInstallButtonLabel,4,1,1,1,Qt::AlignLeft);
@@ -93,17 +103,23 @@ void AppWidget::AppWidgetResize(int w, int h)
    appsRemoveButton->setIconSize(QSize(w*0.25,h*0.25));
    paketAdiLabel->setFixedWidth(w*0.9);
 
+   installStatusLabel->setFixedSize(QSize(w*0.25,h*0.25));
 
-       this->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
-       this->select=false;
+
+
+   if(installStatus==true)
+       installStatusLabel->show();
+    else
+       installStatusLabel->hide();
+
+    this->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
+
+    this->select=false;
    this->appsInstallButton->setVisible(false);
    this->appsRemoveButton->setVisible(false);
 
   this->paketAdiLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
   this->paketResmi->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
-   //appsListButton[i]->appsInstallButton->autoRaise();
-   // appsListButton[i]->appsInstallButton->setStyleSheet("QToolButton#appsInstallButton{background-color: #ffffff; :disabled}");
-   // appsListButton[i]->appsRemoveButton->setStyleSheet("QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}");
 
    QString ExButtonStyleSheet = "QToolButton#appsInstallButton,QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}\
        QToolButton#appsInstallButton:hover,QToolButton#appsRemoveButton:hover{background-color:#efefef;}\
@@ -112,6 +128,7 @@ void AppWidget::AppWidgetResize(int w, int h)
 
      this->appsInstallButton->setStyleSheet(ExButtonStyleSheet);
   this->appsRemoveButton->setStyleSheet(ExButtonStyleSheet);
+
 }
 
 void AppWidget::selectSlot()

@@ -44,18 +44,18 @@ void MainWindow::uygulamaListeHazirla(QStringList list)
         appsButton->paketAdiLabel->setText(lst[0]);
         appsButton->paketResmiYol=lst[1];
         appsButton->paketAciklama=lst[4];
-        appsListButton.append(appsButton);
-        appsButton->setObjectName("appsButton");
-       //qDebug()<<line;
-       // appsButton->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid black;}");
-
         QString path="/var/lib/betikyukleyici/"+lst[0];
         QFile file(path);
         //qDebug()<<path<<file.exists();
-        //     if(file.exists())
-        //       appsButton->setStyleSheet("background-color: #cacaca;/* border:1px solid black;*/");
-        // else
-        //            appsButton->setStyleSheet("background-color: #99dd99;/* border:1px solid black;*/");
+        if(file.exists())
+            appsButton->installStatus=true;
+                else
+            appsButton->installStatus=false;
+
+        appsButton->setObjectName("appsButton");
+        appsListButton.append(appsButton);
+
+
         }
     }
 }

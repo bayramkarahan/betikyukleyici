@@ -408,6 +408,7 @@ qrc_resource.cpp: resource.qrc \
 		icons/internet.svg \
 		icons/myapps.svg \
 		icons/system.svg \
+		icons/install.svg \
 		icons/office.svg \
 		icons/wine.svg \
 		icons/update.svg \

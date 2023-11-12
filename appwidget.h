@@ -19,8 +19,8 @@ public:
     QString paketAciklama;
     QToolButton * appsInstallButton;
     QToolButton * appsRemoveButton;
-    QLabel * appsInstallButtonLabel;
-    QLabel * appsRemoveButtonLabel;
+    QLabel * installStatusLabel;
+    bool installStatus;
        bool select;
     explicit AppWidget(int w, int h,QWidget *parent = nullptr);
 

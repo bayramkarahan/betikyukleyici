@@ -20,5 +20,6 @@
         <file>icons/system.svg</file>
         <file>icons/wine.svg</file>
         <file>icons/myapps.svg</file>
+        <file>icons/install.svg</file>
     </qresource>
 </RCC>
