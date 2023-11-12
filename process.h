@@ -118,6 +118,7 @@ void MainWindow :: procresend()
       /*  localDir="/usr/share/betikyukleyici/";
         QStringList list=fileToList("betikyukleyicilist");
         listToFile(list,"betikyukleyicilist");*/
+        progressbar->setValue(0);
     }
 
     if(procesType=="getindexicons")
@@ -129,6 +130,7 @@ void MainWindow :: procresend()
         listToFile(list,"betikyukleyicilist");*/
         system("unzip -q -x -o /tmp/betikyukleyiciappsicons.zip -d /tmp/");
        // qDebug()<<"icon indirme tamamlandı";
+         progressbar->setValue(0);
     }
 
     if(procesType=="getversion")
@@ -169,6 +171,7 @@ void MainWindow :: procresend()
 
             }
         }
+         progressbar->setValue(0);
     }
 
  doc->moveCursor(QTextCursor::End);

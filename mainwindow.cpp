@@ -186,6 +186,21 @@ aramalayout->setContentsMargins(0,0,0,0);
     progressbar->setFixedSize(pencereNW,pencereNH*0.04);
     progressbar->setRange(0,100);
     progressbar->setStyleSheet("border-radius: 0px;");
+   progressbar->setStyleSheet("QProgressBar {"
+                          "background-color: #ffffff;"
+                          "color: #00000;"
+                          "border-style: outset;"
+                          "border-width: 2px;"
+                          "border-color: #ffffff;"
+                          "border-radius: 7px;"
+                          "text-align: center; }"
+
+                          "QProgressBar::chunk {"
+                          "background-color: #5454ff; }");
+
+    //QString danger = "QProgressBar::chunk: horizontal {border-radius: 3px; background: QLinearGradient(X1:0, y1:0.966136, x2:0, y2:0, stop:0.609721 rgba(242, 53, 53, 255), stop:0.691923 rgba(240, 151, 141, 252));border: .px solid black;}";
+
+    //progressbar->setStyleSheet(danger);
     /**************************************************************/
 
     /**********************Kategori Widget*************************************************/
