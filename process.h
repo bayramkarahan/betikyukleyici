@@ -133,15 +133,28 @@ void MainWindow :: procresend()
 
     if(procesType=="getversion")
     {
-       // qDebug()<<"version kontrol yapılıyor";
+        QStringList arguments;
+        arguments << "-c" << "dpkg -s betikyukleyici|grep -i version";
+        QString resultVersion;
+        QProcess process;
+        process.start("/bin/bash",arguments);
+        if(process.waitForFinished())
+        {
+            resultVersion = process.readAll();
+        }
+        resultVersion.chop(1);
+        version = resultVersion.right(5);
+
+        //qDebug()<<"version kontrol yapılıyor"<<sonuc;
         localDir="/tmp/";
         QStringList listv=fileToList("version");
         for(int i=0;i<listv.count();i++)
         {
             QString line=listv[i];
+          //  qDebug()<<line;
             if(line!="")
             {
-                ///qDebug()<<"**"<<line;
+                //qDebug()<<"**"<<line;
                 if(line.contains(version,Qt::CaseInsensitive))
                 {
                     updateButton->hide();

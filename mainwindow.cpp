@@ -65,11 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->setSpacing(0);
 
     localDir="/usr/share/betikyukleyici/";
-    version="betikyukleyici_1.7.0_amd64.deb";
-    system("rm -rf /tmp/betikyukleyiciappsindex.conf");
-    system("rm -rf /tmp/betikyukleyiciappsicons");
-    system("rm -rf /tmp/betikyukleyiciappsicons.zip");
-    system("rm -rf /tmp/version");
+
+
     system("rm -rf /tmp/installscript.sh");
     system("rm -rf /tmp/removescript.sh");
      /**********************Arama Widget*************************************************/
@@ -245,6 +242,7 @@ aramalayout->setContentsMargins(0,0,0,0);
 
 
   /****************versiyon kontrolü yapılıyor***********************************************/
+  system("rm -rf /tmp/version");
   procesType="getversion";
   QString kmt="wget https://github.com/bayramkarahan/betikyukleyici/raw/master/debian/files -O /tmp/version";
   proces->start(kmt);

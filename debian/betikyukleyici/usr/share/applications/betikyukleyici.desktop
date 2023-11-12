@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Script Installer Application
+Name[tr]=Betik Yükleme Uygulaması
+Type=Application
+Comment=Simple Qt based Script Installer Application
+Comment[tr]=Basit Qt tabanlı Betik Yükleme Uygulaması
+Terminal=false
+Exec=sh -c "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY /usr/bin/betikyukleyici"
+Icon=/usr/share/betikyukleyici/betikyukleyici.svg
+Categories=Qt;Utility;
+Keywords=package;paket;
+GenericName=betikyukleyici
