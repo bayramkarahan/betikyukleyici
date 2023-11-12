@@ -119,7 +119,7 @@ void MainWindow::appWidgetfindTextEditChanged()
 
 void MainWindow::kategoriWidgetfindTextEditChanged(QString data)
 {
-     qDebug()<<"kategori seçildi.."<<data;
+    // qDebug()<<"kategori seçildi.."<<data;
      localDir="/tmp/";
     QStringList list=fileToList("betikyukleyiciappsindex.conf");
      if(data.length()>0&&data!="Tümü")
@@ -127,7 +127,7 @@ void MainWindow::kategoriWidgetfindTextEditChanged(QString data)
         list=listGetList(list, data,0);
     }
 
-    qDebug()<<"liste sayısı: "<<list.count()<<appsListButton.count();
+    ///qDebug()<<"liste sayısı: "<<list.count()<<appsListButton.count();
     uygulamaListeHazirla(list);
     uygulamaListele();
 }

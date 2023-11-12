@@ -54,23 +54,9 @@ void KategoriWidget::selectSlot()
 {
     QPalette palet;
 
-    qDebug()<<"tıklandıı";
+    //qDebug()<<"tıklandıı";
     select=true;
     emit kategoriWidgetClickSignal(paketAdiLabel->text());//nesneler arası data transferi***
-    /*
-      if(select){
-        /*  palet.setColor(QPalette::Window, QColor(0,200,200,100));
-          setPalette(palet);
-          setAutoFillBackground(true);
-*/
-    //  setStyleSheet("background-color: #ff9999;");
-
-    /*   }
-      else{
-
-         setStyleSheet("background-color: #dadada;");
-
-    }*/
 }
 void KategoriWidget::paintEvent(QPaintEvent *pe)
 {

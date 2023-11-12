@@ -38,7 +38,7 @@ QWidget *MainWindow::hakkinda()
    auto *hak=new QLabel(hakkindaPage);
 
     hak->setText("\n* Bu uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
-                 "\n\n* Betiklerin çalıştırılmasından doğacak maddi manevi kaybı kullanıcı kabul etmiş sayılır."
+                 "\n\n* Betiklerin çalıştırılmasından doğacak verikaybı veya sorunlarını kullanıcı kabul etmiş sayılır."
                 "\n\n* Yazılımı kullanarak Yükleme ve Kaldırma betiklerini çalıştırmadan önce kontrol ediniz."
                 "\n\n* Bu betik yükleme listesinde bulunmayan yazılımları talep edebilirsiniz."
                 "\n\n* Listede bulunan betiklerde hata varsa iletişime geçebilirsiniz."
