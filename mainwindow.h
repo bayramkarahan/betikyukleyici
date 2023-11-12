@@ -38,9 +38,6 @@ public slots:
     QStringList listReplace(QStringList list,QString oldData,QString newData,int index);
     QStringList listMerge(QStringList list1, QStringList list2,int dataIndex);
     QStringList listGetList(QStringList list, QString data,int index);
-   QWidget *paketSlot(QWidget *parent);
-   void paketTableCellDoubleClicked(int iRow, int iColumn);
-   void paketTableWidgetWindow_cellClicked(int iRow, int iColumn);
    void disp();
    void procresbegin();
    void procresend();
@@ -51,6 +48,7 @@ public slots:
      void kategoriWidgetfindTextEditChanged(QString data);
      void getIndex();
     void selectPackageSlot(QString paket);
+     void runEndPackageSlot(QString paket);
 
      void selectKategoriSlot(QString paket);
     void uygulamaListele();

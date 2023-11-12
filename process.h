@@ -61,14 +61,14 @@ void MainWindow :: procresend()
        /// system("rm /tmp/installscript.sh");
            myMessageBox("", "\n\Yükleme Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
         procesTypeStatus=1;
-
+    //runEndPackageSlot(selectPaketName);
     }
     if(procesType=="remove")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Tamamlandı***</p>");
    // system("rm /tmp/removescript.sh");
     myMessageBox("", "\n\Kaldırma Betiğinin Çalışması Tamamlandı..\n","","","tamam",QMessageBox::Information);
-
+   // runEndPackageSlot(selectPaketName);
         procesTypeStatus=2;
       }
     if(procesType=="getscriptinstall")
@@ -109,6 +109,8 @@ void MainWindow :: procresend()
 
             }
         }
+
+
 
     }
     if(procesType=="getindex")

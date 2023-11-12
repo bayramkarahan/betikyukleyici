@@ -369,7 +369,7 @@ void   MainWindow::findTextEditChanged()
 void MainWindow::installSlot(QString paket)
 {
     qDebug()<<"Yüklenecek Paket: "<<paket;
-
+            selectPaketName=paket;
          if(!QFile::exists("/tmp/installscript.sh"))
          {
              qDebug()<<"paket seçildi..";
@@ -387,7 +387,7 @@ void MainWindow::installSlot(QString paket)
 void MainWindow::removeSlot(QString paket)
 {
          qDebug()<<"Kaldırılacak Paket: "<<paket;
-
+   selectPaketName=paket;
          if(!QFile::exists("/tmp/removescript.sh"))
          {
             qDebug()<<"paket seçildi..";
@@ -397,6 +397,30 @@ void MainWindow::removeSlot(QString paket)
             procesType="remove";
             system("chmod a+x /tmp/removescript.sh");
             proces->start("/tmp/removescript.sh");
+         }
+
+}
+void MainWindow::runEndPackageSlot(QString paket)
+{
+
+         selectPaketName="";
+         for(int i=0;i<appsListButton.count();i++)
+         {
+            if(appsListButton[i]->paketAdiLabel->text()==paket)
+            {
+            qDebug()<<"işlem yapılan paket"<<paket;
+            if(appsListButton[i]->installStatusLabel->isHidden())
+            appsListButton[i]->installStatusLabel->hide();
+            else
+            appsListButton[i]->installStatusLabel->show();
+
+         /*
+            if(appsListButton[i]->installStatus==true)
+                         appsListButton[i]->installStatusLabel->show();
+            else
+                         appsListButton[i]->installStatusLabel->hide();
+*/
+            }
          }
 
 }
