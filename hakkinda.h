@@ -31,7 +31,10 @@ QWidget *MainWindow::hakkinda()
     /*******************************************************/
     hakkindaPage->setFixedWidth(boy*100);
     hakkindaPage->setFixedHeight(boy*100);
-
+    auto *icon=new QLabel(hakkindaPage);
+    icon->setPixmap( QPixmap( ":/icons/betikyukleyici.svg" ) );
+    icon->setScaledContents( true );
+    icon->setFixedSize(hakkindaPage->width()*0.1,hakkindaPage->height()*0.1);
    auto *hak=new QLabel(hakkindaPage);
 
     hak->setText("\n* Bu uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
@@ -68,6 +71,8 @@ QWidget *MainWindow::hakkinda()
 
     auto layout = new QGridLayout(hakkindaPage);
     layout->setContentsMargins(0, 0, 0,0);
+    layout->addWidget( icon,10,0,1,1,Qt::AlignHCenter);
+
     layout->addWidget( hak,20,0,1,1,Qt::AlignHCenter);
 
    // layout->setColumnStretch(6, 255);

@@ -39,7 +39,8 @@ void MainWindow::uygulamaListeHazirla(QStringList list)
 
         //appsButton->setFixedSize(butonGenislik,butonYukseklik);
         appsButton->paketAdiLabel->setText(lst[0]);
-        appsButton->paketResmiYol=lst[2];
+        appsButton->paketResmiYol=lst[1];
+        appsButton->paketAciklama=lst[4];
         appsListButton.append(appsButton);
         appsButton->setObjectName("appsButton");
        //qDebug()<<line;
@@ -96,7 +97,7 @@ void MainWindow::uygulamaListele()
     appsWidgetListe->setFixedSize(appsWidget->width()*0.99,satir*butonYukseklik);
 
     //wapps->show();
-    appsListButton[0]->selectSlot();
+   /// appsListButton[0]->selectSlot();
       // return   appsListe;
 
 }
@@ -141,7 +142,8 @@ void MainWindow::selectPackageSlot(QString paket)
             appsListButton[i]->appsInstallButton->setVisible(true);
             appsListButton[i]->appsRemoveButton->setVisible(true);
            // appsListButton[i]->appsInstallButton->setFlat(false);
-
+            //if(statusLabel)
+            statusLabel->setText("Seçili Betik: "+paket+"\tBilgi: "+appsListButton[i]->paketAciklama);
         /***********************************************************************************************/
         /*************************install remove scriptler iniyor***************************************/
         /***********************************************************************************************/
@@ -161,7 +163,7 @@ void MainWindow::selectPackageSlot(QString paket)
             proces->waitForFinished(-1);
         /***********************************************************************************************/
 
-         }
+        }
         else
         {
             appsListButton[i]->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
@@ -228,15 +230,15 @@ void MainWindow::kategoriListele()
 
             if(i==0){
             groupList.append("Tümü|all.svg");
-            groupList.append(linet1lst[3]+"|"+linet1lst[4]);
-           // qDebug()<<"group eklendi"<<linet1lst[3]+"|"+linet1lst[4];
+            groupList.append(linet1lst[2]+"|"+linet1lst[3]);
+            //qDebug()<<"group eklendi"<<linet1lst[2]+"|"+linet1lst[3];
 
             }
 
              for(int j=0;j<groupList.count();j++)
             {
                           QString glinet1=groupList[j];  QStringList glinet1lst=glinet1.split("|");
-                          if(glinet1lst[0]==linet1lst[3])
+                          if(glinet1lst[0]==linet1lst[2])
                          {
                              found=true;
                              // qDebug()<<"group liste sayısı"<<linet1lst[4]<<groupList[j];
@@ -246,8 +248,8 @@ void MainWindow::kategoriListele()
               if(found==false)
              {
 
-                        //qDebug()<<"group eklendi-"<<linet1lst[3]+"|"+linet1lst[4];
-                        groupList.append(linet1lst[3]+"|"+linet1lst[4]);
+                       // qDebug()<<"group eklendi-"<<linet1lst[2]+"|"+linet1lst[3];
+                        groupList.append(linet1lst[2]+"|"+linet1lst[3]);
               }
             }
         }

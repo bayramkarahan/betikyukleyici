@@ -84,15 +84,34 @@ void AppWidget::AppWidgetResize(int w, int h)
 {
    this->setFixedSize(w,h);
    paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciappsicons/"+paketResmiYol) );
-  paketResmi->setFixedSize(h*0.45,h*0.45);
+  paketResmi->setFixedSize(h*0.40,h*0.40);
 
-   appsInstallButton->setFixedSize(QSize(w*0.45,h*0.35));
+   appsInstallButton->setFixedSize(QSize(w*0.45,h*0.4));
    appsInstallButton->setIconSize(QSize(w*0.25,h*0.25));
 
-   appsRemoveButton->setFixedSize(QSize(w*0.45,h*0.35));
+   appsRemoveButton->setFixedSize(QSize(w*0.45,h*0.4));
    appsRemoveButton->setIconSize(QSize(w*0.25,h*0.25));
    paketAdiLabel->setFixedWidth(w*0.9);
 
+
+       this->setStyleSheet("QWidget#appsButton{background-color: #ffffff; border:1px solid #dcdcdc;}");
+       this->select=false;
+   this->appsInstallButton->setVisible(false);
+   this->appsRemoveButton->setVisible(false);
+
+  this->paketAdiLabel->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
+  this->paketResmi->setStyleSheet("QLabel{background-color: #ffffff; border:0px solid Red;}");
+   //appsListButton[i]->appsInstallButton->autoRaise();
+   // appsListButton[i]->appsInstallButton->setStyleSheet("QToolButton#appsInstallButton{background-color: #ffffff; :disabled}");
+   // appsListButton[i]->appsRemoveButton->setStyleSheet("QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}");
+
+   QString ExButtonStyleSheet = "QToolButton#appsInstallButton,QToolButton#appsRemoveButton{background-color: #ffffff; border:0px solid Red;}\
+       QToolButton#appsInstallButton:hover,QToolButton#appsRemoveButton:hover{background-color:#efefef;}\
+       QToolButton#appsInstallButton:pressed,QToolButton#appsRemoveButton:pressed{background-color:#dcdcdc;}\
+       QToolButton#appsInstallButton:disabled,QToolButton#appsRemoveButton:disabled{background-color:grey;}";
+
+     this->appsInstallButton->setStyleSheet(ExButtonStyleSheet);
+  this->appsRemoveButton->setStyleSheet(ExButtonStyleSheet);
 }
 
 void AppWidget::selectSlot()

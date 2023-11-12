@@ -1,5 +1,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
+
 void MainWindow :: procresbegin()
 {
 
@@ -132,7 +133,7 @@ void MainWindow :: procresend()
 
     if(procesType=="getversion")
     {
-        qDebug()<<"version kontrol yapılıyor";
+       // qDebug()<<"version kontrol yapılıyor";
         localDir="/tmp/";
         QStringList listv=fileToList("version");
         for(int i=0;i<listv.count();i++)
