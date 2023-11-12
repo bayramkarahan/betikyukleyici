@@ -66,11 +66,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     localDir="/usr/share/betikyukleyici/";
     version="betikyukleyici_1.7.0_amd64.deb";
+    system("rm -rf /tmp/betikyukleyiciappsindex.conf");
+    system("rm -rf /tmp/betikyukleyiciappsicons");
+    system("rm -rf /tmp/betikyukleyiciappsicons.zip");
     system("rm -rf /tmp/version");
     system("rm -rf /tmp/installscript.sh");
     system("rm -rf /tmp/removescript.sh");
-
-    /**********************Arama Widget*************************************************/
+     /**********************Arama Widget*************************************************/
     /**********************Arama Widget*************************************************/
    aramaWidget=new QWidget(anaWidget);
    aramaWidget->setObjectName("aramaWidget");
@@ -143,13 +145,6 @@ aramalayout->setContentsMargins(0,0,0,0);
  aramalayout->addWidget(findTextEdit,1,2,1,1,Qt::AlignLeft);
  aramalayout->addWidget(updateButton,1,4,1,1,Qt::AlignRight);
  aramalayout->addWidget(aboutButton,1,5,1,1,Qt::AlignRight);
-    /**********************Kategori Widget*************************************************/
-    /**********************Kategori Widget*************************************************/
-    kategoriWidget=new QWidget(anaWidget);
-    kategoriWidget->setObjectName("kategoriWidget");
-    kategoriWidget->setStyleSheet("QWidget#kategoriWidget{/*background-color: #00ffaa;*/border-bottom:1px solid #dcdcdc;}");
-    kategoriWidget->setFixedSize(pencereNW,pencereNH*0.10);
-    kategoriListele();
 
     /**********************scriptWidget Widget*************************************************/
     /**********************scriptWidget Widget*************************************************/
@@ -196,7 +191,14 @@ aramalayout->setContentsMargins(0,0,0,0);
     progressbar->setStyleSheet("border-radius: 0px;");
     /**************************************************************/
 
-
+    /**********************Kategori Widget*************************************************/
+    /**********************Kategori Widget*************************************************/
+    getIndex();//index bilgileri iniyor.
+    kategoriWidget=new QWidget(anaWidget);
+    kategoriWidget->setObjectName("kategoriWidget");
+    kategoriWidget->setStyleSheet("QWidget#kategoriWidget{/*background-color: #00ffaa;*/border-bottom:1px solid #dcdcdc;}");
+    kategoriWidget->setFixedSize(pencereNW,pencereNH*0.10);
+    kategoriListele();
     /**********************appsWidget Widget*************************************************/
     /**********************appsWidget Widget*************************************************/
 
@@ -204,7 +206,7 @@ aramalayout->setContentsMargins(0,0,0,0);
     appsWidget->setObjectName("appsWidget");
     // appsWidget->setStyleSheet("QWidget#appsWidget{background-color: #ff0000;border-bottom:1px solid #dc0000;}");
     appsWidget->setFixedSize(pencereNW,pencereNH*0.55);
- getIndex();
+
         if (appsListButton.count()==0)
         {
             localDir="/tmp/";

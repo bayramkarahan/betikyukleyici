@@ -4,6 +4,9 @@
 #include<mainwindow.h>
 void MainWindow::getIndex()
 {
+    system("rm -rf /tmp/betikyukleyiciappsindex.conf");
+    system("rm -rf /tmp/betikyukleyiciappsicons");
+    system("rm -rf /tmp/betikyukleyiciappsicons.zip");
     procesType="getindex";
     proces->start("wget  "+downloadAddress+"betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
     proces->waitForFinished(-1);
