@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     auto layout = new QGridLayout(anaWidget);
     layout->setContentsMargins(0,0, 0,0);
     layout->setSpacing(0);
-
+    appsWidget=new QWidget(anaWidget);
     localDir="/usr/share/betikyukleyici/";
 
 
@@ -133,6 +133,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
      connect(aboutButton, &QToolButton::clicked, [=]() {
          about();
+     //if(appsWidget!=nullptr)
+      //     appsWidget->setEnabled(false);
+
      });
  QGridLayout *aramalayout = new QGridLayout(aramaWidget);
 //aramalayout->setSpacing(0);
@@ -188,7 +191,7 @@ aramalayout->setContentsMargins(0,0,0,0);
     progressbar->setStyleSheet("border-radius: 0px;");
    progressbar->setStyleSheet("QProgressBar {"
                           "background-color: #ffffff;"
-                          "color: #00000;"
+                          "color: #000000;"
                           "border-style: outset;"
                           "border-width: 2px;"
                           "border-color: #ffffff;"
@@ -214,7 +217,7 @@ aramalayout->setContentsMargins(0,0,0,0);
     /**********************appsWidget Widget*************************************************/
     /**********************appsWidget Widget*************************************************/
 
-    appsWidget=new QWidget(anaWidget);
+   // appsWidget=new QWidget(anaWidget);
     appsWidget->setObjectName("appsWidget");
     // appsWidget->setStyleSheet("QWidget#appsWidget{background-color: #ff0000;border-bottom:1px solid #dc0000;}");
     appsWidget->setFixedSize(pencereNW,pencereNH*0.55);

@@ -1,6 +1,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
-
+#include<mainwindow.h>
 void MainWindow :: procresbegin()
 {
 
@@ -8,6 +8,9 @@ void MainWindow :: procresbegin()
     removeButton->setEnabled(false);
     twl->setEnabled(false);
 */
+    if(appsWidget!=nullptr)
+       appsWidget->setEnabled(false);
+
       val=0;
     progressbar->setValue(val);
     doc->setText("");
@@ -53,6 +56,9 @@ void MainWindow :: procresend()
     int procesTypeStatus=0;
 
     progressbar->setValue(val);
+    if(appsWidget!=nullptr)
+      appsWidget->setEnabled(true);
+
     doc->moveCursor (QTextCursor::End);
     if(procesType=="install")
     {
