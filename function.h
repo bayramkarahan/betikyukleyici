@@ -6,14 +6,6 @@ void MainWindow::getIndex()
 {
     system("rm -rf /tmp/betikyukleyiciscript");
     system("rm -rf /tmp/betikyukleyiciscript.zip");
-   /* procesType="getindex";
-    proces->start("wget  "+downloadAddress+"betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
-    proces->waitForFinished(-1);
-
-    procesType="getindexicons";
-    proces->start("wget  "+downloadAddress+"betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciscript.zip");
-    proces->waitForFinished(-1);
-    */
     procesType="getindexscript";
     proces->start("wget  "+downloadAddress+"betikyukleyiciscript.zip -O /tmp/betikyukleyiciscript.zip");
     proces->waitForFinished(-1);
@@ -22,13 +14,6 @@ void MainWindow::getIndex()
 }
 void MainWindow::uygulamaListeHazirla(QStringList list)
 {
-   /* if (appsListButton.count()==0)
-    {
-        localDir="/tmp/";
-        QStringList list=fileToList("index.conf");
-
-    }*/
-
     appsListButton.clear();
     for(int i=0;i<list.count();i++)
     {
@@ -186,22 +171,7 @@ void MainWindow::selectPackageSlot(QString paket)
 
       }
       }
-        /***********************************************************************************************/
-      /*  selectPaketAddressInstall=downloadAddress+paket+"-install.sh";
-        selectPaketAddressRemove=downloadAddress+paket+"-remove.sh";
-        //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressInstall;
-        //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressRemove;
-
-           procesType="getscriptinstall";
-            QString kmt="wget -O /tmp/installscript.sh "+selectPaketAddressInstall;
-            proces->start(kmt);
-            proces->waitForFinished(-1);
-
-            procesType="getscriptremove";
-            kmt="wget -O /tmp/removescript.sh "+selectPaketAddressRemove;
-            proces->start(kmt);
-            proces->waitForFinished(-1);
-        /***********************************************************************************************/
+             /***********************************************************************************************/
 
         }
         else

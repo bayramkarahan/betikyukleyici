@@ -3,11 +3,6 @@
 #include<mainwindow.h>
 void MainWindow :: procresbegin()
 {
-
-   /* installerButton->setEnabled(false);
-    removeButton->setEnabled(false);
-    twl->setEnabled(false);
-*/
     if(appsWidget!=nullptr)
        appsWidget->setEnabled(false);
 
@@ -25,29 +20,13 @@ void MainWindow :: procresbegin()
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Kaldırma Başladı***</p>");
         }
-    if(procesType=="getscriptinstall")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
-
-       }
-    if(procesType=="getscriptremove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Başladı***</p>");
-
-       }
-    //qDebug()<<"procresbegin.";
 
     if(procesType=="getindex")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Başladı***</p>");
     }
 
-    if(procesType=="getindexicons")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İconları İndirme Başladı***</p>");
-    }
-
-    if(procesType=="getindexscript")
+      if(procesType=="getindexscript")
     {
         doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Verileri İndirme Başladı***</p>");
     }
@@ -81,69 +60,6 @@ void MainWindow :: procresend()
    // runEndPackageSlot(selectPaketName);
         procesTypeStatus=2;
       }
-    if(procesType=="getscriptinstall")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-        procesTypeStatus=3;
-        localDir="/tmp/";
-        QStringList list1=fileToList("installscript.sh");
-        installscriptTextEdit->clear();
-        int font=boy*2;
-        for(int i=0;i<list1.count();i++)
-        {
-            QString line=list1[i];
-            if(line!="")
-            {
-                // script->insertPlainText(line+"\n");
-                installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
-
-            }
-        }
-
-    }
-    if(procesType=="getscriptremove")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
-        procesTypeStatus=3;
-        localDir="/tmp/";
-        QStringList list1=fileToList("removescript.sh");
-        removescriptTextEdit->clear();
-        int font=boy*2;
-        for(int i=0;i<list1.count();i++)
-        {
-            QString line=list1[i];
-            if(line!="")
-            {
-                // script->insertPlainText(line+"\n");
-                removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
-
-            }
-        }
-
-
-
-    }
-    if(procesType=="getindex")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İndirme Tamamlandı***</p>");
-        procesTypeStatus=4;
-      /*  localDir="/usr/share/betikyukleyici/";
-        QStringList list=fileToList("betikyukleyicilist");
-        listToFile(list,"betikyukleyicilist");*/
-        progressbar->setValue(0);
-    }
-
-    if(procesType=="getindexicons")
-    {
-        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Listesi İconları İndirme Tamamlandı***</p>");
-        procesTypeStatus=5;
-       /* localDir="/usr/share/betikyukleyici/";
-        QStringList list=fileToList("betikyukleyicilist");
-        listToFile(list,"betikyukleyicilist");*/
-        system("unzip -q -x -o /tmp/betikyukleyiciappsicons.zip -d /tmp/");
-       // qDebug()<<"icon indirme tamamlandı";
-         progressbar->setValue(0);
-    }
     if(procesType=="getindexscript")
     {
          doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Paket Verileri İndirme Tamamlandı***</p>");
