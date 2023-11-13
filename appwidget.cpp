@@ -93,7 +93,7 @@ AppWidget::AppWidget(int w, int h, QWidget *parent)
 void AppWidget::AppWidgetResize(int w, int h)
 {
    this->setFixedSize(w,h);
-   paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciappsicons/"+paketResmiYol) );
+   paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciscript/betikyukleyiciappsicons/"+paketResmiYol) );
   paketResmi->setFixedSize(h*0.40,h*0.40);
 
    appsInstallButton->setFixedSize(QSize(w*0.45,h*0.4));

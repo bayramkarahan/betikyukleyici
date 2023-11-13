@@ -16,7 +16,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    downloadAddress="https://github.com/bayramkarahan/betikyukleyici/raw/master/script/";
+    downloadAddress="https://github.com/bayramkarahan/betikyukleyici/raw/master/";
     QSize screenSize = qApp->screens()[0]->size();
     // qDebug()<<"boyut"<<screenSize.height()*0.65<<screenSize.width()*0.5;
     boy=screenSize.height()/153;
@@ -225,7 +225,7 @@ aramalayout->setContentsMargins(0,0,0,0);
         if (appsListButton.count()==0)
         {
             localDir="/tmp/";
-            QStringList list=fileToList("betikyukleyiciappsindex.conf");
+            QStringList list=fileToList("/betikyukleyiciscript/betikyukleyiciappsindex.conf");
             uygulamaListeHazirla(list);
         }
         //qDebug()<<"apps list"<<appsListButton.count();

@@ -4,15 +4,18 @@
 #include<mainwindow.h>
 void MainWindow::getIndex()
 {
-    system("rm -rf /tmp/betikyukleyiciappsindex.conf");
-    system("rm -rf /tmp/betikyukleyiciappsicons");
-    system("rm -rf /tmp/betikyukleyiciappsicons.zip");
-    procesType="getindex";
+    system("rm -rf /tmp/betikyukleyiciscript");
+    system("rm -rf /tmp/betikyukleyiciscript.zip");
+   /* procesType="getindex";
     proces->start("wget  "+downloadAddress+"betikyukleyiciappsindex.conf -O /tmp/betikyukleyiciappsindex.conf");
     proces->waitForFinished(-1);
 
     procesType="getindexicons";
-    proces->start("wget  "+downloadAddress+"betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciappsicons.zip");
+    proces->start("wget  "+downloadAddress+"betikyukleyiciappsicons.zip -O /tmp/betikyukleyiciscript.zip");
+    proces->waitForFinished(-1);
+    */
+    procesType="getindexscript";
+    proces->start("wget  "+downloadAddress+"betikyukleyiciscript.zip -O /tmp/betikyukleyiciscript.zip");
     proces->waitForFinished(-1);
 
 
@@ -109,7 +112,7 @@ void MainWindow::appWidgetfindTextEditChanged()
 {
     //  qDebug()<<"tuşa basıldı..";
      localDir="/tmp/";
-    QStringList list=fileToList("betikyukleyiciappsindex.conf");
+    QStringList list=fileToList("betikyukleyiciscript/betikyukleyiciappsindex.conf");
     if(findTextEdit->toPlainText().length()>0)
     {
         list=listGetList(list, findTextEdit->toPlainText(),0);
@@ -124,7 +127,7 @@ void MainWindow::kategoriWidgetfindTextEditChanged(QString data)
 {
     // qDebug()<<"kategori seçildi.."<<data;
      localDir="/tmp/";
-    QStringList list=fileToList("betikyukleyiciappsindex.conf");
+    QStringList list=fileToList("betikyukleyiciscript/betikyukleyiciappsindex.conf");
      if(data.length()>0&&data!="Tümü")
     {
         list=listGetList(list, data,0);
@@ -149,8 +152,42 @@ void MainWindow::selectPackageSlot(QString paket)
             statusLabel->setText("Seçili Betik: "+paket+"\tBilgi: "+appsListButton[i]->paketAciklama);
         /***********************************************************************************************/
         /*************************install remove scriptler iniyor***************************************/
+            doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+            // procesTypeStatus=3;
+            localDir="/tmp/betikyukleyiciscript/";
+            QStringList list1=fileToList(paket+"-install.sh");
+            installscriptTextEdit->clear();
+        int font=boy*2;
+        for(int i=0;i<list1.count();i++)
+        {
+         QString line=list1[i];
+        if(line!="")
+        {
+        // script->insertPlainText(line+"\n");
+        installscriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+        }
+        }
+/*********************************************************************/
+        /************************************************************************/
+        doc->textCursor().insertHtml("<br/><p style=\"color:green;\">***Script İndirme Tamamlandı***</p>");
+        //procesTypeStatus=3;
+       localDir="/tmp/betikyukleyiciscript/";
+        QStringList list2=fileToList(paket+"-remove.sh");
+        removescriptTextEdit->clear();
+       // int font=boy*2;
+        for(int i=0;i<list2.count();i++)
+        {
+         QString line=list2[i];
+        if(line!="")
+        {
+         // script->insertPlainText(line+"\n");
+        removescriptTextEdit->textCursor().insertHtml("<br/><lu style=\"color:black;font-size:"+QString::number(font)+"px;\">"+line+"</lu>");
+
+      }
+      }
         /***********************************************************************************************/
-        selectPaketAddressInstall=downloadAddress+paket+"-install.sh";
+      /*  selectPaketAddressInstall=downloadAddress+paket+"-install.sh";
         selectPaketAddressRemove=downloadAddress+paket+"-remove.sh";
         //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressInstall;
         //qDebug()<<"seçilen paket:"<<paket<<selectPaketAddressRemove;
@@ -220,7 +257,7 @@ void MainWindow::kategoriListele()
     if (kategoriListButton.count()==0)
     {
         localDir="/tmp/";
-        QStringList list=fileToList("betikyukleyiciappsindex.conf");
+        QStringList list=fileToList("betikyukleyiciscript/betikyukleyiciappsindex.conf");
        kategoriListButton.clear();
         QStringList groupList;
        for(int i=0;i<list.count();i++)
@@ -370,7 +407,7 @@ void MainWindow::installSlot(QString paket)
 {
     qDebug()<<"Yüklenecek Paket: "<<paket;
             selectPaketName=paket;
-         if(!QFile::exists("/tmp/installscript.sh"))
+         if(!QFile::exists("/tmp/betikyukleyiciscript/"+paket+"-install.sh"))
          {
              qDebug()<<"paket seçildi..";
              ///paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
@@ -378,8 +415,9 @@ void MainWindow::installSlot(QString paket)
          {
          qDebug()<<"paket seçilmiş install başladı..";
          procesType="install";
-        system("chmod a+x /tmp/installscript.sh");
-        proces->start("/tmp/installscript.sh");
+         QString komut="chmod a+x /tmp/betikyukleyiciscript/"+paket+"-install.sh";
+         system(komut.toStdString().c_str());
+        proces->start("/tmp/betikyukleyiciscript/"+paket+"-install.sh");
 
          }
 
@@ -388,15 +426,18 @@ void MainWindow::removeSlot(QString paket)
 {
          qDebug()<<"Kaldırılacak Paket: "<<paket;
    selectPaketName=paket;
-         if(!QFile::exists("/tmp/removescript.sh"))
+         if(!QFile::exists("/tmp/betikyukleyiciscript/"+paket+"-remove.sh"))
          {
             qDebug()<<"paket seçildi..";
             //paketTableWidgetWindow_cellClicked(selectRowIndex, 0);
          }else
          {
             procesType="remove";
-            system("chmod a+x /tmp/removescript.sh");
-            proces->start("/tmp/removescript.sh");
+
+            QString komut="chmod a+x /tmp/betikyukleyiciscript/"+paket+"-remove.sh";
+            system(komut.toStdString().c_str());
+
+            proces->start("/tmp/betikyukleyiciscript/"+paket+"-remove.sh");
          }
 
 }
