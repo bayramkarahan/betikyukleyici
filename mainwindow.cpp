@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   statusLabel=new QLabel(aramaWidget);
   statusLabel->setObjectName("statusLabel");
-  statusLabel->setStyleSheet("QLabel#statusLabel{color: #aa0000;font-size:"+QString::number(font)+"px;}");
+  statusLabel->setStyleSheet("QLabel#statusLabel{color: #aa0000;font-size:"+QString::number(fontt)+"px;}");
   // statusLabel->setStyleSheet("background-color: #0000ac;");
   statusLabel->setFixedSize(aramaWidget->width()*0.55,aramaWidget->height()*0.9);
 
@@ -157,7 +157,7 @@ aramalayout->setContentsMargins(0,0,0,0);
 
    // qDebug()<<"font:"<<font<<fontt<<fonttt;
     QString tabstyle="QTabWidget::pane {border: 1px solid lightgray;top:-1px; background:#efefef;}\
-        QTabBar::tab {background:#eeeeee; border: 1px solid lightgray;font-size:"+QString::number(font)+"px; padding: 5px;} \
+        QTabBar::tab {background:#eeeeee; border: 1px solid lightgray;font-size:"+QString::number(fonttt)+"px; padding: 5px;} \
         QTabBar::tab:selected { background:#ffffff; margin-bottom: -1px; }";
     tabw->setStyleSheet(tabstyle);
     doc=new QTextEdit(tabw);
