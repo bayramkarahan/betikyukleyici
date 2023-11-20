@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
  updateButton->setIcon(QIcon(":/icons/update.svg"));
  updateButton->setAutoRaise(true);
  updateButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
- updateButton->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
+ updateButton->setStyleSheet("background-color:#FDB227;color: #000000;font-size:"+QString::number(font)+"px");
 
  updateButton->setText("Programı Güncelle");
 
