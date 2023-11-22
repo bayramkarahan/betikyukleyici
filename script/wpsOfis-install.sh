@@ -5,7 +5,7 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/wps.deb https://depo.pardus.org.tr/etap/pool/non-free/w/wps-office/wps-office_10.1.0.6757pardus2_amd64.deb
+wget -O /tmp/wps.deb https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11708/wps-office_11.1.0.11708.XA_amd64.deb
 dpkg --force-all -i /tmp/wps.deb
 wget -O /tmp/wps-tr.deb https://github.com/bayramkarahan/wps-office-tr-dil/blob/master/wps-tr.deb
 dpkg --force-all -i /tmp/wps-tr.deb
