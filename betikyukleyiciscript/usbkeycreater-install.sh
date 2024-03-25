@@ -5,7 +5,7 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/paket.deb https://github.com/bayramkarahan/usbkeycreaterusers/raw/master/usbkeycreaterusers_1.5.0_amd64.deb
+wget -O /tmp/paket.deb https://github.com/bayramkarahan/usbkeycreaterusers/raw/master/usbkeycreaterusers_1.6.0_amd64.deb
 dpkg --force-all -i /tmp/paket.deb
 sleep 1
 rm /tmp/paket.deb
