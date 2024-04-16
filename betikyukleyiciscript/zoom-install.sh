@@ -5,7 +5,7 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/zoom.deb https://zoom.us/client/5.12.9.367/zoom_amd64.deb
+wget -O /tmp/zoom.deb https://zoom.us/client/6.0.0.4563/zoom_amd64.deb
 dpkg --force-all -i /tmp/zoom.deb
 sleep 1
 rm /tmp/zoom.deb
