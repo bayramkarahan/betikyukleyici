@@ -1,0 +1,12 @@
+Package: betikyukleyici-dbgsym
+Source: betikyukleyici
+Version: 1.8.6
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Bayram KARAHAN <bayramk@gmail.com>
+Installed-Size: 41
+Depends: betikyukleyici (= 1.8.6)
+Section: debug
+Priority: optional
+Description: debug symbols for betikyukleyici
+Build-Ids: fea1f7104772951731564b99a4621343397f8e1a
