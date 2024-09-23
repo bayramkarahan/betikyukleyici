@@ -43,7 +43,7 @@ KategoriWidget::KategoriWidget(int w, int h, QWidget *parent)
 
 void KategoriWidget::KategoriWidgetResize(int w, int h)
 {
-    qDebug()<<"----------------"<<resimyol;
+    //qDebug()<<"----------------"<<resimyol;
     this->setFixedSize(w,h);
    // paketResmi->setPixmap( QPixmap( ":/icons/"+resimyol) );
     paketResmi->setPixmap( QPixmap( "/tmp/betikyukleyiciscript/kategoriicons/"+resimyol) );
