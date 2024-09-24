@@ -323,7 +323,7 @@ void MainWindow::kategoriListele()
                          recordNumber=(i-1)*sutunSayisi+j;
             //  appsListButton.append(appsButton);
 
-            kategoriListButton[recordNumber-1]->KategoriWidgetResize(butonGenislik*0.7,butonYukseklik*0.9);
+            kategoriListButton[recordNumber-1]->KategoriWidgetResize(butonGenislik,butonYukseklik*0.9);
             kategoriListButton[recordNumber-1]->setAutoFillBackground(false);
             kategorilayout->addWidget(kategoriListButton[recordNumber-1], i,j,1,1);
 
