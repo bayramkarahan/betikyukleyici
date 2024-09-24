@@ -5,10 +5,18 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/remaster.deb https://github.com/bayramkarahan/betikyukleyici/raw/master/deb/pardus-remaster_0.1.0_all.deb
-dpkg --force-all -i /tmp/remaster.deb
+
+rm -r /var/lib/dpkg/lock*
+dpkg --configure -a
+apt-get install -f -y
+apt-get update
+apt-get upgrade -y
+apt-get full-upgrade -y
+apt-get autoremove -y
+ apt-get autoclean -y
+
 sleep 1
-rm /tmp/remaster.deb
+
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/remasterImaj
+touch /var/lib/betikyukleyici/ilkbakim
 exit 0
