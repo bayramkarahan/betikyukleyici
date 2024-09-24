@@ -1,4 +1,4 @@
 #!/bin/bash
-apt remove zoom -y
-rm -rf /var/lib/betikyukleyici/zoom
+
+rm -rf /var/lib/betikyukleyici/update
 exit 0
