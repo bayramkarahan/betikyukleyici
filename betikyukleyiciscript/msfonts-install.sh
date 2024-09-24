@@ -5,7 +5,7 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-aptinstall ttf-mscore-installer -y
+apt install ttf-mscore-installer -y
 sleep 1
 
 mkdir /var/lib/betikyukleyici
