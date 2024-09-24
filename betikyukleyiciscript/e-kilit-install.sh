@@ -5,7 +5,7 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/e-kilit.deb https://github.com/bayramkarahan/e-kilit/raw/master/e-kilit_4.8.1_amd64-testing.deb
+wget -O /tmp/e-kilit.deb https://github.com/bayramkarahan/e-kilit/raw/refs/heads/master/e-kilit_4.8.3_amd64.deb
 dpkg --force-all -i /tmp/e-kilit.deb
 sleep 1
 rm /tmp/e-kilit.deb
