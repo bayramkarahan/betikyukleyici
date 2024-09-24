@@ -303,7 +303,7 @@ void MainWindow::kategoriListele()
     qDeleteAll(kategoriWidgetListe->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
     if (kategoriListButton.count()==0) return;
     int kategoriSayisi=kategoriListButton.count();
-    int sutunSayisi=8;
+    int sutunSayisi=12;
     int satir=kategoriSayisi/sutunSayisi;
     int mod=kategoriSayisi%sutunSayisi;
     if (mod!=0) satir++;
