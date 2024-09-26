@@ -6,7 +6,7 @@ apt autoremove -y
 apt update
 ############################################################
 cd /tmp 
-wget -O https://github.com/bayramkarahan/foxit/raw/refs/heads/master/foxit.run
+wget https://github.com/bayramkarahan/foxit/raw/refs/heads/master/foxit.run
 chmod a+x foxit.run
 ./foxit.run
 
