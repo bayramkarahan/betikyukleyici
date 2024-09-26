@@ -5,7 +5,9 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/e-ag.deb https://github.com/bayramkarahan/e-ag/raw/master/e-ag_2.2.0_amd64.deb
+apt remove e-ag-client -y
+rm -rf /usr/share/e-ag
+wget -O /tmp/e-ag.deb https://github.com/bayramkarahan/e-ag/raw/refs/heads/master/e-ag_2.2.0_amd64.deb
 dpkg --force-all -i /tmp/e-ag.deb
 sleep 1
 mkdir /var/lib/betikyukleyici
