@@ -5,18 +5,12 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-
-rm -r /var/lib/dpkg/lock*
-dpkg --configure -a
-apt-get install -f -y
-apt-get update
-#apt-get upgrade -y
-#apt-get full-upgrade -y
-apt-get autoremove -y
- apt-get autoclean -y
-
+wget -O /tmp/app.deb https://github.com/bayramkarahan/ttkbfont/raw/refs/heads/master/ttkbfont.deb
+dpkg --force-all -i /tmp/app.deb
+sleep 1
+rm /tmp/app.deb
 sleep 1
 
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/ilkbakim
+touch /var/lib/betikyukleyici/ttkbfont
 exit 0
