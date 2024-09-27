@@ -113,12 +113,13 @@ MainWindow::MainWindow(QWidget *parent) :
      if (updateFile=="") return;
      QString kmt="wget -O /tmp/prg.deb https://github.com/bayramkarahan/betikyukleyici/raw/master/"+updateFile;
      system(kmt.toStdString().c_str());
-      system("sleep 1");
+     system("sleep 1");
      system("chmod 777 /tmp/prg.deb");
-      system("sleep 1");
-     system("dpkg -i --force-all /tmp/prg.deb");
-      //system("sleep 2");
-     //system("rm  /tmp/prg.deb");
+     system("sleep 1");
+     procesType="updateapp";
+     proces->start("dpkg -i --force-all /tmp/prg.deb");
+     proces->waitForFinished(-1);
+
  });
 
  aboutButton= new QToolButton(aramaWidget);

@@ -95,7 +95,7 @@ void MainWindow :: procresend()
           //  qDebug()<<line;
             if(line!="")
             {
-                //qDebug()<<"**"<<line;
+               // qDebug()<<"**"<<line<<version;
                 if(line.contains(version,Qt::CaseInsensitive))
                 {
                     updateButton->hide();
@@ -104,13 +104,21 @@ void MainWindow :: procresend()
                 {
                     updateButton->show();
                     line.truncate(line.lastIndexOf("deb")+3);
-                    // qDebug()<<line;
+                    //qDebug()<<line;
                     updateFile=line;
                 }
 
             }
         }
          progressbar->setValue(0);
+    }
+
+
+    if(procesType=="updateapp")
+    {
+        system("sleep 1");
+        system("rm  /tmp/prg.deb");
+        exit(0);
     }
 
  doc->moveCursor(QTextCursor::End);

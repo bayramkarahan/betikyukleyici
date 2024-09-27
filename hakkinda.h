@@ -21,7 +21,7 @@
 #include<QProcess>
 #include<QPalette>
 #include<QPushButton>
-
+#include<QDate>
 #ifndef HAKKINDA_H
 #define HAKKINDA_H
 QWidget *MainWindow::hakkinda()
@@ -36,6 +36,7 @@ QWidget *MainWindow::hakkinda()
     icon->setScaledContents( true );
     icon->setFixedSize(hakkindaPage->width()*0.1,hakkindaPage->height()*0.1);
    auto *hak=new QLabel(hakkindaPage);
+    int tarih=QDate().currentDate().year();
 
     hak->setText("\n* Bu uygulama istediğimiz görevi yükleyen ve kaldıran betikleri çalıştırmak için yazılmıştır."
                  "\n\n* Betiklerin çalıştırılmasından doğacak verikaybı veya sorunlarını kullanıcı kabul etmiş sayılır."
@@ -43,7 +44,7 @@ QWidget *MainWindow::hakkinda()
                 "\n\n* Bu betik yükleme listesinde bulunmayan yazılımları talep edebilirsiniz."
                 "\n\n* Listede bulunan betiklerde hata varsa iletişime geçebilirsiniz."
                  "\n"
-                   "\n   Copyright (C) 2023 by Bayram KARAHAN                                     "
+                 "\n   Copyright (C) "+QString::number(tarih)+" by Bayram KARAHAN                                     "
                   "\n   github.com/bayramkarahan/betikyukleyici                                         "
                   "\n"
                   "\n   This program is free software; you can redistribute it and/or modify    "
