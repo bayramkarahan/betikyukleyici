@@ -13,6 +13,6 @@ sleep 1
 
 display=":$(ls /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"      #Detect the name of the display in use
 user=$(who | grep '('$display')' | awk '{print $1}')    #Detect the user using such display
-chown ${user}:${user} /opt/windows
+chown ${user}:${user} -R /opt/windows
 touch /var/lib/betikyukleyici/ilkhazirlikwine
 
