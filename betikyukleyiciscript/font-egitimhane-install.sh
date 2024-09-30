@@ -5,12 +5,12 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/app.deb https://github.com/bayramkarahan/fonts/raw/refs/heads/master/diktemelabc.deb
+wget -O /tmp/app.deb https://github.com/bayramkarahan/fonts/raw/refs/heads/master/egitimhane.deb
 dpkg --force-all -i /tmp/app.deb
 sleep 1
 rm /tmp/app.deb
 sleep 1
 
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/diktemelabc
+touch /var/lib/betikyukleyici/egitimhanefont
 exit 0

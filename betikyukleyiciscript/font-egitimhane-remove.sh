@@ -1,4 +1,4 @@
 #!/bin/bash
-apt remove diktemelabc -y
-rm -rf /var/lib/betikyukleyici/diktemelabc
+apt remove egitimhane -y
+rm -rf /var/lib/betikyukleyici/egitimhanefont
 exit 0
