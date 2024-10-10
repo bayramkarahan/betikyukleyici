@@ -6,7 +6,7 @@ apt autoremove -y
 apt update
 ############################################################
 wget -O /tmp/eta-keyboard.deb https://github.com/bayramkarahan/betikyukleyici/raw/master/deb/eta-keyboard_1.0.6_amd64.deb
-apt install /tmp/eta-keyboard.deb
+apt install /tmp/eta-keyboard.deb -y
 sleep 1
 rm /tmp/eta-keyboard.deb
 mkdir /var/lib/betikyukleyici
