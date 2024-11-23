@@ -8,18 +8,20 @@ apt update
 apt-get install zenity -y
 sleep 1
 
-username=$(zenity --entry --title "User Info" --text "Otomatik Giriş Yapılacak Kullanıcıyı Adını Giriniz")
+username=$(zenity --entry --title "User Info" --text "Otomatik Giriş Yapılacak Kullanıcı Adını Giriniz")
 echo "Girilen isim: $username"
-id $username
-if [ $? -ne 0 ]; then
-	zenity --error --text="Böyle Bir Kullanıcı Yok.\n ${status}" --title="Error" --width=300 --width=200
-	exit 1
-else
-	sed -i -e 's/autologin-user =/#autologin-user =/g' ./lightdm.conf
-	sed -i -e 's/autologin-user=/#autologin-user =/g' ./lightdm.conf
+if [ "$username" != "" ]; then
+	id $username
+	if [ $? -ne 0 ]; then
+		zenity --error --text="Böyle Bir Kullanıcı Yok.\n ${status}" --title="Error" --width=300 --width=200
+		exit 1
+	else
+		sed -i -e 's/autologin-user =/#autologin-user =/g' ./lightdm.conf
+		sed -i -e 's/autologin-user=/#autologin-user =/g' ./lightdm.conf
 
-	sed -i 's/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g' ./lightdm.conf
-	zenity --info --text="$username Kullanıcısı ile Otomatik Giriş Ayarlandı." --width=400
+		sed -i 's/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g' ./lightdm.conf
+		zenity --info --text="$username Kullanıcısı ile Otomatik Giriş Ayarlandı." --width=400
+	fi
 fi
 
 mkdir /var/lib/betikyukleyici
