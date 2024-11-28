@@ -8,7 +8,7 @@ apt update
 apt-get install zenity -y
 sleep 1
 
-username=$(zenity --entry --title "User Info" --text "Parolasını Değiştireceğiniz Kullanıcıyı Adını Giriniz")
+username=$(zenity --entry --title "Kullanıcı Adı" --text "Parolasını Değiştireceğiniz Kullanıcıyı Adını Giriniz")
 echo "Girilen isim: $username"
 p1=$(zenity --entry --title "User Info" --text "Yeni Parolayı Giriniz")
 p2=$(zenity --entry --title "User Info" --text "Yeni Parolayı Tekrar Giriniz")

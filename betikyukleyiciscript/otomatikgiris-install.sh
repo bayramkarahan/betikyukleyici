@@ -8,7 +8,7 @@ apt update
 apt-get install zenity -y
 sleep 1
 
-username=$(zenity --entry --title "User Info" --text "Otomatik Giriş Yapılacak Kullanıcı Adını Giriniz")
+username=$(zenity --entry --title "Kullanıcı Adı" --text "Otomatik Giriş Yapılacak Kullanıcı Adını Giriniz")
 echo "Girilen isim: $username"
 if [ "$username" != "" ]; then
 	id $username
