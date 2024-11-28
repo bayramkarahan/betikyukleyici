@@ -16,10 +16,10 @@ if [ "$username" != "" ]; then
 		zenity --error --text="Böyle Bir Kullanıcı Yok.\n ${status}" --title="Error" --width=300 --width=200
 		exit 1
 	else
-		sed -i -e 's/autologin-user =/#autologin-user =/g' ./lightdm.conf
-		sed -i -e 's/autologin-user=/#autologin-user =/g' ./lightdm.conf
+		sed -i -e 's/autologin-user =/#autologin-user =/g' /etc/lightdm/lightdm.conf
+		sed -i -e 's/autologin-user=/#autologin-user =/g' /etc/lightdm/lightdm.conf
 
-		sed -i 's/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g' ./lightdm.conf
+		sed -i 's/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g' /etc/lightdm/lightdm.conf
 		zenity --info --text="$username Kullanıcısı ile Otomatik Giriş Ayarlandı." --width=400
 	fi
 fi
