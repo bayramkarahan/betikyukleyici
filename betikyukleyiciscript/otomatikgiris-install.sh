@@ -19,7 +19,7 @@ if [ "$username" != "" ]; then
 		sed -i -e 's/autologin-user =/#autologin-user =/g' /etc/lightdm/lightdm.conf
 		sed -i -e 's/autologin-user=/#autologin-user =/g' /etc/lightdm/lightdm.conf
 
-		sed -i 's/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g' /etc/lightdm/lightdm.conf
+		sed -i "s/\[Seat:\*\]/\[Seat:\*\]\nautologin-user=${username}/g" /etc/lightdm/lightdm.conf
 		zenity --info --text="$username Kullanıcısı ile Otomatik Giriş Ayarlandı." --width=400
 	fi
 fi
