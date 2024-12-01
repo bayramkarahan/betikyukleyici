@@ -10,7 +10,7 @@ apt-get install zenity -y
 sleep 1
 
 ############################################################
-wget -O /tmp/app.deb https://github.com/bayramkarahan/rightclicklongpress/releases/download/current/rightclicklongpress_1.0_all.deb
+wget -O /tmp/app.deb https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/rightclicklongpress_1.0_all.deb
 dpkg --force-all -i /tmp/app.deb
 sleep 1
 rm /tmp/app.deb
