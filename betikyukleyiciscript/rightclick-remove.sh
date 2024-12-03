@@ -3,10 +3,10 @@
 apt-get install zenity -y
 sleep 1
 
-apt remove rightclicklongpress -y
+apt remove rightclick -y
 
-glib-compile-schemas /usr/share/glib-2.0/schemas/
-dconf update
+#glib-compile-schemas /usr/share/glib-2.0/schemas/
+#dconf update
 
 zenity --info --text="Ayarların geçerli olması için sistemi yeniden başlatınız veya oturumu kapatıp tekrar giriniz." --width=500
 
