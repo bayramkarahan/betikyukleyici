@@ -11,11 +11,11 @@ display=":$(ls /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
 # Detect the user using such display	
 user=$(who | grep '('$display')' | awk '{print $1}')	
 cd /tmp
-wget -O wget -O /tmp/skel.zip https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/skel.zip
-cd /tmp
+wget -O wget /tmp/skel.zip https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/skel.zip
+sleep 1
 unzip skel.zip
 sleep 1
-rm /tmp/skel.zip
+rm -rf /tmp/skel.zip
 
 cp -prfv /tmp/skel/* /home/$user/
 
