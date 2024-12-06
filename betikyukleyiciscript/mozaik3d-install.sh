@@ -11,7 +11,7 @@ display=":$(ls /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
 # Detect the user using such display	
 user=$(who | grep '('$display')' | awk '{print $1}')	
 cd /tmp
-wget https://download.mozaweb.com/m3dviewer/m3dViewer_2.0.633_x64.tar.gz
+wget --no-check-certificate https://download.mozaweb.com/m3dviewer/m3dViewer_2.0.633_x64.tar.gz
 tar -xf m3dViewer_2.0.633_x64.tar.gz
 sleep 1
 rm -rf /tmp/m3dViewer_2.0.633_x64.tar.gz
