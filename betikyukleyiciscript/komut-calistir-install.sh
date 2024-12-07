@@ -11,7 +11,7 @@ sleep 1
 komut=$(zenity --entry --title "Komut Çalıştırıcı" --text "Çalıştırılacak Komutu Giriniz"  --width=300)
 echo "Girilen isim: $komut"
 if [ "$komut" != "" ]; then
-	sonuc=$(sh -c "$komut")
+	sonuc=$(sh -c "env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY  $komut")
 	
 		zenity --info --text="Komut Çalıştırıldı. \n ${sonuc}" --width=400
 fi
