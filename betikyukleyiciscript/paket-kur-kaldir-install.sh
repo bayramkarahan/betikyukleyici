@@ -1,4 +1,8 @@
 #!/bin/bash
+zenity --info --text="merhaba." --width=400
+exit
+
+
 apt install --fix-missing -y
 apt --fix-broken install -y
 apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
