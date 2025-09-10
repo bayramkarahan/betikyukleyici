@@ -5,6 +5,11 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
+rm -rf /etc/apt/sources.list.d/*
+rm -rf /etc/apt/sources.list
+echo "deb https://deb.debian.org/debian stable main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
+echo "deb https://depo.pardus.org.tr/pardus yirmiuc main contrib non-free" | sudo tee -a /etc/apt/sources.list
+
 
 rm -r /var/lib/dpkg/lock*
 dpkg --configure -a
