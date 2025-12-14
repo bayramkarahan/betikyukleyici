@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+<polygon style="fill:#D6D6D6;" points="58.432,143.248 256,29.184 453.568,143.248 453.568,371.376 256,485.44 58.432,371.376 "/>
+<polygon points="151.912,197.216 256,137.12 360.088,197.216 360.088,317.4 256,377.496 151.912,317.4 "/>
+<g>
+	<path style="fill:#FFFFFF;" d="M256,382.112l-108.088-62.4V194.904L256,132.504l108.088,62.4V319.72L256,382.112z M155.92,315.088
+		L256,372.88l100.088-57.792v-115.56L256,141.736l-100.08,57.792V315.088z"/>
+	<path style="fill:#FFFFFF;" d="M256,307.072c-28.152,0-51.048-22.896-51.048-51.04s22.896-51.04,51.048-51.04
+		c28.144,0,51.04,22.896,51.04,51.04S284.144,307.072,256,307.072z M256,212.992c-23.736,0-43.048,19.304-43.048,43.04
+		s19.312,43.04,43.048,43.04s43.04-19.304,43.04-43.04S279.736,212.992,256,212.992z"/>
+	
+		<rect x="101.176" y="115.934" transform="matrix(-0.503 0.8643 -0.8643 -0.503 305.0212 164.6278)" style="fill:#FFFFFF;" width="8" height="108.161"/>
+	
+		<rect x="51.523" y="339.683" transform="matrix(-0.8715 0.4904 -0.4904 -0.8715 365.3401 591.6332)" style="fill:#FFFFFF;" width="107.264" height="8"/>
+	
+		<rect x="402.824" y="290.078" transform="matrix(-0.4904 0.8715 -0.8715 -0.4904 905.8724 157.7191)" style="fill:#FFFFFF;" width="8" height="107.264"/>
+	
+		<rect x="352.795" y="165.986" transform="matrix(-0.8641 0.5033 -0.5033 -0.8641 844.0123 112.0912)" style="fill:#FFFFFF;" width="108.159" height="8"/>
+	<rect x="252" y="25.752" style="fill:#FFFFFF;" width="8" height="111.368"/>
+	<rect x="252" y="377.52" style="fill:#FFFFFF;" width="8" height="111.376"/>
+</g>
+<g>
+	<circle style="fill:#E50914;" cx="453.568" cy="370" r="25.752"/>
+	<circle style="fill:#E50914;" cx="58.432" cy="142.808" r="25.752"/>
+	<circle style="fill:#E50914;" cx="453.568" cy="142.808" r="25.752"/>
+	<circle style="fill:#E50914;" cx="58.432" cy="370" r="25.752"/>
+	<circle style="fill:#E50914;" cx="256" cy="25.752" r="25.752"/>
+	<circle style="fill:#E50914;" cx="256" cy="486.248" r="25.752"/>
+</g>
+</svg>
