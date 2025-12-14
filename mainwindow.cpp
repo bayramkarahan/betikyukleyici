@@ -17,28 +17,38 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     downloadAddress="https://github.com/bayramkarahan/betikyukleyici/raw/master/";
-    QSize screenSize = qApp->screens()[0]->size();
-    // qDebug()<<"boyut"<<screenSize.height()*0.65<<screenSize.width()*0.5;
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QSize screenSize = screen->availableGeometry().size();
     boy=screenSize.height()/153;
     en=boy*1.1;
     //   qDebug()<<"en"<<en;
     int e=en;
     int b=boy;
-    int pencereW=en*180;
-    int pencereH=boy*125;
+    int pencereW=en*235;
+    int pencereH=boy*150;
     int pencereNW=pencereW*0.99;
-     int pencereNH=pencereH;
+    int pencereNH=pencereH;
+
     this->setFixedSize(pencereW,pencereH);
-    int x = (screenSize.width() - this->width())/2;
-    int y = (screenSize.height() - this->height()) / 2;
-    this->move(x, y);
-    font=boy*2;
+    int x = (screenSize.width() - width()) / 2;
+    int y = (screenSize.height() - height()) / 2;
+    move(x, y);
+
+
+
+    font=boy*2.5;
     int fontt=font*1;
-    int fonttt=font*0.7;
+    int fonttt=font*1;
 
     auto appIcon = QIcon(":/icons/betikyukleyici.svg");
     this->setWindowIcon(appIcon);
-    this->setWindowTitle("Betik Yükleyici");
+    QProcess process;
+    process.start("/bin/bash", {"-c", "dpkg -s betikyukleyici | grep -i '^Version:' | awk '{print $2}'"});
+    process.waitForFinished();
+
+    QString version = QString::fromUtf8(process.readAll()).trimmed();
+    setWindowTitle("betikyukleyici " + version);
     /**************************************************************/
     proces=new QProcess(this);
     proces->setReadChannelMode(QProcess::MergedChannels);
@@ -151,9 +161,9 @@ aramalayout->setContentsMargins(0,0,0,0);
     /**********************scriptWidget Widget*************************************************/
     scriptWidget=new QWidget(anaWidget);
     scriptWidget->setStyleSheet("background-color: #ffffff;");
-    scriptWidget->setFixedSize(pencereNW,pencereNH*0.25);
+    scriptWidget->setFixedSize(pencereNW,pencereNH*0.80);
     QTabWidget *tabw=new QTabWidget(scriptWidget);
-    tabw->setFixedSize(pencereNW,pencereNH*0.5);
+    tabw->setFixedSize(pencereNW,pencereNH*0.80);
    // tabw->setStyleSheet("font-size:"+QString::number(font)+"px");
 
    // qDebug()<<"font:"<<font<<fontt<<fonttt;
@@ -162,21 +172,22 @@ aramalayout->setContentsMargins(0,0,0,0);
         QTabBar::tab:selected { background:#ffffff; margin-bottom: -1px; }";
     tabw->setStyleSheet(tabstyle);
     doc=new QTextEdit(tabw);
-    doc->setFixedSize(pencereNW*0.995,pencereNH*0.2);
+    doc->setFixedSize(pencereNW*0.995,pencereNH*0.75);
     doc->setReadOnly(true);
     doc->setStyleSheet(" border:0px solid black;");
 
     installscriptTextEdit=new QTextEdit(tabw);
-    installscriptTextEdit->setFixedSize(pencereNW,pencereNH*0.2);
+    installscriptTextEdit->setFixedSize(pencereNW,pencereNH*0.75);
     installscriptTextEdit->setReadOnly(true);
     installscriptTextEdit->setStyleSheet(" border:0px solid black;");
 
     removescriptTextEdit=new QTextEdit(tabw);
-    removescriptTextEdit->setFixedSize(pencereNW,pencereNH*0.2);
+    removescriptTextEdit->setFixedSize(pencereNW,pencereNH*0.75);
     removescriptTextEdit->setReadOnly(true);
     removescriptTextEdit->setStyleSheet(" border:0px solid black;");
 
   //  doc->setStyleSheet("background-color: #dfdfdf;");
+    tabw->addTab(appsWidget,"Uygulamalar");
     tabw->addTab(installscriptTextEdit,"Yükleme Betiği");
     tabw->addTab(removescriptTextEdit,"Kaldırma Betiği");
 
@@ -221,7 +232,7 @@ aramalayout->setContentsMargins(0,0,0,0);
    // appsWidget=new QWidget(anaWidget);
     appsWidget->setObjectName("appsWidget");
     // appsWidget->setStyleSheet("QWidget#appsWidget{background-color: #ff0000;border-bottom:1px solid #dc0000;}");
-    appsWidget->setFixedSize(pencereNW,pencereNH*0.55);
+    appsWidget->setFixedSize(pencereNW,pencereNH*0.80);
 
         if (appsListButton.count()==0)
         {
@@ -254,7 +265,7 @@ aramalayout->setContentsMargins(0,0,0,0);
 
         layout->addWidget(aramaWidget,1,1,1,1,Qt::AlignCenter);
         layout->addWidget(kategoriWidget,2,1,1,1,Qt::AlignCenter);
-        layout->addWidget(appsWidget,4,1,1,1,Qt::AlignCenter);
+       // layout->addWidget(appsWidget,4,1,1,1,Qt::AlignCenter);
 
         layout->addWidget(scriptWidget,5,1,1,1,Qt::AlignCenter);
         layout->addWidget(progressbar,6,1,1,1,Qt::AlignCenter);

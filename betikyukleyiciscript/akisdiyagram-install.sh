@@ -55,6 +55,7 @@ if dpkg --compare-versions "$LOCAL_VERSION" ne "$REMOTE_VERSION"; then
 else
     echo "Sürüm zaten master ile aynı."
 fi
+rm -rf ${TMP_DIR}
 sleep 1
 mkdir /var/lib/betikyukleyici
 touch /var/lib/betikyukleyici/${PACKAGE_NAME}

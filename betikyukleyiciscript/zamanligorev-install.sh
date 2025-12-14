@@ -56,6 +56,7 @@ else
     echo "Sürüm zaten master ile aynı."
 fi
 sleep 1
+rm -rf ${TMP_DIR}
 mkdir /var/lib/betikyukleyici
 touch /var/lib/betikyukleyici/${PACKAGE_NAME}
 exit 0
