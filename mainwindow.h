@@ -17,6 +17,7 @@
 #include<QWidget>
 #include<QGridLayout>
 #include<QScrollArea>
+#include <QClipboard>
 namespace Ui {
 class MainWindow;
 }
@@ -49,7 +50,7 @@ public slots:
      void getIndex();
     void selectPackageSlot(QString paket);
      void runEndPackageSlot(QString paket);
-
+    void saveCustomScript();
      void selectKategoriSlot(QString paket);
     void uygulamaListele();
     void uygulamaListeHazirla(QStringList list);
@@ -99,6 +100,12 @@ private:
     int selectRowIndex=0;
     QWidget *hakkinda();
     int font;
+    QWidget *customScriptWidget;
+    QTextEdit *customScriptTextEdit;
+    QToolButton *customScriptPasteButton;
+    QToolButton *customScriptRunButton;
+
+
 };
 
 #endif // MAINWINDOW_H

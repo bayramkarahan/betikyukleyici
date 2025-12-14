@@ -186,11 +186,59 @@ aramalayout->setContentsMargins(0,0,0,0);
     removescriptTextEdit->setReadOnly(true);
     removescriptTextEdit->setStyleSheet(" border:0px solid black;");
 
+    customScriptWidget=new QWidget(tabw);
+    customScriptWidget->setFixedSize(pencereNW,pencereNH*0.75);
+
+    customScriptTextEdit=new QTextEdit(customScriptWidget);
+    customScriptTextEdit->setFixedSize(pencereNW*0.98,pencereNH*0.61);
+    //customScriptTextEdit->setReadOnly(true);
+    customScriptTextEdit->setStyleSheet(" border:1px solid black;");
+
+    customScriptPasteButton= new QToolButton(customScriptWidget);
+    customScriptPasteButton->setFixedSize(pencereNW*0.14,pencereNH*0.06);
+    customScriptPasteButton->setIconSize(QSize(pencereNW*0.10,pencereNH*0.06));
+    customScriptPasteButton->setStyleSheet("Text-align:center");
+    customScriptPasteButton->setIcon(QIcon(":/icons/paste.svg"));
+    customScriptPasteButton->setAutoRaise(true);
+    customScriptPasteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    customScriptPasteButton->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
+    customScriptPasteButton->setText("Script Yapıştır");
+    connect(customScriptPasteButton, &QToolButton::clicked, [=]() {
+        QClipboard *clipboard = QApplication::clipboard();
+        QString text = clipboard->text();
+
+        if (!text.isEmpty()) {
+            customScriptTextEdit->setPlainText(text);
+        }
+    });
+
+    customScriptRunButton= new QToolButton(customScriptWidget);
+    customScriptRunButton->setFixedSize(pencereNW*0.14,pencereNH*0.06);
+    customScriptRunButton->setIconSize(QSize(pencereNW*0.10,pencereNH*0.06));
+    customScriptRunButton->setStyleSheet("Text-align:center");
+    customScriptRunButton->setIcon(QIcon(":/icons/run.svg"));
+    customScriptRunButton->setAutoRaise(true);
+    customScriptRunButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    customScriptRunButton->setStyleSheet("color: #000000;font-size:"+QString::number(font)+"px");
+    customScriptRunButton->setText("Çalıştır");
+    connect(customScriptRunButton, &QToolButton::clicked, [=]() {
+        saveCustomScript();
+        installSlot("ozel");
+    });
+
+    // GRID YERLEŞİMİ
+    auto *customgrid=new QGridLayout();
+    customgrid->addWidget(customScriptPasteButton, 0, 0, Qt::AlignLeft);
+    customgrid->addWidget(customScriptRunButton,   0, 1, Qt::AlignLeft);
+
+    // TextEdit altta ve tüm satırı kaplasın
+    customgrid->addWidget(customScriptTextEdit, 1, 0, 1, 4);
+    customScriptWidget->setLayout(customgrid);
   //  doc->setStyleSheet("background-color: #dfdfdf;");
     tabw->addTab(appsWidget,"Uygulamalar");
     tabw->addTab(installscriptTextEdit,"Yükleme Betiği");
     tabw->addTab(removescriptTextEdit,"Kaldırma Betiği");
-
+    tabw->addTab(customScriptWidget,"Özel Betik Çalıştır");
     tabw->addTab(doc,"Süreç");
    // tabw->setTabPosition(QTabWidget::West);
   //  mwidget->setFixedSize(en*120,boy*125);

@@ -10,5 +10,7 @@
         <file>icons/update.svg</file>
         <file>icons/betikyukleyici.svg</file>
         <file>icons/install.svg</file>
+        <file>icons/paste.svg</file>
+        <file>icons/run.svg</file>
     </qresource>
 </RCC>

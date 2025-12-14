@@ -435,4 +435,50 @@ void MainWindow::runEndPackageSlot(QString paket)
          }
 
 }
+
+void MainWindow::saveCustomScript()
+{
+    QString script = customScriptTextEdit->toPlainText();
+
+    if (script.trimmed().isEmpty())
+        return;
+
+    // Hedef dizin
+    QString dirPath = "/tmp/betikyukleyiciscript";
+    QDir dir;
+
+    // Dizin yoksa oluştur
+    if (!dir.exists(dirPath)) {
+        if (!dir.mkpath(dirPath)) {
+            qWarning() << "Dizin oluşturulamadı:" << dirPath;
+            return;
+        }
+    }
+
+    // Dosya yolu
+    QString filePath = dirPath + "/ozel-install.sh";
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Dosya yazılamadı:" << filePath;
+        return;
+    }
+
+    QTextStream out(&file);
+    if (!script.startsWith("#!"))
+        script.prepend("#!/bin/bash\n\n");
+
+    out << script;
+    file.close();
+
+    // Çalıştırma izni ver
+    QFile::setPermissions(
+        filePath,
+        QFileDevice::ReadOwner  |
+            QFileDevice::WriteOwner |
+            QFileDevice::ExeOwner
+        );
+
+    qDebug() << "Script kaydedildi:" << filePath;
+}
 #endif // FUNCTION_H
