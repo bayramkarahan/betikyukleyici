@@ -12,5 +12,6 @@ Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends},
        	libqt5core5a,
     	libqt5gui5,
-    	libqt5widgets5
+    	libqt5widgets5,
+    	curl
 Description: betikyukleyici Uygulaması
