@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    font=boy*2.5;
+    font=boy*2.0;
     int fontt=font*1;
     int fonttt=font*1;
 
