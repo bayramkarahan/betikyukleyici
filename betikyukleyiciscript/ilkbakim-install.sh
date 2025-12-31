@@ -24,8 +24,7 @@ deb http://depo.etap.org.tr/guvenlik yirmiuc-deb main contrib non-free non-free-
 EOF
 apt update || true
 
-apt install eta-register -y || true
-
 # ---- betikyukleyici işlemi ------
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/eta-register
+touch /var/lib/betikyukleyici/ilkbakim
+
