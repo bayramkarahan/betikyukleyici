@@ -25,45 +25,45 @@ deb http://depo.etap.org.tr/guvenlik yirmiuc-deb main contrib non-free non-free-
 EOF
 apt update || true
 #ek pakerler
-apt install eta-info -y || true
-apt install eta-register -y || true
-apt install eta-gtk-theme -y || true
-apt install eta-icon-theme -y || true
-apt install eta-qr-reader -y || true
-apt install eta-right-click -y || true
-apt install eta-keyboard -y || true
-apt install rsync -y || true
+apt install eta-info --reinstall -y || true
+apt install eta-register --reinstall -y || true
+apt install eta-gtk-theme --reinstall  -y || true
+apt install eta-icon-theme --reinstall -y || true
+apt install eta-qr-reader --reinstall -y || true
+apt install eta-right-click --reinstall -y || true
+apt install eta-keyboard --reinstall -y || true
+apt install rsync --reinstall -y || true
 
 # ek paket bitti
 wget -O /tmp/addmycomputer.deb https://github.com/bayramkarahan/addmycomputer/raw/refs/heads/master/addmycomputer.deb
 cd /tmp
-apt install ./addmycomputer.deb
+apt install ./addmycomputer.deb --reinstall -y || true
 rm -f /tmp/addmycomputer.deb
 
 wget -O /tmp/eta-menu.deb https://github.com/bayramkarahan/eta-menu/raw/refs/heads/master/eta-menu_1.2.1_all.deb
 cd /tmp
-apt install ./eta-menu.deb
+apt install ./eta-menu.deb --reinstall -y || true
 rm -f /tmp/eta-menu.deb
 
 wget -O /tmp/setwallpaperlock.deb https://github.com/bayramkarahan/setwallpaper/raw/refs/heads/master/setwallpaperlock.deb
 cd /tmp
-apt install ./setwallpaperlock.deb
+apt install ./setwallpaperlock.deb --reinstall -y || true
 rm -f /tmp/setwallpaperlock.deb
 
 wget -O /tmp/e-ag-client.deb https://github.com/bayramkarahan/e-ag-client/raw/refs/heads/master/e-ag-client_2.8.5_amd64.deb
 cd /tmp
-apt install ./e-ag-client.deb
+apt install ./e-ag-client.deb --reinstall -y || true
 rm -f /tmp/e-ag-client.deb
 
 wget -O /tmp/zamanligorev.deb https://github.com/bayramkarahan/zamanligorev/raw/refs/heads/master/zamanligorev_1.8.0_amd64.deb
 cd /tmp
-apt install ./zamanligorev.deb
+apt install ./zamanligorev.deb --reinstall -y || true
 rm -f /tmp/zamanligorev.deb
 
 
 wget -O /tmp/greeter.deb https://github.com/bayramkarahan/pardus-lightdm-greeter/releases/download/current/pardus-lightdm-greeter_40.0.0_all.deb
 cd /tmp
-apt install ./greeter.deb
+apt install ./greeter.deb --reinstall -y || true
 rm -f /tmp/greeter.deb
 
 wget -O /tmp/corner_applet.js https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/corner_applet.js
