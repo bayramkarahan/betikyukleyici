@@ -32,6 +32,8 @@ apt install eta-icon-theme -y || true
 apt install eta-qr-reader -y || true
 apt install eta-right-click -y || true
 apt install eta-keyboard -y || true
+apt install rsync -y || true
+
 # ek paket bitti
 wget -O /tmp/addmycomputer.deb https://github.com/bayramkarahan/addmycomputer/raw/refs/heads/master/addmycomputer.deb
 cd /tmp
@@ -79,18 +81,18 @@ unzip -o skel.zip
 rm -f /tmp/skel.zip
 
 # 3️⃣ /etc/skel güncelle
-cp -prfv /tmp/skel/. /etc/skel/
+#cp -prfv /tmp/skel/. /etc/skel/
+rsync -a /tmp/skel/ /etc/skel/
 chown -R root:root /etc/skel
 
 # 4️⃣ /home altındaki tüm kullanıcılar
 for home in /home/*; do
     [ -d "$home" ] || continue
-
     user=$(basename "$home")
 
-    echo "➡️ $user için ayarlar uygulanıyor"
+    echo "➡️ $user"
 
-    cp -prfv /tmp/skel/. "$home"/
+    rsync -a /tmp/skel/ "$home"/
     chown -R "$user:$user" "$home"
 done
 
