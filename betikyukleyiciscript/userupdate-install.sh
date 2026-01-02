@@ -66,6 +66,13 @@ cd /tmp
 apt install ./greeter.deb --reinstall -y || true
 rm -f /tmp/greeter.deb
 
+wget -O /tmp/pardusupdate.deb https://depo.etap.org.tr/pardus/pool/main/p/pardus-update/pardus-update_0.5.1_all.deb
+cd /tmp
+apt install ./pardusupdate.deb --reinstall -y || true
+rm -f /tmp/pardusupdate.deb
+
+
+
 wget -O /tmp/corner_applet.js https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/corner_applet.js
 cd /tmp
 cp /tmp/corner_applet.js /usr/share/cinnamon/applets/cornerbar@cinnamon.org/applet.js
