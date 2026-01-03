@@ -1,24 +1,30 @@
 #!/bin/bash
-set -e
 export DEBIAN_FRONTEND=noninteractive
+set -u
+[ "$(id -u)" -eq 0 ] || exit 0
+
+packagename="betikyukleyici"
+deb_url="https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/betikyukleyici_2.1.0_amd64.deb"
+deb_file="/tmp/${packagename}.deb"
+
 # ---- Paket sistemi toparlama ----
 dpkg --configure -a || true
-apt install -f -y || true
-apt install --fix-missing -y || true
 apt --fix-broken install -y || true
-packagename="betikyukleyici"
-############################################################
-wget O /tmp/${packagename}.deb https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/betikyukleyici_2.1.0_amd64.deb
-cd /tmp
-apt install ./${packagename}.deb --reinstall -y || true
-rm -f /tmp/${packagename}.deb || true
 
-apt install -f -y || true
+# ---- Paket indirme ----
+wget -O "$deb_file" "$deb_url" || true
+
+# ---- Kurulum / yeniden kurulum ----
+apt install "$deb_file" --reinstall -y || true
+
+# ---- Temizlik ----
+rm -f "$deb_file" || true
 apt --fix-broken install -y || true
-apt autoremove -y || true
+dpkg --configure -a || true
 
-sleep 1
-mkdir /var/lib/betikyukleyici
+# ---- İşaret dosyası ----
+mkdir -p /var/lib/betikyukleyici
 touch /var/lib/betikyukleyici/${packagename}
+
 exit 0
 
