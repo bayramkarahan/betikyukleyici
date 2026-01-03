@@ -33,7 +33,7 @@ apt install eta-qr-reader --reinstall -y || true
 apt install eta-right-click --reinstall -y || true
 apt install eta-keyboard --reinstall -y || true
 apt install rsync --reinstall -y || true
-
+rm -rf /etc/xdg/autostart/eta-register-autostart.desktop  || true
 # ek paket bitti
 wget -O /tmp/addmycomputer.deb https://github.com/bayramkarahan/addmycomputer/raw/refs/heads/master/addmycomputer.deb
 cd /tmp
@@ -65,6 +65,17 @@ wget -O /tmp/greeter.deb https://github.com/bayramkarahan/pardus-lightdm-greeter
 cd /tmp
 apt install ./greeter.deb --reinstall -y || true
 rm -f /tmp/greeter.deb
+if lsusb | grep -qE "(6615:0084|6615:0085|6615:0086|6615:0087|6615:0088|6615:0c20|2621:2201|2621:4501)" ; then
+	echo -e "\033[32m-------Faz(1-2) Ölçeklendirme Yapiliyor..---------\033[0m"
+	olcek="1.5"
+	sed -i '/scale/d' /usr/share/pardus/pardus-lightdm-greeter/data/config.ini
+	sed -i "s/\[pardus\]/\[pardus\]\nscale=${olcek}/g" /usr/share/pardus/pardus-lightdm-greeter/data/config.ini		
+else
+	echo -e "\033[32m-------Faz(3) Ölçeklendirme Yapiliyor..---------\033[0m"
+	olcek="2"
+	sed -i '/scale/d' /usr/share/pardus/pardus-lightdm-greeter/data/config.ini
+	sed -i "s/\[pardus\]/\[pardus\]\nscale=${olcek}/g" /usr/share/pardus/pardus-lightdm-greeter/data/config.ini	
+fi
 
 wget -O /tmp/pardusupdate.deb https://depo.etap.org.tr/pardus/pool/main/p/pardus-update/pardus-update_0.5.1_all.deb
 cd /tmp

@@ -1,14 +1,23 @@
 #!/bin/bash
-apt install --fix-missing -y
-apt --fix-broken install -y
-apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
-apt autoremove -y
-apt update
+set -e
+export DEBIAN_FRONTEND=noninteractive
+# ---- Paket sistemi toparlama ----
+dpkg --configure -a || true
+apt install -f -y || true
+apt install --fix-missing -y || true
+apt --fix-broken install -y || true
+packagename="eta-keyboard"
 ############################################################
-wget -O /tmp/eta-keyboard.deb https://github.com/bayramkarahan/betikyukleyici/raw/master/deb/eta-keyboard_1.0.6_amd64.deb
-apt install /tmp/eta-keyboard.deb -y
+wget O /tmp/${packagename}.deb https://depo.etap.org.tr/etap/pool/main/e/eta-keyboard/eta-keyboard_1.1.3_amd64.deb
+cd /tmp
+apt install ./${packagename}.deb --reinstall -y || true
+rm -f /tmp/${packagename}.deb || true
+
+apt install -f -y || true
+apt --fix-broken install -y || true
+apt autoremove -y || true
+
 sleep 1
-rm /tmp/eta-keyboard.deb
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/eta-keyboard
+touch /var/lib/betikyukleyici/${packagename}
 exit 0

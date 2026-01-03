@@ -25,6 +25,7 @@ EOF
 apt update || true
 
 apt install eta-register -y || true
+rm -rf /etc/xdg/autostart/eta-register-autostart.desktop  || true
 
 # ---- betikyukleyici işlemi ------
 mkdir /var/lib/betikyukleyici

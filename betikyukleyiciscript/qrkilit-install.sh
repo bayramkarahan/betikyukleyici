@@ -1,29 +1,24 @@
 #!/bin/bash
-apt install --fix-missing -y
-apt --fix-broken install -y
-apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
-apt autoremove -y
-apt update
+set -e
+export DEBIAN_FRONTEND=noninteractive
+# ---- Paket sistemi toparlama ----
+dpkg --configure -a || true
+apt install -f -y || true
+apt install --fix-missing -y || true
+apt --fix-broken install -y || true
+packagename="qrkilit"
 ############################################################
+wget O /tmp/${packagename}.deb https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/qrkilit_4.8.8_amd64.deb
 cd /tmp
-wget https://github.com/bayramkarahan/pardus-lightdm-greeter-qrkilit/releases/download/current/pardus-lightdm-greeter-qrkilit_1.2_all.deb
+apt install ./${packagename}.deb --reinstall -y || true
+rm -f /tmp/${packagename}.deb || true
 
-dpkg -i /tmp/etap-greeter_0.1.0_all.deb # dosya adını uygun şekilde yazınız.
-apt --fix-broken install -y
-apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
+apt install -f -y || true
+apt --fix-broken install -y || true
+apt autoremove -y || true
 
 sleep 1
-
-wget https://github.com/bayramkarahan/pardus-lightdm-greeter-listener/releases/download/current/pardus-lightdm-greeter-listener_1.0_all.deb
-
-dpkg -i /tmp/pardus-lightdm-greeter-listener_1.0_all.deb # dosya adını uygun şekilde yazınız.
-apt --fix-broken install -y
-apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
-sleep 1
-rm /tmp/pardus-lightdm-greeter-qrkilit_1.2_all.deb
-rm /tmp/pardus-lightdm-greeter-listener_1.0_all.deb
-
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/qrkilit
+touch /var/lib/betikyukleyici/${packagename}
 exit 0
 
