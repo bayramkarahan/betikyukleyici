@@ -3,7 +3,7 @@ export DEBIAN_FRONTEND=noninteractive
 set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
-packagename="keyboardautoshow"
+packagename="etahta-virtualkeyboard-integration"
 deb_url="https://github.com/bayramkarahan/etahta-virtualkeyboard-integration/raw/refs/heads/master/etahta-virtualkeyboard-integration_1.5_all.deb"
 deb_file="/tmp/${packagename}.deb"
 
