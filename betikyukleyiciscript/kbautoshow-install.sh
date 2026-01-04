@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="keyboardautoshow"
-deb_url="https://github.com/bayramkarahan/etahta-virtualkeyboard-integration/raw/refs/heads/master/etahta-virtualkeyboard-integration_1.0_all.deb"
+deb_url="https://github.com/bayramkarahan/etahta-virtualkeyboard-integration/raw/refs/heads/master/etahta-virtualkeyboard-integration_1.5_all.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----
