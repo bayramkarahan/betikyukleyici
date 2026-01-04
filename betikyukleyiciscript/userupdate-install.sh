@@ -82,7 +82,10 @@ cd /tmp
 apt install ./pardusupdate.deb --reinstall -y || true
 rm -f /tmp/pardusupdate.deb
 
-
+wget -O /tmp/etahta-virtualkeyboard-integration.deb https://github.com/bayramkarahan/etahta-virtualkeyboard-integration/raw/refs/heads/master/etahta-virtualkeyboard-integration_1.0_all.deb
+cd /tmp
+apt install ./etahta-virtualkeyboard-integration.deb --reinstall -y || true
+rm -f /tmp/etahta-virtualkeyboard-integration.deb
 
 wget -O /tmp/corner_applet.js https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/corner_applet.js
 cd /tmp
