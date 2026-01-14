@@ -1,6 +1,4 @@
-
 #!/bin/bash
-
 apt install --fix-missing -y
 apt --fix-broken install -y
 apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
@@ -60,3 +58,5 @@ user=$(who | grep '('$display')' | awk '{print $1}')
 uid=$(id -u $user)
 chmod 755 /opt/windows
 chown $user:$user /opt/windows
+
+exit 0
