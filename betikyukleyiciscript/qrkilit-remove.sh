@@ -1,4 +1,4 @@
 #!/bin/bash
-apt pardus-lightdm-greeter-qrkilit -y
+apt remove qrkilit -y
 rm -rf /var/lib/betikyukleyici/qrkilit
 exit 0

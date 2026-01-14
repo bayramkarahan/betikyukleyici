@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="qrkilit"
-deb_url="https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/qrkilit_1.0.0_amd64.deb"
+deb_url="https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/qrkilit_1.1.0_amd64.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----
