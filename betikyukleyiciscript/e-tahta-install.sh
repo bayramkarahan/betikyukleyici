@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="e-tahta"
-deb_url="https://github.com/bayramkarahan/e-tahta/raw/refs/heads/master/e-tahta_1.8.9_amd64.deb"
+deb_url="https://github.com/bayramkarahan/e-tahta/raw/refs/heads/master/e-tahta_1.9.0_amd64.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----

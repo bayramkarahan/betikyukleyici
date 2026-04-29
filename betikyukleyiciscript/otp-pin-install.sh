@@ -3,8 +3,8 @@ export DEBIAN_FRONTEND=noninteractive
 set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
-packagename="e-kilit"
-deb_url="https://github.com/bayramkarahan/e-kilit/raw/refs/heads/master/e-kilit_4.8.3_amd64.deb"
+packagename="otp-pin"
+deb_url="https://github.com/bayramkarahan/e-kilit/raw/refs/heads/master/eta-otp-lock_1.0.7_all.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----

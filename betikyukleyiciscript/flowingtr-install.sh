@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="flowingtr"
-deb_url="https://github.com/bayramkarahan/flowingtr/raw/refs/heads/master/flowingtr_3.2_amd64.deb"
+deb_url="https://github.com/bayramkarahan/flowingtr/raw/refs/heads/master/flowingtr_3.3_amd64.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----

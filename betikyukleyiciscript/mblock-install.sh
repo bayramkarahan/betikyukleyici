@@ -5,10 +5,10 @@ apt-get install -f -y # eksik bağımlılıkları tamamlaması için.
 apt autoremove -y
 apt update
 ############################################################
-wget -O /tmp/scratch.deb https://github.com/bayramkarahan/scratch-desktop-linux/releases/download/current/scratch-desktop-linux_3.29.1_amd64.deb
-apt install /tmp/scratch.deb -y
+wget -O /tmp/scratch.deb https://github.com/bayramkarahan/mBlock-desktop-linux/releases/download/v5.6.0/mblock-builder_5.6.0_amd64.deb
+apt install /tmp/mblock.deb -y
 sleep 1
-rm /tmp/scratch.deb
+rm /tmp/mblock.deb
 mkdir /var/lib/betikyukleyici
-touch /var/lib/betikyukleyici/scratch
+touch /var/lib/betikyukleyici/mblock
 exit 0

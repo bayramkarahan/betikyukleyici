@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="zamanligorev"
-deb_url="https://github.com/bayramkarahan/zamanligorev/raw/refs/heads/master/zamanligorev_1.8.0_amd64.deb"
+deb_url="https://github.com/bayramkarahan/zamanligorev/raw/refs/heads/master/zamanligorev_1.9.0_amd64.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----
