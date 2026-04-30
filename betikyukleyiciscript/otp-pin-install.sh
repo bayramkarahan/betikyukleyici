@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="otp-pin"
-deb_url="https://github.com/bayramkarahan/e-kilit/raw/refs/heads/master/eta-otp-lock_1.0.7_all.deb"
+deb_url="https://github.com/bayramkarahan/betikyukleyici/raw/refs/heads/master/deb/eta-otp-lock_1.0.7_all.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----
