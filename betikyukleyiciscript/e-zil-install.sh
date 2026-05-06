@@ -4,7 +4,8 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="e-zil"
-deb_url="wget O /tmp/${packagename}.deb https://github.com/bayramkarahan/e-zil/raw/refs/heads/master/e-zil_3.5.0_amd64.deb"
+deb_url="https://github.com/bayramkarahan/e-zil/raw/refs/heads/master/e-zil_3.5.0_amd64.deb"
+
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----

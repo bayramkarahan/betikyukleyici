@@ -4,7 +4,7 @@ set -u
 [ "$(id -u)" -eq 0 ] || exit 0
 
 packagename="e-ag-client"
-deb_url="https://github.com/bayramkarahan/e-ag-client/raw/refs/heads/master/e-ag-client_2.9.7_amd64.deb"
+deb_url="https://github.com/bayramkarahan/e-ag-client/raw/refs/heads/master/e-ag-client_2.9.8_amd64.deb"
 deb_file="/tmp/${packagename}.deb"
 
 # ---- Paket sistemi toparlama ----
